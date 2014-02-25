@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="history" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="7c8df79b-13fe-4869-9277-ca68ef1352e2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.fit.width" value="1"/>
+	<property name="net.sf.jasperreports.export.xls.fit.height" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="org.joda.time.DateTime"/>
+	<import value="org.joda.time.format.DateTimeFormat"/>
+	<import value="org.joda.time.DateTimeZone"/>
+	<parameter name="dateTimeZone" class="org.joda.time.DateTimeZone"/>
+	<parameter name="from" class="org.joda.time.DateTime"/>
+	<parameter name="until" class="org.joda.time.DateTime"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="revision" class="java.lang.Integer"/>
+	<field name="title" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="created" class="org.joda.time.DateTime"/>
+	<field name="lastPublished" class="org.joda.time.DateTime"/>
+	<field name="nextReview" class="org.joda.time.DateTime"/>
+	<field name="status" class="java.lang.Object"/>
+	<field name="serviceGroup" class="java.lang.String"/>
+	<field name="direction" class="java.lang.Object"/>
+	<field name="affect" class="java.lang.Object"/>
+	<field name="effectiveFrom" class="java.lang.String"/>
+	<field name="delay" class="java.lang.String"/>
+	<field name="freeform" class="java.lang.String"/>
+	<field name="alterationType" class="java.lang.Object"/>
+	<field name="location" class="java.lang.String"/>
+	<group name="IncidentGroup">
+		<groupExpression><![CDATA[$F{title}]]></groupExpression>
+	</group>
+	<group name="RevisionGroup">
+		<groupExpression><![CDATA[$F{revision}]]></groupExpression>
+	</group>
+	<group name="ServiceGroupAlterationGroup">
+		<groupExpression><![CDATA[$F{serviceGroup}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="18">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="20" y="0" width="50" height="18" uuid="abd7985a-c32f-4738-a843-e1c4d1641065">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[DateTimeFormat.forPattern("dd/MM/yyyy").withZone($P{dateTimeZone}).print($P{from})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="0" width="120" height="18" uuid="0a2bd6eb-5536-45c2-8574-b17b30f3def5">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[DateTimeFormat.forPattern("dd/MM/yyyy").withZone($P{dateTimeZone}).print($P{until})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="18" uuid="fa01fcb1-a6a5-47d3-ab3a-f2f9e7485992">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[From:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="119" height="18" uuid="7fcfbc90-61d0-4749-86a1-f8d0a451d2c5">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Until:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="20" y="0" width="50" height="18" uuid="5a8ce165-f0f2-44ab-a149-41f02a3c8ef0">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="119" height="18" uuid="4933977a-8d0d-4cc7-9420-85eb18b49931">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="0" width="120" height="18" uuid="6b7e24af-bf69-46f1-804e-911e6cb223cc">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Created]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="658" y="0" width="72" height="18" uuid="b5da48ff-fac4-46cf-a46b-74406f98c0d5">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Direction]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="0" width="70" height="18" uuid="c33ee144-7ce0-467a-aa4a-60f7ed8ec82e">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="0" width="70" height="18" uuid="c97a3407-bb60-401b-8ef7-4db89e496f1a">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Last Published]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="71" height="18" uuid="ce3937bd-65f1-4914-89e7-a9d9e8df3e15">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Next Review]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="70" height="18" uuid="2377af6f-1860-44ef-8e6c-0bbbe0b9dc35">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Effective From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="870" y="0" width="70" height="18" uuid="d9b80eae-6610-4e2a-afa2-bb1f52f2af45">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Delay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="940" y="0" width="70" height="18" uuid="2d9446e2-18a3-4fd9-aec8-cb6968498894">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Note]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1010" y="0" width="70" height="18" uuid="9c9ef012-0c74-4ac6-808c-cd99da990977">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Alteration Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1080" y="0" width="70" height="18" uuid="b006912a-b8f9-4850-ad63-596d3d02cde6">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Location]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="730" y="0" width="70" height="18" uuid="092a0355-46d7-44e3-9b8e-3494c7cf0d3b">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textElement markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Affect]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="0" width="138" height="18" uuid="3615ace4-c878-4fe1-8c84-20e68529a414">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textElement markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Service Group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="20" height="18" uuid="1a1bf30a-fe58-468c-af9c-7abdc92921ec">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Revision]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="20" y="0" width="50" height="18" printWhenGroupChanges="RevisionGroup" uuid="fe835b7c-0880-4c0e-abd4-a7b81f4baf47">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="70" y="0" width="119" height="18" printWhenGroupChanges="RevisionGroup" uuid="e444972d-e519-4f09-a838-8e427c7732d3">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="189" y="0" width="120" height="18" printWhenGroupChanges="RevisionGroup" uuid="07553a48-b900-4199-a117-5b774dae5bf1">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[DateTimeFormat.forPattern("HH:mm dd/MM/yyyy").withZone($P{dateTimeZone}).print($F{created})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="730" y="0" width="70" height="18" printWhenGroupChanges="ServiceGroupAlterationGroup" uuid="6d7b7607-d68f-480d-9ac5-94ff23c5e28b">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{affect}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="309" y="0" width="70" height="18" printWhenGroupChanges="RevisionGroup" uuid="95ca54f2-cbbc-4447-b323-8ea4013ced43">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[DateTimeFormat.forPattern("HH:mm dd/MM/yyyy").withZone($P{dateTimeZone}).print($F{lastPublished})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="379" y="0" width="71" height="18" printWhenGroupChanges="RevisionGroup" uuid="8e84349a-b4e7-4a87-95ff-9d052397d1de">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[DateTimeFormat.forPattern("HH:mm dd/MM/yyyy").withZone($P{dateTimeZone}).print($F{nextReview})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="450" y="0" width="70" height="18" printWhenGroupChanges="RevisionGroup" uuid="25e61de5-a599-4520-ade9-2fd2751dc2ce">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="658" y="0" width="72" height="18" printWhenGroupChanges="ServiceGroupAlterationGroup" uuid="42c97c88-4193-4ade-b45e-f574c3f7ed23">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{direction}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="800" y="0" width="70" height="18" printWhenGroupChanges="ServiceGroupAlterationGroup" uuid="f54f5b7e-07e6-4fd4-9bd7-a8ec381a8e30">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{effectiveFrom}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="870" y="0" width="70" height="18" printWhenGroupChanges="ServiceGroupAlterationGroup" uuid="71827c38-964a-4a88-8757-50a37ab7a69c">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{delay}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="940" y="0" width="70" height="18" printWhenGroupChanges="ServiceGroupAlterationGroup" uuid="88e8ec2c-8a27-4719-8405-4ef87c9b0022">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{freeform}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1010" y="0" width="70" height="18" uuid="cfce3efa-7042-4dad-9b6e-cb18cc1a92e8">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{alterationType}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1080" y="0" width="70" height="18" uuid="a96ab421-aa4b-4f00-ac04-ed47f5ef5518">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{location}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="20" height="18" printWhenGroupChanges="IncidentGroup" uuid="f9c33577-9b5e-4ef1-a1c8-176e91e6db92">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="520" y="0" width="138" height="18" printWhenGroupChanges="RevisionGroup" uuid="8078d7d2-9415-4888-ae92-a69595bc2ecc">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{serviceGroup}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

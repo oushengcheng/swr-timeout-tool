@@ -1,0 +1,77 @@
+.mapcontainer {	
+	padding-bottom: 20px;
+}
+
+.mapcontainer img {
+	opacity: 0.35;
+}
+
+.mapcontainer a, a:hover, a:focus {
+	position: absolute;
+	color: #000000;
+	font-style: bold;
+}
+
+#waterloo-map {
+	height: 579px;
+	width: 954px;
+	position: relative;
+	margin: 0 auto;
+}
+
+#windsorline-map {
+	height: 579px;
+	width: 954px;
+	position: relative;
+	margin: 0 auto;
+}
+
+.srp1 {	
+	left: 623px;
+	top: 107px;	
+}
+
+.srp2 {	
+	left: 623px;
+	top: 127px;	
+}
+
+.srp3 {	
+	left: 187px;
+	top: 74px;	
+}
+
+.srp4 {	
+	left: 187px;
+	top: 94px;	
+}
+
+.srp5 {	
+	left: 187px;
+	top: 114px;	
+}
+
+.srp6 {	
+	left: 623px;
+	top: 107px;	
+}
+
+.srp7 {	
+	left: 623px;
+	top: 127px;	
+}
+
+.srp8 {	
+	left: 187px;
+	top: 74px;	
+}
+
+.srp9 {	
+	left: 187px;
+	top: 94px;	
+}
+
+.srp10 {	
+	left: 187px;
+	top: 114px;	
+}

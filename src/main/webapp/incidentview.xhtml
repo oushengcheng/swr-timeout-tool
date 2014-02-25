@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:func="http://aps.com/functions"
+	xmlns:of="http://omnifaces.org/functions"
+	template="/WEB-INF/templates/default.xhtml">
+	<f:metadata>
+        <f:viewParam name="id" value="#{incidentViewBacking.id}" />
+    </f:metadata>
+	<ui:define name="content">
+		<div class="well">
+			<h:panelGroup rendered="#{incidentViewBacking.incident == null}">
+				<h1>
+					#{msg.incident_view_no_incident}
+				</h1>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{incidentViewBacking.incident != null}">
+				<h1>
+					#{incidentViewBacking.incident.title}
+				</h1>	
+				<h2>
+					#{incidentViewBacking.incident.description}
+				</h2>
+				<span class="h4">
+					#{msg.incident_view_lastpublished} 
+					<h:outputText value="#{incidentViewBacking.incident.lastPublished}" converter="prettyJodaTimeConverter"/>			
+					<h:outputText value=" - "/>
+					#{msg.incident_view_nextreview} 
+					<h:outputText value="#{incidentViewBacking.incident.nextReview}" converter="dateTimeConverter">
+						<f:attribute name="pattern" value="HH:mm"/>
+					</h:outputText>
+				</span>
+				<hr/>
+				<div class="row clearfix">
+					<div class="col-md-6 column">
+						<ul>
+							<ui:repeat var="serviceGroupAlteration" value="#{incidentViewBacking.left}">
+								<li>
+									#{func:format(serviceGroupAlteration)}										
+								</li>
+								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
+									<ul>
+										<li>#{serviceGroupAlteration.freeform}</li>
+									</ul> 
+								</h:panelGroup>								
+							</ui:repeat>
+						</ul>
+					</div>
+					<div class="col-md-6 column">
+						<ul>
+							<ui:repeat var="serviceGroupAlteration" value="#{incidentViewBacking.right}">
+								<li>
+									#{func:format(serviceGroupAlteration)}										
+								</li>
+								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
+									<ul>
+										<li>#{serviceGroupAlteration.freeform}</li>
+									</ul> 
+								</h:panelGroup>								
+							</ui:repeat>
+						</ul>
+					</div>
+				</div>
+			</h:panelGroup>
+		</div>	
+	</ui:define>
+	<ui:define name="footer">
+		#{msg.incident_view_lastupdated} 
+		#{of:formatDateWithTimezone(now, 'HH:mm:ss', dateTimeZone.ID)}
+		<h:outputText value=" - "/>		
+	</ui:define>
+</ui:composition>

@@ -1,11 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>wicc</groupId>
-	<artifactId>wicc</artifactId>
-	<packaging>war</packaging>
-	<version>1.0</version>
-	<name>wicc</name>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>wicc</groupId>
+    <artifactId>wicc</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
+    <name>WICC timeout tool</name>
+    <description>A tool for use in the WICC for timeouts</description>
+	
 	<repositories>
 		<repository>
 			<id>eap</id>
@@ -17,7 +21,14 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		
+		<repository>
+        	<id>jr-ce-releases</id>
+        	<url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+    	</repository>
+    
 	</repositories>
+	
 	<pluginRepositories>
 		<pluginRepository>
 			<id>eap</id>
@@ -29,61 +40,512 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
+		
+		<pluginRepository>
+        	<id>jr-ce-releases</id>
+        	<url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+    	</pluginRepository>
+    	
 	</pluginRepositories>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
-	</properties>
-	<dependencies>
-<!--
-As updates are released for EAP the version of the provided jboss-javaee-6.0
-jar can change.  To ensure your application is compiling against the same jars
-that the runtime provides the <version> element below should match the
-installed version of EAP on the node hosting your application.  To determine
-the version of EAP running on the node, log into an example EAP application and
-look in the jbosseap/logs/server.log file for the line:
+	
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		
+		<version.deltaspike>0.5</version.deltaspike>
+		<version.richfaces>5.0.0.Alpha3</version.richfaces>   
+		<version.richfaces-push-depchain>5.0.0.Alpha3</version.richfaces-push-depchain> 					
+		<version.omnifaces>1.6.3</version.omnifaces>
+		<version.commons-lang3>3.1</version.commons-lang3>
+		<version.joda-time>2.1</version.joda-time>
+		<version.usertype.core>3.1.0.CR1</version.usertype.core>
+		<version.prettytime>3.2.4.Final</version.prettytime>
+		<version.picketlink>2.6.0.Beta3</version.picketlink>
+		<version.jasperreports>5.2.0</version.jasperreports>
+		<version.poi>3.9</version.poi>
+		<version.poi-scratchpad>3.8</version.poi-scratchpad>    
+		<jboss.bom.version>1.0.0.M6</jboss.bom.version>
+		<!-- <jboss.bom.version>1.0.0.M6-redhat-1</jboss.bom.version>> -->
+		
+		<plugin.maven-compiler-plugin.version>3.0</plugin.maven-compiler-plugin.version>
+		<plugin.maven-war-plugin.version>2.4</plugin.maven-war-plugin.version>
+		<plugin.jasperreports-maven-plugin.version>1.0-beta-2</plugin.jasperreports-maven-plugin.version>
+		<plugin.build-helper-maven-plugin.version>1.8</plugin.build-helper-maven-plugin.version>
+		
+    </properties>
 
-... JBAS015874: JBoss EAP 6.1.1.GA (AS 7.2.1.Final-redhat-10) started ...
+    <dependencyManagement>
+        <dependencies>
+        
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-javaee-6.0-with-tools</artifactId>
+                <version>${jboss.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
+                <version>${jboss.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+        </dependencies>
+    </dependencyManagement>
+    
+    <dependencies>
+		         
+       <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-To determine the correct value for <version>, download the maven repository zip
-file corresponding to the installed version of EAP from the customer service
-portal [1].  Unzip the file and examine the single directory under
-jboss-eap-*-maven-repository/org/jboss/spec/jboss-javaee-6.0
+        <!-- Import the Common Annotations API (JSR-250), we use provided  scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-[1] https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=appplatform&productChanged=yes"
--->
+        <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the JPA API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Import the EJB API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+		<!-- Import the Servlet API, we use provided scope as the API is included in JBoss AS 7 -->
 		<dependency>
-			<groupId>org.jboss.spec</groupId>
-			<artifactId>jboss-javaee-6.0</artifactId>
-			<version>3.0.2.Final-redhat-4</version>
-			<type>pom</type>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-	</dependencies>
-	<profiles>
+
+        <!-- JSR-303 (Bean Validation) Implementation -->
+        <!-- Provides portable constraints such as @Email -->
+        <!-- Hibernate Validator is shipped in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Import the JSF API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.faces</groupId>
+            <artifactId>jboss-jsf-api_2.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Import for catch Weld specific exception -->
+		<dependency>
+        	<groupId>org.jboss.weld</groupId>
+        	<artifactId>weld-core</artifactId>
+        	<version>1.1.13.Final</version>
+        	<scope>provided</scope>
+        </dependency>
+        
+        <!-- Now we declare any tools needed -->
+
+        <!-- Annotation processor to generate the JPA 2.0 metamodel classes for typesafe criteria queries -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Annotation processor that raising compilation errors whenever constraint annotations are incorrectly used. -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+		<dependency>
+        	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-core</artifactId>
+        	<scope>provided</scope>        	
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-envers</artifactId>
+        	<scope>provided</scope>
+        </dependency>
+        
+		<!-- Richfaces -->
+		<dependency>
+    		<groupId>org.richfaces</groupId>
+    		<artifactId>richfaces</artifactId>    		
+    		<version>${version.richfaces}</version> 
+		</dependency>
+				
+		<!-- Deltaspike -->	
+		<dependency>
+		    <groupId>org.apache.deltaspike.core</groupId>
+		    <artifactId>deltaspike-core-api</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.deltaspike.core</groupId>
+		    <artifactId>deltaspike-core-impl</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.deltaspike.modules</groupId>
+		    <artifactId>deltaspike-security-module-api</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.deltaspike.modules</groupId>
+		    <artifactId>deltaspike-security-module-impl</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.deltaspike.modules</groupId>
+		    <artifactId>deltaspike-jsf-module-api</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.deltaspike.modules</groupId>
+		    <artifactId>deltaspike-jsf-module-impl</artifactId>
+		    <version>${version.deltaspike}</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>${version.omnifaces}</version>
+			<scope>compile</scope>
+		</dependency>	
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<scope>compile</scope>
+			<version>${version.commons-lang3}</version>			
+		</dependency>
+		
+		<!-- Joda -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>			
+			<scope>compile</scope>
+			<version>${version.joda-time}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<scope>compile</scope>
+			<version>${version.usertype.core}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-entitymanager</artifactId>
+				</exclusion>
+			</exclusions>		
+		</dependency>
+		
+		<!-- Prettytime -->		
+		<dependency>
+		   <groupId>org.ocpsoft.prettytime</groupId>
+		   <artifactId>prettytime</artifactId>
+		   <version>${version.prettytime}</version>
+		</dependency>
+
+		<dependency>
+   			<groupId>org.ocpsoft.prettytime</groupId>
+   			<artifactId>prettytime-integration-jsf</artifactId>
+   			<version>${version.prettytime}</version>   			
+		</dependency>
+
+		<!-- PicketLink -->
+    	<dependency>
+     		<groupId>org.picketlink</groupId>
+      		<artifactId>picketlink-api</artifactId>
+      		<version>${version.picketlink}</version>      	
+    	</dependency>
+    	
+ 	   	<dependency>
+      		<groupId>org.picketlink</groupId>
+      		<artifactId>picketlink-impl</artifactId>
+      		<version>${version.picketlink}</version>
+      	</dependency>         
+    
+    	<dependency>
+      		<groupId>org.picketlink</groupId>
+      		<artifactId>picketlink-idm-api</artifactId>
+      		<version>${version.picketlink}</version> 
+    	</dependency>
+
+    	<dependency>
+      		<groupId>org.picketlink</groupId>
+      		<artifactId>picketlink-idm-impl</artifactId>
+      		<scope>runtime</scope>
+      		<version>${version.picketlink}</version> 
+    	</dependency>
+
+    	<dependency>
+      		<groupId>org.picketlink</groupId>
+      		<artifactId>picketlink-idm-simple-schema</artifactId>
+      		<version>${version.picketlink}</version> 
+    	</dependency>
+    	
+    	<!-- Jasperreports -->
+		<dependency>
+	       <groupId>net.sf.jasperreports</groupId>
+	       <artifactId>jasperreports</artifactId>
+	       <scope>compile</scope>
+	       <version>${version.jasperreports}</version>	       
+        </dependency>
+        
+        <dependency>
+        	<groupId>net.sf.jasperreports</groupId>
+        	<artifactId>jasperreports-functions</artifactId>
+        	<scope>compile</scope>
+	        <version>${version.jasperreports}</version>
+    	</dependency>
+    
+        <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<scope>compile</scope>
+			<version>${version.poi}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<scope>compile</scope>
+			<version>${version.poi-scratchpad}</version>
+		</dependency>
+		
+        <!-- Testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+       
+    </dependencies>
+
+    <build>        
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+                    
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <version>${plugin.build-helper-maven-plugin.version}</version>			    
+			    <executions>
+			        <execution>
+			            <id>add-source</id>
+			            <phase>generate-sources</phase>
+			            <goals>
+			                <goal>add-source</goal>
+			            </goals>
+			            <configuration>
+			                <sources>			             
+                    			<source>${project.build.directory}/generated-sources/apt/</source>                	                    
+			                    <source>src/main/jasperreports/</source>			                    
+			                </sources>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${plugin.maven-war-plugin.version}</version>
+                <configuration>
+				   	<webResources>								   					   		
+				     	<resource>
+				       		<filtering>true</filtering>
+				       		<directory>src/main/webapp/WEB-INF</directory>
+				       		<targetPath>WEB-INF</targetPath>		       
+				    	</resource>
+				   	</webResources>														
+				</configuration>                
+            </plugin>            
+            
+            <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jasperreports-maven-plugin</artifactId>				
+				<version>${plugin.jasperreports-maven-plugin.version}</version>
+				<executions>					
+					<execution>
+						<phase>process-classes</phase>	
+						<!-- Bind to process-classes because user defined classes are referenced in jrxml -->					
+						<goals>							
+							<goal>compile-reports</goal>
+						</goals>
+					</execution>
+				</executions>
+			
+				<dependencies>
+					<!--note this must be repeated here to pick up correct xml validation -->
+					<dependency>
+						<groupId>net.sf.jasperreports</groupId>
+						<artifactId>jasperreports</artifactId>
+						<version>${version.jasperreports}</version>					
+					</dependency>
+					
+					 <dependency>
+			        	 <groupId>net.sf.jasperreports</groupId>
+			        	 <artifactId>jasperreports-functions</artifactId>		        	
+				         <version>${version.jasperreports}</version>						
+    				</dependency>
+    				    				        
+				</dependencies>
+			</plugin>
+			          
+        </plugins>
+        
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>org.codehaus.mojo</groupId>
+        								<artifactId>jasperreports-maven-plugin</artifactId>
+        								<versionRange>[0,)</versionRange>
+        								<goals>
+        									<goal>compile-reports</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<execute></execute>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+    	
+    	<!-- Development Profile -->
 		<profile>
-			<!-- When built in OpenShift the 'openshift' profile will be used when 
-				invoking mvn. -->
-			<!-- Use this profile for any OpenShift specific customization your app 
-				will need. -->
-			<!-- By default that is to put the resulting archive into the 'deployments' 
-				folder. -->
-			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			<id>openshift</id>
-			<build>
-				<finalName>wicc</finalName>
+			<id>dev</id>
+			
+			<activation>
+      			<property>
+        			<name>!environment.type</name>
+      			</property>
+    		</activation>
+    		
+			<build>		
+				
+				<filters>
+    				<filter>src/main/resources/application-dev.properties</filter>
+    			</filters>
+    							
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>						
+						<filtering>true</filtering>						      			        				          		
+          			</resource> 
+				</resources>
+						
 				<plugins>
+					
 					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1.1</version>
+						<version>${plugin.maven-war-plugin.version}</version>											
 						<configuration>
-							<outputDirectory>deployments</outputDirectory>
-							<warName>ROOT</warName>
+							<filters>
+    							<filter>src/main/resources/application-dev.properties</filter>
+    						</filters>											
+						   	<warName>wicc</warName>									
 						</configuration>
 					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+										
+				</plugins>            
+            </build>            
+        </profile>
+                
+		<profile>		
+            <id>openshift</id>
+            
+            <properties>
+    			<environment.type>openshift</environment.type>
+    		</properties>
+    		
+            <build>
+				<finalName>wicc</finalName>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${plugin.maven-war-plugin.version}</version>
+                        <configuration>
+                            <outputDirectory>deployments</outputDirectory>
+                            <filters>
+    							<filter>src/main/resources/application-prod.properties</filter>
+    						</filters>	
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
 </project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+	<application>
+		<resource-bundle>
+			<base-name>resources</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<message-bundle>messages</message-bundle>			
+	</application>	
+
+	<lifecycle>
+    	<phase-listener>org.omnifaces.eventlistener.ResetInputAjaxActionListener</phase-listener>
+		<!--     	<phase-listener>com.aps.wicc.web.LifeCycleListener</phase-listener> -->
+	</lifecycle>
+
+	<factory>
+        <exception-handler-factory>com.aps.wicc.exceptionhandling.DeltaSpikeExceptionHandlerFactory</exception-handler-factory>
+    </factory>
+</faces-config>

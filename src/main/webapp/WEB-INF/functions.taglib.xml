@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib 
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+    version="2.0">
+    <namespace>http://aps.com/functions</namespace>    
+    <function>
+        <function-name>format</function-name>
+        <function-class>com.aps.wicc.web.formatter.Functions</function-class>
+        <function-signature>java.lang.String format(com.aps.wicc.model.ServiceGroupAlteration)</function-signature>
+    </function>  
+    <function>
+        <function-name>shortFormat</function-name>
+        <function-class>com.aps.wicc.web.formatter.Functions</function-class>
+        <function-signature>java.lang.String shortFormat(com.aps.wicc.model.ServiceGroupAlteration)</function-signature>
+    </function>    
+</facelet-taglib>

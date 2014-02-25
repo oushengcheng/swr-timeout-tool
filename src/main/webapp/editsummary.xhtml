@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:r="http://richfaces.org"	 
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">		
+		<div class="well">			
+			<h1>#{msg.editsummary_plans}</h1>			
+			<br />	
+			<h:form>							
+				<div class="form-group">
+					<div class="btn-group">
+						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.newIncident}">
+							#{msg.editsummary_newplan_button}
+						</h:commandLink> 			
+						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.viewPlanStatic}" target="_blank">
+							#{msg.editsummary_viewplanstatic_button}
+						</h:commandLink>
+						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.viewPlanScroll}" target="_blank">
+							#{msg.editsummary_viewplanscroll_button}
+						</h:commandLink>
+					</div>			
+				</div>
+				<div class="table-responsive">
+					<h:dataTable id="dataTable" var="_incident" value="#{editSummaryBacking.incidents}" styleClass="table table-striped table-bordered">
+						<h:column>
+							<f:facet name="header">#{msg.editsummary_title_column}</f:facet>
+		                	#{_incident.title}
+		            	</h:column>
+						<h:column>
+							<f:facet name="header">#{msg.editsummary_description_column}</f:facet>
+		                	#{_incident.description}
+		            	</h:column>
+						<h:column>
+							<f:facet name="header">#{msg.editsummary_created_column}</f:facet>
+		                	<h:outputText value="#{_incident.created}" converter="dateTimeConverter"/>
+		            	</h:column>	
+		            	<h:column>
+							<f:facet name="header">#{msg.editsummary_published_column}</f:facet>
+		                	<h:outputText value="#{_incident.lastPublished}" converter="dateTimeConverter"/>
+		            	</h:column>	
+		            	<h:column>
+							<f:facet name="header">#{msg.editsummary_status_column}</f:facet>
+		                	<h:outputText value="#{msg[_incident.status.message]}" />
+		            	</h:column>				
+						<h:column>
+							<f:facet name="header">#{msg.editsummary_edit_column}</f:facet>
+							<h:commandLink action="#{editSummaryBacking.editIncident(_incident)}" value="#{msg.editsummary_edit_column}"/>						
+						</h:column>			
+						<h:column>
+							<f:facet name="header">#{msg.editsummary_close_column}</f:facet>
+							<r:commandLink execute="@this" value="#{msg.editsummary_close_column}" render="@none" oncomplete="#{r:component('confirmPane')}.show()">                    
+	                    		<f:setPropertyActionListener value="#{_incident}" target="#{editCloseBacking.close}" />
+	                    	</r:commandLink>
+						</h:column>
+					</h:dataTable>
+				</div>
+				
+				<r:popupPanel id="confirmPane" autosized="true" styleClass="modal-dialog" aria-labelledby="confirmPaneLabel" aria-hidden="true" domElementAttachment="form">		            
+					<div class="modal-content">
+						<div class="modal-header">
+							<h:button value="x"  styleClass="close" data-dismiss="modal" aria-hidden="true" onclick="#{r:component('confirmPane')}.hide(); return false;" />
+							<h4 class="modal-title" id="confirmPaneLabel">
+								#{msg.editsummary_confirm_title}
+							</h4>
+						</div>
+						<div class="modal-body">
+							<p>#{msg.editsummary_confirm_question}</p>
+						</div>
+						<div class="modal-footer">
+							<r:commandButton value="#{msg.editsummary_confirm_cancel_button}" styleClass="btn btn-default" onclick="#{r:component('confirmPane')}.hide(); return false;" />
+	           				<r:commandButton value="#{msg.editsummary_confirm_yes_button}" styleClass="btn btn-primary" onclick="close(); return false;" /> 
+						</div>
+					</div>												
+		        </r:popupPanel>	
+		        
+		        <r:jsFunction name="close" action="#{editCloseBacking.doClose}" render="dataTable" execute="@this" oncomplete="#{r:component('confirmPane')}.hide();" />
+        					
+			</h:form>
+		</div>
+			
+		<h:outputScript target="body">
+			 jQuery(function() {        		
+        		setInterval(function() {jQuery.get("poll");}, ${(session.maxInactiveInterval - 20) * 1000});
+    		});						
+		</h:outputScript>
+		
+	</ui:define>
+</ui:composition>

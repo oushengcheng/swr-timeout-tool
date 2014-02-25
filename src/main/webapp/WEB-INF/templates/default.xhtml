@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:r="http://richfaces.org"
+	  xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<title>#{msg.header_title}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset="utf-8"/>
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    	
+	</h:head>
+
+	<h:body>
+		<!-- This is to drag in jQuery and bootstrap.css from Richfaces -->
+		<h:form id="richfacesform">
+			<r:orderingList style="display: none"  />
+		</h:form>
+		
+		<!-- Ensure this loaded after Richfaces -->
+		<h:outputStylesheet name="css/bootstrap.css" />
+		<h:outputStylesheet name="css/style.css" />
+		<h:outputStylesheet name="css/sticky-footer-navbar.css" />
+		
+		<!-- Wrap all page content here -->
+    	<div id="wrap">
+
+			<!-- Fixed navbar -->
+			<div class="navbar navbar-default navbar-fixed-top">
+				<div class="container hidden-xs">
+			    	<div class="navbar-header">		            
+			      		<div class="navbar-brand">
+			      			#{msg.brand}					
+			      		</div>			      				      
+			    	</div>			    
+				    <span class="navbar-text navbar-right">			    
+						<h:form prependId="false">
+							<h:commandLink id="logout" value="#{msg.logout}" action="#{logoutBacking.logout()}" rendered="#{identity.loggedIn}"/>
+						</h:form>
+				    </span>			    
+			  	</div>
+
+				<div class="container visible-xs">
+			    	<div class="navbar-header">		            
+			      		<div class="navbar-brand">
+			      			#{msg.brand_extrasmall}					
+			      		</div>
+			      		<span class="navbar-text navbar-right">			    
+							<h:form prependId="false">
+								<h:commandLink id="logout2" value="#{msg.logout}" action="#{logoutBacking.logout()}" rendered="#{identity.loggedIn}"/>
+							</h:form>
+				    	</span>			      				      
+			    	</div>			    
+				    		    
+			  	</div>
+			</div>
+
+			<div class="container">       				
+				<ui:insert name="content"/>			        
+			</div>
+		    	
+		</div>
+		
+		<div id="footer">
+      		<div class="container">
+					<div class="text-muted pull-left hidden-xs">
+      					<h:graphicImage library="gfx" styleClass="" name="swrlogosmall.png"  />
+      				</div>      				      			
+      				<div class="text-muted pull-right">      			
+      					<ui:insert name="footer"/>	
+      				</div>
+      		</div>
+    	</div>
+		
+		<h:outputScript name="js/bootstrap.min.js" target="head"/>
+		<h:outputScript name="js/custom.js" target="head"/>
+		
+	</h:body>
+	
+</html>
