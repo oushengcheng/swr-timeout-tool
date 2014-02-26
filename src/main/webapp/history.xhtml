@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:r="http://richfaces.org"	 
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/default.xhtml">
 	<ui:define name="content">		
 		<div class="well">			
 			<h1>#{msg.history_incidents}</h1>			
@@ -66,10 +66,7 @@
 			</h:form>
 		</div>
 		
-		<h:outputScript target="body">
-			 jQuery(function() {        		
-        		setInterval(function() {jQuery.get("poll");}, ${(session.maxInactiveInterval - 20) * 1000});
-    		});						
-		</h:outputScript>			
+		<ui:include src="/WEB-INF/polling.xhtml" />	
+					
 	</ui:define>
 </ui:composition>

@@ -4,7 +4,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:r="http://richfaces.org"
-	template="/WEB-INF/templates/default.xhtml">	
+	template="/WEB-INF/default.xhtml">	
 	<ui:define name="content">
 		<h:head>	
 			<h:outputStylesheet name="css/contingency.css" />
@@ -30,9 +30,9 @@
 							<div id="waterloo-map">
 								<h:graphicImage library="gfx" name="waterloo.png"/>	
 								<ui:repeat var="plan" value="#{editSummaryBacking.contingencyPlans}">
-									<r:commandLink styleClass="#{plan.code.toLowerCase()}"
+									<r:commandLink styleClass="#{plan.code.toLowerCase()}"												   
 									               execute="@this"
-									               render="@form"
+									               render="contingencyplan"
 									               value="#{plan.code} - #{plan.title}"
 									               action="#{editSummaryBacking.setContingencyPlan(plan)}"/>																				
 								</ui:repeat>			
@@ -55,11 +55,8 @@
 			</h:form>			
 		</div>
 		
-		<h:outputScript target="body">
-			 jQuery(function() {        		
-        		setInterval(function() {jQuery.get("poll");}, ${(session.maxInactiveInterval - 20) * 1000});
-    		});						
-		</h:outputScript>
+		<ui:include src="/WEB-INF/polling.xhtml" />	
+		
 	</ui:define>
 	
 </ui:composition>

@@ -99,6 +99,8 @@ public class EditSummaryBacking implements Serializable
         this.contingencyPlans = this.contingencyPlanBean.findAll();
     }
     
+    // ========================== Edit Detail Modal ==========================================
+    
     public List<ServiceGroup> getServiceGroups() {
         return this.serviceGroups;
     }
@@ -150,6 +152,10 @@ public class EditSummaryBacking implements Serializable
         this.editServiceGroupAlteration.setAffect(Affect.DELAYED);
     }
     
+    public void setEffectiveNow() {
+    	this.editServiceGroupAlteration.setEffectiveFrom(new StringBuilder("from ").append(new LocalTime(dateTimeZone).toString("HH:mm")).toString());
+    }
+    
     public void deleteFirstAlteration() {
         if (this.sortedAlterationsChanged && !this.sortedAlterations.isEmpty()) {
             this.sortedAlterations.remove(0);
@@ -182,6 +188,8 @@ public class EditSummaryBacking implements Serializable
         this.sortedAlterationsChanged = false;
     }
     
+    // ========================== Edit Summary ==========================================
+    
     public List<Incident> getIncidents() {
         return this.incidentBean.getAllForPreviousWeek();
     }
@@ -189,21 +197,21 @@ public class EditSummaryBacking implements Serializable
     public Class<? extends ViewConfig> newIncident() {
         this.editIncident = new Incident();
         this.conversation.begin();
-        return (Class<? extends ViewConfig>)Pages.Editdetail.class;
+        return Pages.Editdetail.class;
     }
     
     public Class<? extends ViewConfig> viewPlanStatic() {
-        return (Class<? extends ViewConfig>)Pages.Planview.class;
+        return Pages.Planview.class;
     }
     
     public Class<? extends ViewConfig> viewPlanScroll() {
-        return (Class<? extends ViewConfig>)Pages.Planviewscroll.class;
+        return Pages.Planviewscroll.class;
     }
     
     public Class<? extends ViewConfig> editIncident(final Incident incident) {
         this.editIncident = incident;
-        this.conversation.begin();
-        return (Class<? extends ViewConfig>)Pages.Editdetail.class;
+        this.conversation.begin();        
+        return Pages.Editdetail.class;
     }
     
     public List<ServiceGroupAlteration> getSortedServiceGroupAlterations() {
@@ -216,18 +224,19 @@ public class EditSummaryBacking implements Serializable
     
     public Class<? extends ViewConfig> saveSortServiceGroupAlteration() {
         this.editIncident.setServiceGroupAlterations(this.sortedServiceGroupAlterations);
-        return (Class<? extends ViewConfig>)Pages.Editdetail.class;
+        return Pages.Editdetail.class;
     }
     
     public Class<? extends ViewConfig> startSortServiceGroupAlteration() {
         this.sortedServiceGroupAlterations = new ArrayList<ServiceGroupAlteration>();
-        return (Class<? extends ViewConfig>)Pages.Sort.class;
+        return Pages.Sort.class;
     }
     
     public Class<? extends ViewConfig> cancelSortServiceGroupAlteration() {
-        return (Class<? extends ViewConfig>)Pages.Editdetail.class;
+        return Pages.Editdetail.class;
     }
     
+    // ========================== Edit Detail ========================================== 
     public Incident getEditIncident() {
         return this.editIncident;
     }
@@ -241,7 +250,7 @@ public class EditSummaryBacking implements Serializable
     }
     
     public void setNextReviewPlus(final Integer plus) {
-        this.nextReview = new LocalTime(this.dateTimeZone).plusHours((int)plus);
+        this.nextReview = new LocalTime(this.dateTimeZone).plusMinutes(plus);
     }
     
     public void autoSort() {
@@ -281,10 +290,14 @@ public class EditSummaryBacking implements Serializable
     }
     
     public Class<?> saveIncident() {
-        final MutableDateTime now = new LocalTime().isAfter((ReadablePartial)this.nextReview) ? new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone) : new DateTime().toMutableDateTime(this.dateTimeZone);
+        
+    	final MutableDateTime now = new LocalTime().isAfter(this.nextReview) ? new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone) : new DateTime().toMutableDateTime(this.dateTimeZone);
+        
         now.setHourOfDay(this.nextReview.getHourOfDay());
         now.setMinuteOfHour(this.nextReview.getMinuteOfHour());
+        
         this.editIncident.setNextReview(now.toDateTime());
+        
         try {
             this.incidentBean.save(this.editIncident);
             this.conversation.end();
@@ -304,6 +317,7 @@ public class EditSummaryBacking implements Serializable
         return Pages.Editsummary.class;
     }
     
+    // =============== Contingency Plan ==============================
     public Class<?> selectContingencyPlan() {
         return Pages.Contingency.class;
     }
@@ -313,6 +327,7 @@ public class EditSummaryBacking implements Serializable
     }
     
     public void setContingencyPlan(final ContingencyPlan contingencyPlan) {
+    	System.out.println("Setting contingency plan");
         this.contingencyPlan = contingencyPlan;
     }
     

@@ -51,8 +51,7 @@
   <session-timeout>30</session-timeout>
  </session-config>
  <welcome-file-list>
-  <welcome-file>login</welcome-file>  <!-- This works on JBoss EAP 6.1 -->
-  <!-- <welcome-file>login.xhtml</welcome-file>   This works with Wildfly 8.0.0.CR1 -->
+  <welcome-file>login</welcome-file>
  </welcome-file-list>
 <error-page>
 	<error-code>404</error-code>  

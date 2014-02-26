@@ -22,6 +22,7 @@ public final class Functions
         switch (serviceGroupAlteration.getAffect()) {
             case DELAYED:    builder.append(delay(serviceGroupAlteration));    break;
             case ALTERED:    builder.append(altered(serviceGroupAlteration));  break;
+            case RESTORED:   builder.append(restored());                       break;
             case CANCELLED:  builder.append(cancelled());                      break;
             case UNAFFECTED: builder.append(unaffacted());                     break;            
         }
@@ -50,6 +51,10 @@ public final class Functions
     
     private static String unaffacted() {
         return "are unaffected";
+    }
+    
+    private static String restored() {
+        return "will be restored";
     }
     
     static class ListFormatterAlterationImpl implements ListFormatter<CompressedAlteration>

@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:r="http://richfaces.org"	
 	xmlns:func="http://aps.com/functions"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/default.xhtml">
 	<ui:define name="content">
 		<div class="well">			
 			<h:form id="form">			
@@ -42,24 +42,29 @@
 							<r:ajax/>						             	
 						</h:inputText>
 						<span class="input-group-btn">
+							<r:commandButton execute="@this"
+					  						 render="nextreviewparent"
+					  		                 action="#{editSummaryBacking.setNextReviewPlus(30)}"
+					  		                 styleClass="btn btn-default" 
+					  		                 value="#{msg.editdetail_edit_nextreview_30_mins}"/>
 					  		<r:commandButton execute="@this"
 					  						 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(1)}"
+					  		                 action="#{editSummaryBacking.setNextReviewPlus(60)}"
 					  		                 styleClass="btn btn-default" 
 					  		                 value="#{msg.editdetail_edit_nextreview_1_hour}"/>
 					  		<r:commandButton execute="@this"
 					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(2)}"
+					  		                 action="#{editSummaryBacking.setNextReviewPlus(120)}"
 					  		                 styleClass="btn btn-default" 
 					  		                 value="#{msg.editdetail_edit_nextreview_2_hour}"/>
 					  		<r:commandButton execute="@this"
 					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(3)}"
+					  		                 action="#{editSummaryBacking.setNextReviewPlus(180)}"
 					  		                 styleClass="btn btn-default" 
 					  		                 value="#{msg.editdetail_edit_nextreview_3_hour}"/>	
 							<r:commandButton execute="@this"
 					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(4)}"
+					  		                 action="#{editSummaryBacking.setNextReviewPlus(240)}"
 					  		                 styleClass="btn btn-default" 
 					  		                 value="#{msg.editdetail_edit_nextreview_4_hour}"/>								  		                									
 						</span>
@@ -206,7 +211,7 @@
 										<span class="input-group-btn">
 									  		<r:commandButton execute="@this"
 									  						 render="effective"
-									  		                 action="#{editSummaryBacking.serviceGroupAlteration.setEffectiveFrom(msg.editdetail_edit_effective_now_value)}"
+									  		                 action="#{editSummaryBacking.setEffectiveNow}"
 									  		                 styleClass="btn btn-default" 
 									  		                 value="#{msg.editdetail_edit_effective_now}"/>
 									  		<r:commandButton execute="@this"
@@ -343,12 +348,12 @@
 					</div>								
 				</div>															
 	        </r:popupPanel>
+	        
+	    
+	    	
 		</h:form>
 
-		<h:outputScript target="body">
-			 jQuery(function() {        		
-        	 	setInterval(function() {jQuery.get("poll");}, ${(session.maxInactiveInterval - 20) * 1000});
-    		 });						
-		</h:outputScript>			
+		<ui:include src="/WEB-INF/polling.xhtml" />		
+		
 	</ui:define>
 </ui:composition>

@@ -6,7 +6,7 @@
 	xmlns:r="http://richfaces.org"
 	xmlns:func="http://aps.com/functions"
 	xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/templates/default.xhtml">
+	template="/WEB-INF/default.xhtml">
 	<ui:define name="content">
 		<div class="well">
 			<h1>#{msg.sort_title}</h1>			
@@ -55,11 +55,8 @@
 			</h:form>	          				                 
 		</div>
 		
-		<h:outputScript target="body">
-			 jQuery(function() {        		
-        		setInterval(function() {jQuery.get("poll");}, ${(session.maxInactiveInterval - 20) * 1000});
-    		});						
-		</h:outputScript>
+		<ui:include src="/WEB-INF/polling.xhtml" />	
+		
 	</ui:define>
 	
 </ui:composition>

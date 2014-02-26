@@ -4,6 +4,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.ReadableInstant;
@@ -13,6 +14,8 @@ import org.joda.time.format.DateTimeFormat;
 public class DateTimeConverter implements Converter
 {
     private static final String defaultPattern = "HH:mm EEE d MMM yyyy";
+    
+    @Inject
     private DateTimeZone dateTimeZone;
     
     public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {

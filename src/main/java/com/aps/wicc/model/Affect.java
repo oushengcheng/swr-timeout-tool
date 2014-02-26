@@ -4,6 +4,7 @@ public enum Affect
 {
     ALTERED("enum.affect.altered"), 
     CANCELLED("enum.affect.cancelled"), 
+    RESTORED("enum.affect.restored"),
     DELAYED("enum.affect.delayed"), 
     UNAFFECTED("enum.affect.unaffected");
     

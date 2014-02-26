@@ -43,13 +43,13 @@ public class IncidentDao
         incidentRoot.fetch(Incident_.serviceGroupAlterations, JoinType.LEFT);
         
         criteria.where(builder.or(builder.greaterThan(incidentRoot.get(Incident_.created), builder.literal(new DateTime().minusDays(7))), builder.equal(incidentRoot.get(Incident_.status), builder.literal((Object)Status.OPEN))));
-        criteria.orderBy(builder.desc(incidentRoot.get(Incident_.created)));
+        criteria.orderBy(builder.desc(incidentRoot.get(Incident_.lastPublished)));
         
         final TypedQuery<Incident> query = this.entityManager.createQuery(criteria);
         
         try {
         
-        	final List<Incident> incidents = (List<Incident>)query.getResultList();
+        	final List<Incident> incidents = query.getResultList();
             this.serviceGroupAlterationDao.getServiceGroupAlterations(incidents);
             return incidents;
         

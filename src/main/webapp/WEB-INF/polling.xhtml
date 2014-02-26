@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:r="http://richfaces.org"	
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form>
+		<r:jsFunction name="dopoll" action="#{pollBacking.keepSessionAndConversationAlive}" />
+	</h:form>				
+		
+	<h:outputScript target="body">
+	 	jQuery(function() {        		
+	     	setInterval(function() {dopoll()}, 60000); // Refresh every minute
+		});						
+	</h:outputScript>
+
+</ui:composition>
