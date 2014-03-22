@@ -476,14 +476,7 @@
     	
     	<!-- Development Profile -->
 		<profile>
-			<id>dev</id>
-			
-			<activation>
-      			<property>
-        			<name>!environment.type</name>
-      			</property>
-    		</activation>
-    		
+			<id>dev</id>						    
 			<build>		
 				
 				<filters>
@@ -517,12 +510,20 @@
                 
 		<profile>		
             <id>openshift</id>
-            
-            <properties>
-    			<environment.type>openshift</environment.type>
-    		</properties>
-    		
+           	
             <build>
+            
+            	<filters>
+    				<filter>src/main/resources/application-prod.properties</filter>
+    			</filters>
+    							
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>						
+						<filtering>true</filtering>						      			        				          		
+          			</resource> 
+				</resources>
+				
 				<finalName>wicc</finalName>
                 <plugins>
                     <plugin>
