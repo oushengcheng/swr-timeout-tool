@@ -2,11 +2,14 @@ package com.aps.wicc.ejb.initialisation;
 
 import javax.inject.Inject;
 
+import org.apache.deltaspike.core.api.exclude.Exclude;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 import org.picketlink.idm.credential.*;
 import org.picketlink.idm.model.*;
 import org.picketlink.idm.model.basic.*;
 import org.picketlink.idm.*;
 
+@Exclude(ifProjectStage = { ProjectStage.Production.class })
 @Primary
 public class IDMInitialisationBean implements Initialisable
 {
