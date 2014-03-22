@@ -23,13 +23,10 @@ public class PollBacking {
 		
 		facesContext.getExternalContext().getSession(false); // Keep session alive
 		
-		System.out.println("Hello, I've just kept the session alive");
-		
 		if (!conversation.isTransient()) {
 			
 			conversation.setTimeout(DateTimeConstants.MILLIS_PER_MINUTE * THIRTY_MINUTES); // Keep conversation active for another 30 minutes
-			
-			System.out.println("Hello, I've just kept the conversation alive");
+					
 		}			
 	}
 }

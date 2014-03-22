@@ -22,9 +22,7 @@ public class InitialisationBean
 	@Inject
 	@Secondary
     private Instance<Initialisable> secondary;
-    
-	@Inject org.jboss.weld.context.http.HttpConversationContext conversationContext;
-	 
+     
     @PostConstruct
     void atStartUp() {
         

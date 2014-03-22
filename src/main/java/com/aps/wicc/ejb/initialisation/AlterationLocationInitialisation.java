@@ -3,11 +3,15 @@ package com.aps.wicc.ejb.initialisation;
 import javax.inject.Inject;
 import javax.persistence.*;
 
+import org.apache.deltaspike.core.api.exclude.Exclude;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
+
 import com.aps.wicc.persist.*;
 import com.aps.wicc.model.*;
 
 import java.util.*;
 
+@Exclude(ifProjectStage = { ProjectStage.Production.class })
 @Secondary
 public class AlterationLocationInitialisation implements Initialisable
 {

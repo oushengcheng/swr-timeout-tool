@@ -17,12 +17,10 @@ public class LifeCycleListener implements PhaseListener
     }
     
     public void beforePhase(final PhaseEvent event) {
-        LifeCycleListener.logger.debug("START PHASE " + event.getPhaseId());
-        System.out.println("START PHASE " + event.getPhaseId());
+        LifeCycleListener.logger.debug("START PHASE " + event.getPhaseId());        
     }
     
     public void afterPhase(final PhaseEvent event) {
-        LifeCycleListener.logger.debug("END PHASE " + event.getPhaseId());
-        System.out.println("END PHASE " + event.getPhaseId());
+        LifeCycleListener.logger.debug("END PHASE " + event.getPhaseId());        
     }
 }
