@@ -326,8 +326,7 @@ public class EditSummaryBacking implements Serializable
         return this.contingencyPlan;
     }
     
-    public void setContingencyPlan(final ContingencyPlan contingencyPlan) {
-    	System.out.println("Setting contingency plan");
+    public void setContingencyPlan(final ContingencyPlan contingencyPlan) {    	
         this.contingencyPlan = contingencyPlan;
     }
     

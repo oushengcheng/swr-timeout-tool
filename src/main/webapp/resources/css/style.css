@@ -125,6 +125,27 @@ h1, h2, h3 {
 	.planview h3 {
 		font-size: 16px;	
 	} 
+	
+	.planview li {
+	   font-size: 26px;	
+	}
+	
+	.planviewscroll h1 {
+		font-weight: bold;	
+		font-size: 22px;	
+	} 	
+	
+	.planviewscroll h2 {
+		font-size: 22px;	
+	} 
+	
+	.planviewscroll h3 {
+		font-size: 16px;	
+	}
+	
+	.planviewscroll li {
+	   font-size: 26px;	   
+	}
 }
 
 @media only screen and (min-device-width : 1024px) {
@@ -140,7 +161,35 @@ h1, h2, h3 {
 	
 	.planview h3 {
 		font-size: 26px;	
+	}
+	
+	.planview li {
+	   font-size: 26px;	
+	}
+	
+	.planviewscroll h1 {
+		font-weight: bold;
+		font-size: 64px;
+		height: 70px;
+		overflow: hidden;	
+	} 	
+	
+	.planviewscroll h2 {
+		font-size: 44px;
+		height: 50px;
+		overflow: hidden;			
 	} 
+	
+	.planviewscroll h3 {
+		font-size: 44px;
+		height: 50px;
+		overflow: hidden;	
+	}
+	
+	.planviewscroll li {
+	   font-size: 44px;
+	   font-weight: bold;
+	}
 }
 
 a {

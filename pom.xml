@@ -336,14 +336,7 @@
 	       <scope>compile</scope>
 	       <version>${version.jasperreports}</version>	       
         </dependency>
-        
-        <dependency>
-        	<groupId>net.sf.jasperreports</groupId>
-        	<artifactId>jasperreports-functions</artifactId>
-        	<scope>compile</scope>
-	        <version>${version.jasperreports}</version>
-    	</dependency>
-    
+               
         <dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>

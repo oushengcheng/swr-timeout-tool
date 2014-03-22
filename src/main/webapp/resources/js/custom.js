@@ -52,4 +52,4 @@
 			
 	};
 		
-}(window.aps = window.aps || {}, jQuery))
+}(window.aps = window.aps || {}, jQuery));

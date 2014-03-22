@@ -14,8 +14,7 @@ public class LogExceptionHandler
     }
     
     void logExceptions(@BeforeHandles final ExceptionEvent<Throwable> evt) {
-        LogExceptionHandler.logger.warn("An error occured: " + evt.getException().getMessage());
-        evt.getException().printStackTrace();
+        LogExceptionHandler.logger.warn("An error occured: " + evt.getException().getMessage(), evt.getException());        
         evt.handledAndContinue();
     }
 }
