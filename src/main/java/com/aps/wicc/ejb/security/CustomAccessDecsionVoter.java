@@ -21,38 +21,60 @@ public class CustomAccessDecsionVoter implements AccessDecisionVoter {
     }
     
     public Set<SecurityViolation> checkPermission(final AccessDecisionVoterContext accessDecisionVoterContext) {
+        Access access = getAccessMetaData(accessDecisionVoterContext);    	
+    	boolean accessAllowed = testIfUserHasAccess(access);
+    	return createSecurityViolationsIfRequired(accessAllowed);
         
-    	final Set<SecurityViolation> set = new HashSet<SecurityViolation>();
-            	
-    	Access access = accessDecisionVoterContext.getMetaDataFor(Access.class.getName(), Access.class);
+    }
+    
+    private Access getAccessMetaData(AccessDecisionVoterContext accessDecisionVoterContext) {
+    
+    	return accessDecisionVoterContext.getMetaDataFor(Access.class.getName(), Access.class);
     	
-    	boolean match = false;
+    }
+    
+    private boolean testIfUserHasAccess(Access access) {
+    	
+    	if (access == null) {
+    		
+    		return true;
+    		
+    	}
+    	
+    	boolean accessAllowed = false;
     	
     	for (String role : access.role()) {
-    	
+        	
     		if (authorizationChecker.hasApplicationRole(role)) {
-    			
-    			match = true;
+    			    			
+    			accessAllowed = true;
     			
     		}
     			
     	}
     	
-    	if (!match) {
-    		    		
-            set.add(new SecurityViolation() {
-            
-            	private static final long serialVersionUID = 1L;
-                
-                public String getReason() {
-                    return "User is not logged in";
-                }
-                
-            });
-            
-        }
+    	return accessAllowed;
+    }
+    
+    private Set<SecurityViolation> createSecurityViolationsIfRequired(boolean accessAllowed) {
     	
-        return set;
-        
+    	Set<SecurityViolation> set = new HashSet<SecurityViolation>();
+    	
+    	if (!accessAllowed) {
+    		    	
+    		set.add(new SecurityViolation() {
+	             
+    			private static final long serialVersionUID = 1L;
+	             
+	            public String getReason() {
+	                return "User is not logged in";
+	            }
+	             
+	        });
+    	 
+    	}
+    	
+    	return set;
+    	 
     }
 }
