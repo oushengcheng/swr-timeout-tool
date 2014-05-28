@@ -4,6 +4,8 @@ import java.io.*;
 
 import javax.inject.*;
 
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
 import org.omnifaces.cdi.*;
 
 import com.aps.wicc.ejb.*;
@@ -20,31 +22,42 @@ import javax.annotation.*;
 
 @Named
 @ViewScoped
-public class IncidentViewBacking implements Serializable
+public class ScrollViewBacking implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private String id;
     private String requiredid;
+    private String scrollspeed;
+    private String defaultscrollspeed;
     private IncidentBean incidentBean;
     private ViewNavigationHandler viewNavigationHandler;
     private Incident incident;
     
-    public IncidentViewBacking() {
+    public ScrollViewBacking() {
         super();
     }
     
     @Inject
-    public IncidentViewBacking(final IncidentBean incidentBean, final ViewNavigationHandler viewNavigationHandler, @PlanViewIdParameter final String requiredid) {
+    public ScrollViewBacking(IncidentBean incidentBean, 
+    		                   ViewNavigationHandler viewNavigationHandler, 
+    		                   @PlanViewIdParameter String requiredid,
+    		                   @ScrollSpeed String defaultscrollspeed) {
         super();
         this.requiredid = requiredid;
+        this.defaultscrollspeed = defaultscrollspeed;
         this.incidentBean = incidentBean;
         this.viewNavigationHandler = viewNavigationHandler;
     }
     
     @PreRenderView
     protected void preRenderView() {
+    	// Protect pages using id passed in in url
         if (this.id == null || !this.id.equals(this.requiredid)) {
             this.viewNavigationHandler.navigateTo(Pages.Pagenotfound.class);
+        }
+        // Set default scroll speed
+        if (this.scrollspeed == null) {
+        	this.scrollspeed = defaultscrollspeed;
         }
     }
     
@@ -61,7 +74,19 @@ public class IncidentViewBacking implements Serializable
         this.id = id;
     }
     
-    public Incident getIncident() {
+    public String getScrollspeed() {
+		return scrollspeed;
+	}
+
+	public void setScrollspeed(String scrollspeed) {
+		this.scrollspeed = scrollspeed;
+	}
+
+	public Incident getIncident() {
         return this.incident;
+    }
+	
+	public Integer getIncidentAge() {
+    	return Minutes.minutesBetween(incident.getLastPublished(), new DateTime()).getMinutes();
     }
 }

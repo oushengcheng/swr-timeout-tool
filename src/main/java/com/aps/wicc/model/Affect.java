@@ -3,8 +3,9 @@ package com.aps.wicc.model;
 public enum Affect
 {
     ALTERED("enum.affect.altered"), 
-    CANCELLED("enum.affect.cancelled"), 
-    RESTORED("enum.affect.restored"),
+    CANCELLED("enum.affect.cancelled"),
+    PARTRESTORED("enum.affect.partrestored"),
+    FULLRESTORED("enum.affect.fullrestored"),
     DELAYED("enum.affect.delayed"), 
     UNAFFECTED("enum.affect.unaffected");
     

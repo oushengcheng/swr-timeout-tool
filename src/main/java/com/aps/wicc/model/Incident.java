@@ -32,11 +32,10 @@ public class Incident
     private Long version;
 	
 	@NotNull(message="{incident.titlenotnull}")
-	@Length(max=100, message="{incident.titlelength}")
+	@Length(max=40, message="{incident.titlelength}")
     private String title;
     
 	@NotNull(message="{incident.descriptionnotnull}")
-	@Length(max=200, message="{incident.descriptionlength}")
     private String description;
     
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")    
@@ -52,7 +51,7 @@ public class Incident
     private Status status;
     
     @OneToMany(cascade=CascadeType.ALL)
-    @OrderBy("position")
+    @OrderBy("position")    
     private List<ServiceGroupAlteration> serviceGroupAlterations;
     
     public Incident() {

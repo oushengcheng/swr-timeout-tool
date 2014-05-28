@@ -3,10 +3,14 @@ package com.aps.wicc.web;
 import org.apache.deltaspike.core.api.config.view.*;
 import org.apache.deltaspike.core.api.config.view.controller.*;
 import org.apache.deltaspike.jsf.api.config.view.*;
+
 import com.aps.wicc.web.backing.*;
+
 import org.apache.deltaspike.core.api.config.view.navigation.*;
 import org.apache.deltaspike.security.api.authorization.*;
+
 import com.aps.wicc.ejb.security.*;
+import com.aps.wicc.model.Roles;
 
 @Folder(name = "/")
 public interface Pages
@@ -17,40 +21,47 @@ public interface Pages
     }
     
     @View(navigation = View.NavigationMode.REDIRECT)
-    public static class Editsummary implements ViewConfig, SecuredPages
+    @Access(role=Roles.EDIT_ROLE)
+    public class Editsummary implements ViewConfig, SecuredPages
     {
     }
     
     @View(navigation = View.NavigationMode.REDIRECT)
-    public static class Editdetail implements ViewConfig, SecuredPages
+    @Access(role=Roles.EDIT_ROLE)
+    public class Editdetail implements ViewConfig, SecuredPages
     {
     }
     
     @View(navigation = View.NavigationMode.REDIRECT)
-    public static class Contingency implements ViewConfig, SecuredPages
+    @Access(role=Roles.EDIT_ROLE)
+    public class Contingency implements ViewConfig, SecuredPages
     {
     }
     
     @View(navigation = View.NavigationMode.REDIRECT)
+    @Access(role=Roles.ADMIN_ROLE)
     public static class History implements ViewConfig, SecuredPages
     {
     }
     
     @View(navigation = View.NavigationMode.REDIRECT)
+    @Access(role=Roles.EDIT_ROLE)
     public static class Sort implements ViewConfig, SecuredPages
     {
     }
-    
-    @ViewControllerRef(IncidentViewBacking.class)
-    @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
-    @NavigationParameter(key = "id", value = "#{planViewIdParameter}")
-    public static class Planview implements ViewConfig
+        
+    @View(navigation = View.NavigationMode.REDIRECT)
+    @Access(role={Roles.EDIT_ROLE, Roles.VIEW_ROLE})
+    public static class Planview implements ViewConfig, SecuredPages
     {
     }
     
-    @ViewControllerRef(IncidentViewBacking.class)
+    @ViewControllerRef(ScrollViewBacking.class)
     @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
-    @NavigationParameter(key = "id", value = "#{planViewIdParameter}")
+    @NavigationParameter.List({
+    		@NavigationParameter(key = "id", value = "#{planViewIdParameter}"),
+    		@NavigationParameter(key = "scrollspeed", value = "#{scrollSpeed}")    		
+    })
     public static class Planviewscroll implements ViewConfig
     {
     }
@@ -74,7 +85,7 @@ public interface Pages
     {
     }
     
-    @Secured(value = { CustomAccessDecsionVoter.class }, errorView = Accessdenied.class)
+    @Secured(value = { CustomAccessDecsionVoter.class }, errorView = Accessdenied.class)    
     public interface SecuredPages
     {
     }

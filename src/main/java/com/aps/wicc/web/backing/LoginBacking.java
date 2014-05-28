@@ -8,6 +8,7 @@ import org.picketlink.*;
 import org.picketlink.credential.*;
 
 import com.aps.wicc.ejb.security.*;
+import com.aps.wicc.model.Roles;
 
 import org.apache.deltaspike.core.api.config.view.navigation.*;
 import org.apache.deltaspike.jsf.api.message.*;
@@ -88,12 +89,21 @@ public class LoginBacking
     }
     
     private Class<? extends ViewConfig> navigate() {
-        if (this.authorizationChecker.hasApplicationRole("admin")) {
-            return (Class<? extends ViewConfig>)Pages.History.class;
+    	
+        if (this.authorizationChecker.hasApplicationRole(Roles.ADMIN_ROLE)) {
+        	
+            return Pages.History.class;
+            
+        } else if (this.authorizationChecker.hasApplicationRole(Roles.EDIT_ROLE)) {
+        	
+            return Pages.Editsummary.class;
+            
+        } else if (this.authorizationChecker.hasApplicationRole(Roles.VIEW_ROLE)) {
+        	
+            return Pages.Planview.class;
+            
         }
-        if (this.authorizationChecker.hasApplicationRole("edit")) {
-            return (Class<? extends ViewConfig>)Pages.Editsummary.class;
-        }
+        
         throw new RuntimeException("Unknown role on log in");
     }
 }

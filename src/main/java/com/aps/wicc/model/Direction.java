@@ -3,8 +3,8 @@ package com.aps.wicc.model;
 public enum Direction
 {
     BOTH("enum.direction.both"), 
-    UP("enum.direction.up"), 
-    DOWN("enum.direction.down");
+    REVERSE("enum.direction.reverse"), 
+    FORWARD("enum.direction.forward");
     
     private String message;
     

@@ -6,7 +6,9 @@ public enum AlterationType
     CALLADD("enum.alterationtype.calladd"), 
     NOTCALL("enum.alterationtype.notcall"), 
     RUNVIA("enum.alterationtype.runvia"), 
-    NEWDEST("enum.alterationtype.newdest");
+    NEWDEST("enum.alterationtype.newdest"),
+    STARTFINISH("enum.alterationtype.startfinish"),
+    FINISHSTART("enum.alterationtype.finishstart");
     
     private String message;
     

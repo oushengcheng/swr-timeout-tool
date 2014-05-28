@@ -6,41 +6,38 @@
 	xmlns:func="http://aps.com/functions"
 	xmlns:r="http://richfaces.org"
 	xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/default.xhtml">
-	<f:metadata>
-        <f:viewParam name="id" value="#{incidentViewBacking.id}" />
-    </f:metadata>
+	template="/WEB-INF/default.xhtml">	
 	<ui:define name="content">			
 		<div class="well planview">
-			<h:panelGroup rendered="#{incidentViewBacking.incident == null}">
+			<h:panelGroup rendered="#{staticViewBacking.incident == null}">
 				<h1>
 					#{msg.incident_view_no_incident}
 				</h1>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{incidentViewBacking.incident != null}">
+			<h:panelGroup rendered="#{staticViewBacking.incident != null}">
 				<h1>
-					#{incidentViewBacking.incident.title}
-				</h1>	
-				<h2>
-					#{incidentViewBacking.incident.description}
-				</h2>
+					#{staticViewBacking.incident.title}
+				</h1>					
 				<h3>
-					<span id="timestamp">
+					<span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
 						#{msg.incident_view_lastpublished} 
-						<h:outputText value="#{incidentViewBacking.incident.lastPublished}" converter="dateTimeConverter">
+						<h:outputText value="#{staticViewBacking.incident.lastPublished}" converter="dateTimeConverter">
 							<f:attribute name="pattern" value="HH:mm"/>
 						</h:outputText>			
 						<h:outputText value=" - "/>
 						#{msg.incident_view_nextreview} 
-						<h:outputText value="#{incidentViewBacking.incident.nextReview}" converter="dateTimeConverter">
+						<h:outputText value="#{staticViewBacking.incident.nextReview}" converter="dateTimeConverter">
 							<f:attribute name="pattern" value="HH:mm"/>
 						</h:outputText>
 					</span>
 				</h3>
 				<br/>
-				<div class="row clearfix">					
+				<div class="row clearfix">
 					<ul>
-						<ui:repeat var="serviceGroupAlteration" value="#{incidentViewBacking.incident.serviceGroupAlterations}">
+						<li>
+							<h:outputText value="#{staticViewBacking.incident.description}" styleClass="preformatted"/>
+						</li>
+						<ui:repeat var="serviceGroupAlteration" value="#{staticViewBacking.incident.serviceGroupAlterations}">
 							<li>
 								#{func:format(serviceGroupAlteration)}																		
 								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >

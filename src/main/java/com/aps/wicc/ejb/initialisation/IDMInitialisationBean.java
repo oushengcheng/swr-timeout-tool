@@ -4,10 +4,15 @@ import javax.inject.Inject;
 
 import org.apache.deltaspike.core.api.exclude.Exclude;
 import org.apache.deltaspike.core.api.projectstage.ProjectStage;
-import org.picketlink.idm.credential.*;
-import org.picketlink.idm.model.*;
-import org.picketlink.idm.model.basic.*;
-import org.picketlink.idm.*;
+import org.picketlink.idm.IdentityManager;
+import org.picketlink.idm.PartitionManager;
+import org.picketlink.idm.RelationshipManager;
+import org.picketlink.idm.credential.Password;
+import org.picketlink.idm.model.basic.BasicModel;
+import org.picketlink.idm.model.basic.Role;
+import org.picketlink.idm.model.basic.User;
+
+import com.aps.wicc.model.Roles;
 
 @Exclude(ifProjectStage = { ProjectStage.Production.class })
 @Primary
@@ -19,30 +24,41 @@ public class IDMInitialisationBean implements Initialisable
     @Override
     public void init() {
         
-    	final IdentityManager identityManager = this.partitionManager.createIdentityManager();
-        final RelationshipManager relationshipManager = this.partitionManager.createRelationshipManager();
+    	IdentityManager identityManager = this.partitionManager.createIdentityManager();
+        RelationshipManager relationshipManager = this.partitionManager.createRelationshipManager();
         
-        final Role edit = new Role("edit");
-        identityManager.add((IdentityType)edit);
+        Role edit = new Role(Roles.EDIT_ROLE);
+        identityManager.add(edit);
         
-        final Role admin = new Role("admin");
-        identityManager.add((IdentityType)admin);
+        Role admin = new Role(Roles.ADMIN_ROLE);
+        identityManager.add(admin);
         
-        final User editUser = new User("wicc");
+        Role view = new Role(Roles.VIEW_ROLE);
+        identityManager.add(view);
+        
+        User editUser = new User("wicc");
         editUser.setEmail("");
         editUser.setFirstName("");
         editUser.setLastName("");
-        identityManager.add((IdentityType)editUser);
-        identityManager.updateCredential((Account)editUser, (Object)new Password("wicc"));
-        BasicModel.grantRole(relationshipManager, (IdentityType)editUser, edit);
+        identityManager.add(editUser);
+        identityManager.updateCredential(editUser, new Password("wicc"));
+        BasicModel.grantRole(relationshipManager, editUser, edit);
         
-        final User adminUser = new User("admin");
+        User adminUser = new User("admin");
         adminUser.setEmail("");
         adminUser.setFirstName("");
         adminUser.setLastName("");
-        identityManager.add((IdentityType)adminUser);
-        identityManager.updateCredential((Account)adminUser, (Object)new Password("admin"));
-        BasicModel.grantRole(relationshipManager, (IdentityType)adminUser, admin);
+        identityManager.add(adminUser);
+        identityManager.updateCredential(adminUser, new Password("admin"));
+        BasicModel.grantRole(relationshipManager, adminUser, admin);
+        
+        User viewUser = new User("crompton");
+        viewUser.setEmail("");
+        viewUser.setFirstName("");
+        viewUser.setLastName("");
+        identityManager.add(viewUser);
+        identityManager.updateCredential(viewUser, new Password("crompton"));
+        BasicModel.grantRole(relationshipManager, viewUser, view);
         
     }
 }

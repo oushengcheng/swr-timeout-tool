@@ -29,12 +29,16 @@ public class ServiceGroupAlterationDao
     }
     
     public List<ServiceGroupAlteration> getServiceGroupAlterations(final Collection<Incident> incidents) {
+    	
         if (incidents.isEmpty()) {
-            return Collections.emptyList();
+        
+        	return Collections.emptyList();
+        
         }
-        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<ServiceGroupAlteration> criteria = builder.createQuery(ServiceGroupAlteration.class);
-        final Root<ServiceGroupAlteration> root = criteria.from(ServiceGroupAlteration.class);
+        
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<ServiceGroupAlteration> criteria = builder.createQuery(ServiceGroupAlteration.class);
+        Root<ServiceGroupAlteration> root = criteria.from(ServiceGroupAlteration.class);
         
         criteria.distinct(true);
         

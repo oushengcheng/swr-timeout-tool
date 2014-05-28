@@ -33,6 +33,10 @@ public class ContingencyAlteration
     @Enumerated(EnumType.STRING)
     private Affect affect;
     
+    private String delay;
+    
+    private String freeform;
+    
     @ElementCollection
     @IndexColumn(name="position")
     private List<Alteration> alterations;
@@ -42,12 +46,14 @@ public class ContingencyAlteration
         this.alterations = new ArrayList<Alteration>();
     }
     
-    private ContingencyAlteration(final ServiceGroup serviceGroup, final Direction direction, final Affect affect, final List<Alteration> alterations) {
+    private ContingencyAlteration(ServiceGroup serviceGroup, Direction direction, Affect affect, String delay, String freeform, List<Alteration> alterations) {
         super();
         this.alterations = new ArrayList<Alteration>();
         this.serviceGroup = serviceGroup;
         this.direction = direction;
         this.affect = affect;
+        this.delay = delay;
+        this.freeform = freeform;
         this.alterations = new ArrayList<Alteration>();
         for (final Alteration alteration : alterations) {
             this.alterations.add(new Alteration(alteration));
@@ -70,6 +76,14 @@ public class ContingencyAlteration
         return this.affect;
     }
     
+    public String getDelay() {
+		return delay;
+	}
+
+	public String getFreeform() {
+		return freeform;
+	}
+	
     public List<Alteration> getAlterations() {
         return ImmutableList.copyOf(this.alterations);
     }
@@ -77,12 +91,14 @@ public class ContingencyAlteration
     @Override
     public String toString() {
         final ToStringBuilder builder = new ToStringBuilder((Object)this);
-        builder.append("id", (Object)this.id);
-        builder.append("version", (Object)this.version);
-        builder.append("serviceGroup", (Object)this.serviceGroup);
-        builder.append("direction", (Object)this.direction);
-        builder.append("affect", (Object)this.affect);
-        builder.append("alterations", (Object)this.alterations);
+        builder.append("id", this.id);
+        builder.append("version", this.version);
+        builder.append("serviceGroup", this.serviceGroup);
+        builder.append("direction", this.direction);
+        builder.append("affect", this.affect);
+        builder.append("delay", this.delay);
+        builder.append("freeform", this.freeform);
+        builder.append("alterations", this.alterations);
         return builder.toString();
     }
     
@@ -91,6 +107,8 @@ public class ContingencyAlteration
         private ServiceGroup serviceGroup;
         private Direction direction;
         private Affect affect;
+        private String delay;        
+        private String freeform;
         private List<Alteration> alterations;
         
         public Builder() {
@@ -98,18 +116,28 @@ public class ContingencyAlteration
             this.alterations = new ArrayList<Alteration>();
         }
         
-        public Builder setServiceGroup(final ServiceGroup serviceGroup) {
+        public Builder setServiceGroup(ServiceGroup serviceGroup) {
             this.serviceGroup = serviceGroup;
             return this;
         }
         
-        public Builder setDirection(final Direction direction) {
+        public Builder setDirection(Direction direction) {
             this.direction = direction;
             return this;
         }
         
-        public Builder setAffect(final Affect affect) {
+        public Builder setAffect(Affect affect) {
             this.affect = affect;
+            return this;
+        }
+        
+        public Builder setDelay(String delay) {
+            this.delay = delay;
+            return this;
+        }
+        
+        public Builder setFreeform(String freeform) {
+            this.freeform = freeform;
             return this;
         }
         
@@ -119,7 +147,9 @@ public class ContingencyAlteration
         }
         
         public ContingencyAlteration build() {
-            return new ContingencyAlteration(this.serviceGroup, this.direction, this.affect, this.alterations);
+            return new ContingencyAlteration(serviceGroup, direction, affect, delay, freeform, alterations);
         }
     }
+
+	
 }

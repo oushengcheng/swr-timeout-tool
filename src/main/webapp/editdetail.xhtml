@@ -25,9 +25,9 @@
 				</div>
 				<div class="form-group #{!description.valid ? 'has-error' : ''}">
 					 <h:outputLabel for="description" value="#{msg.editdetail_description_label}" styleClass="control-label"/>
-					 <h:inputText id="description" styleClass="form-control" value="#{editSummaryBacking.editIncident.description}" binding="#{description}">
+					 <h:inputTextarea id="description" styleClass="form-control" value="#{editSummaryBacking.editIncident.description}" binding="#{description}">
 					 	<r:ajax/>
-					 </h:inputText>
+					 </h:inputTextarea>
 					 <h:message for="description"/>
 				</div>
 				<h:panelGroup id="nextreviewparent"  styleClass="form-group #{!nextreview.valid ? 'has-error' : ''}" layout="block">
@@ -83,9 +83,7 @@
 					<h:dataTable id="dataTable" var="_alteration" value="#{editSummaryBacking.editIncident.serviceGroupAlterations}" styleClass="table table-striped table-bordered">
 						<h:column>
 							<f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
-							#{_alteration.serviceGroup.headcode}
-							<h:outputText value=": " />
-		                	#{_alteration.serviceGroup.description}
+							#{_alteration.serviceGroup.standardDescription}
 		            	</h:column>
 						<h:column>
 							<f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
@@ -150,7 +148,7 @@
 	        </r:popupPanel>		
 		</h:form>
 			
-		<h:form id="editform">		    	
+		<h:form id="editform">			   
 			<r:popupPanel id="editPane" autosized="true" moveable="true" styleClass="modal-dialog large-modal" aria-labelledby="editPaneLabel" aria-hidden="true" domElementAttachment="form">						            
 				<div class="modal-content">								
 					<div class="modal-header">
@@ -161,7 +159,10 @@
 					</div>
 					<div class="modal-body">
 						<div class="row">	
-							<div class="col-md-6 column">																										
+							<div class="col-md-6 column">
+								
+								<h:messages/>
+																																		
 								<div class="form-group #{!servicegroup.valid ? 'has-error' : ''}">
 									<h:outputLabel for="servicegroup" value="#{msg.editdetail_edit_servicegroup}" styleClass="control-label"/>
 									<h:selectOneMenu id="servicegroup" 
@@ -171,7 +172,10 @@
 									                 binding="#{servicegroup}">
 										<r:ajax execute="servicegroup" render="locations"/>
 										<f:selectItem noSelectionOption="true" itemLabel="#{msg.editdetail_edit_selectone}"/>
-										<f:selectItems value="#{editSummaryBacking.serviceGroups}" var="serviceGroup" itemValue="#{serviceGroup}" itemLabel="#{serviceGroup.headcode}: #{serviceGroup.description}"/>																					
+										<f:selectItems value="#{editSummaryBacking.serviceGroups}" 
+										               var="serviceGroup" 
+										               itemValue="#{serviceGroup}" 
+										               itemLabel="#{serviceGroup.standardDescription}"/>																					
 									</h:selectOneMenu>
 									<h:message for="servicegroup"/>
 								</div>									
@@ -347,10 +351,7 @@
 
 					</div>								
 				</div>															
-	        </r:popupPanel>
-	        
-	    
-	    	
+	        </r:popupPanel>	        
 		</h:form>
 
 		<ui:include src="/WEB-INF/polling.xhtml" />		

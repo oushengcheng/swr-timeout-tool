@@ -10,6 +10,18 @@
 	color: #999999;
 }
 
+.preformatted {
+    white-space: pre-wrap;
+}
+
+span.newchange {
+	color: red;	
+}
+
+span.oldchange {
+	color: orange;	
+}
+
 code {
   font-size: 80%;
 }
@@ -127,7 +139,7 @@ h1, h2, h3 {
 	} 
 	
 	.planview li {
-	   font-size: 26px;	
+	   font-size: 20px;	
 	}
 	
 	.planviewscroll h1 {
@@ -144,7 +156,7 @@ h1, h2, h3 {
 	}
 	
 	.planviewscroll li {
-	   font-size: 26px;	   
+	   font-size: 20px;	   
 	}
 }
 

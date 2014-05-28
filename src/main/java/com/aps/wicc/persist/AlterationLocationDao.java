@@ -30,21 +30,31 @@ public class AlterationLocationDao
     
     public List<String> getLocations(final ServiceGroup serviceGroup, final Set<Direction> directions, final AlterationType alterationType) {
     	
-        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<String> criteria = builder.createQuery(String.class);
-        final Root<AlterationLocation> serviceGroupRoot = criteria.from(AlterationLocation.class);
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<String> criteria = builder.createQuery(String.class);
+        Root<AlterationLocation> serviceGroupRoot = criteria.from(AlterationLocation.class);
         
         criteria.select(serviceGroupRoot.get(AlterationLocation_.location));
         criteria.distinct(true);
-        criteria.where(builder.and(builder.equal(serviceGroupRoot.get(AlterationLocation_.serviceGroup), serviceGroup), serviceGroupRoot.get(AlterationLocation_.direction).in(directions), builder.equal(serviceGroupRoot.get(AlterationLocation_.alterationType), alterationType)));
+        
+        criteria.where(
+        		builder.and(
+        				builder.equal(serviceGroupRoot.get(AlterationLocation_.serviceGroup), serviceGroup), 
+        				serviceGroupRoot.get(AlterationLocation_.direction).in(directions), 
+        				builder.equal(serviceGroupRoot.get(AlterationLocation_.alterationType), alterationType)));
+        
         criteria.orderBy(builder.asc(serviceGroupRoot.get(AlterationLocation_.location)));
         
         final TypedQuery<String> query = this.entityManager.createQuery(criteria);
+        
         try {
-            return (List<String>)query.getResultList();
-        }
-        catch (NoResultException nre) {
+        	
+            return query.getResultList();
+        
+        } catch (NoResultException nre) {
+        	
             return Collections.emptyList();
+            
         }
     }
 }

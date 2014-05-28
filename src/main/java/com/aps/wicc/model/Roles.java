@@ -4,4 +4,5 @@ public final class Roles
 {
     public static final String EDIT_ROLE = "edit";
     public static final String ADMIN_ROLE = "admin";
+    public static final String VIEW_ROLE = "view";
 }

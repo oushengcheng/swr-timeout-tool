@@ -24,8 +24,12 @@ public class ServiceGroup
     private Long version;
 	
     private String uid;
+    private Long orderingIndex;
     private String headcode;
-    private String description;
+    private Boolean unidirectional;
+    private String forwardDescription;
+    private String reverseDescription;
+    private String bothDescription;
     
     @ManyToOne
     private ServiceGrouping serviceGrouping;
@@ -34,17 +38,32 @@ public class ServiceGroup
         super();
     }
     
-    public ServiceGroup(final String uid, final String headcode, final String description, final ServiceGrouping serviceGrouping) {
+    public ServiceGroup(Long orderingIndex, 
+                        String uid, 
+    		            String headcode, 
+    		            Boolean unidirectional, 
+    		            String forwardDescription,
+    		            String reverseDescription,
+    		            String bothDescription, 
+    		            final ServiceGrouping serviceGrouping) {
         super();
-        this.uid = uid;
+        this.orderingIndex = orderingIndex;
+        this.uid = uid;        
         this.headcode = headcode;
-        this.description = description;
+        this.unidirectional = unidirectional;
+        this.forwardDescription = forwardDescription;
+        this.reverseDescription = reverseDescription;
+        this.bothDescription = bothDescription;
         this.serviceGrouping = serviceGrouping;
     }
     
     public Long getId() {
         return this.id;
     }
+    
+    public Long getOrderingIndex() {
+		return orderingIndex;
+	}
     
     public String getUid() {
         return this.uid;
@@ -53,27 +72,68 @@ public class ServiceGroup
     public String getHeadcode() {
         return this.headcode;
     }
-    
-    public String getDescription() {
-        return this.description;
-    }
-    
-    public ServiceGrouping getServiceGrouping() {
+
+    public Boolean getUnidirectional() {
+		return unidirectional;
+	}
+
+	public String getForwardDescription() {
+		return forwardDescription;
+	}
+
+	public String getReverseDescription() {
+		return reverseDescription;
+	}
+
+	public String getBothDescription() {
+		return bothDescription;
+	}
+
+	public String getStandardDescription() {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		if (headcode.length() > 0) {
+			
+			builder.append(headcode).append(": ");
+			
+		}
+		
+		if (unidirectional) {
+			
+			builder.append(bothDescription);
+			
+		} else {
+			
+			builder.append(forwardDescription);
+		
+		}
+		
+		return builder.toString();
+		
+	}
+	
+	public ServiceGrouping getServiceGrouping() {
         return this.serviceGrouping;
     }
     
     @Override
-    public String toString() {
-        final ToStringBuilder builder = new ToStringBuilder((Object)this);
-        builder.append("id", (Object)this.id);
-        builder.append("version", (Object)this.version);
-        builder.append("headcode", (Object)this.headcode);
-        builder.append("description", (Object)this.description);
-        builder.append("serviceGrouping", (Object)this.serviceGrouping);
-        return builder.toString();
-    }
-    
-    @Override
+	public String toString() {
+		ToStringBuilder builder = new ToStringBuilder(this);
+		builder.append("id", id);
+		builder.append("version", version);
+		builder.append("uid", uid);
+		builder.append("orderingIndex", orderingIndex);
+		builder.append("headcode", headcode);
+		builder.append("unidirectional", unidirectional);
+		builder.append("forwardDescription", forwardDescription);
+		builder.append("reverseDescription", reverseDescription);
+		builder.append("bothDescription", bothDescription);
+		builder.append("serviceGrouping", serviceGrouping);
+		return builder.toString();
+	}
+
+	@Override
     public int hashCode() {
         final HashCodeBuilder builder = new HashCodeBuilder();
         builder.append(this.uid);

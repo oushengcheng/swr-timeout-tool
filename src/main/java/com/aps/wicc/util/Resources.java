@@ -12,7 +12,10 @@ import javax.enterprise.context.*;
 import org.picketlink.annotations.*;
 import org.joda.time.*;
 
+import com.aps.wicc.ejb.initialisation.NotificationLower;
+import com.aps.wicc.ejb.initialisation.NotificationUpper;
 import com.aps.wicc.ejb.initialisation.PlanViewIdParameter;
+import com.aps.wicc.ejb.initialisation.ScrollSpeed;
 
 import javax.inject.*;
 
@@ -24,7 +27,19 @@ public class Resources
 	@Inject
 	@PlanViewIdParameter
     private String planViewIdParameter;
+	
+	@Inject
+	@ScrollSpeed
+    private String scrollSpeed;
+	
+	@Inject
+	@NotificationLower
+    private Integer notificationLower;
     
+	@Inject
+	@NotificationUpper
+    private Integer notificationUpper;
+	
     @Produces
     public Logger produceLog(final InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
@@ -57,5 +72,23 @@ public class Resources
     @Named
     public String getPlanViewIdParameter() {
         return this.planViewIdParameter;
+    }
+    
+    @Produces
+    @Named
+    public String getScrollSpeed() {
+        return this.scrollSpeed;
+    }
+    
+    @Produces
+    @Named
+    public Integer getNotificationLower() {
+        return this.notificationLower;
+    }
+    
+    @Produces
+    @Named
+    public Integer getNotificationUpper() {
+        return this.notificationUpper;
     }
 }

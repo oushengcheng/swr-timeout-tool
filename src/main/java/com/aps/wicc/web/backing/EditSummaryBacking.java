@@ -181,7 +181,9 @@ public class EditSummaryBacking implements Serializable
     }
     
     public void addAlteration() {
-        this.editServiceGroupAlteration.setAffect(Affect.ALTERED);
+    	if (this.editServiceGroupAlteration.getAffect() != Affect.PARTRESTORED) {
+    		this.editServiceGroupAlteration.setAffect(Affect.ALTERED);
+    	}
         this.editServiceGroupAlteration.addAlteration(this.editAlteration);
         this.editAlteration = new Alteration();
         this.sortedAlterations = new ArrayList<Alteration>();

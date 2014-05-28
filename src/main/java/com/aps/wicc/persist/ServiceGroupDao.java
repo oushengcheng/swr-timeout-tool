@@ -31,11 +31,11 @@ public class ServiceGroupDao
         final Root<ServiceGroup> serviceGroupRoot = criteria.from(ServiceGroup.class);
         
         criteria.select(serviceGroupRoot);
-        criteria.where(builder.equal(serviceGroupRoot.get(ServiceGroup_.uid), (Object)uid));
+        criteria.where(builder.equal(serviceGroupRoot.get(ServiceGroup_.uid), uid));
         
         final TypedQuery<ServiceGroup> query = this.entityManager.createQuery(criteria);
         try {
-            return (ServiceGroup)query.getSingleResult();
+            return query.getSingleResult();
         }
         catch (NoResultException nre) {
             throw new RuntimeException(String.format("Unable to find ServiceGroup for uid %s", uid), nre);
@@ -43,13 +43,16 @@ public class ServiceGroupDao
     }
     
     public List<ServiceGroup> findAll() {
-        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        final CriteriaQuery<ServiceGroup> criteria = builder.createQuery(ServiceGroup.class);
-        final Root<ServiceGroup> serviceGroupRoot = criteria.from(ServiceGroup.class);
+    	
+        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<ServiceGroup> criteria = builder.createQuery(ServiceGroup.class);
+        Root<ServiceGroup> serviceGroupRoot = criteria.from(ServiceGroup.class);
         
         criteria.select(serviceGroupRoot);
-        criteria.orderBy(builder.asc(serviceGroupRoot.get(ServiceGroup_.headcode)));
-        final TypedQuery<ServiceGroup> query = this.entityManager.createQuery(criteria);
+        
+        criteria.orderBy(builder.asc(serviceGroupRoot.get(ServiceGroup_.orderingIndex)));
+        
+        TypedQuery<ServiceGroup> query = this.entityManager.createQuery(criteria);
         
         try {
             return (List<ServiceGroup>)query.getResultList();

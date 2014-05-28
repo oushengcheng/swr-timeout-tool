@@ -212,18 +212,18 @@ public class ServiceGroupAlteration
     @Override
     public String toString() {
         final ToStringBuilder builder = new ToStringBuilder((Object)this);
-        builder.append("id", (Object)this.id);
-        builder.append("version", (Object)this.version);
-        builder.append("uuid", (Object)this.uuid);
+        builder.append("id", this.id);
+        builder.append("version", this.version);
+        builder.append("uuid", this.uuid);
         builder.append("position", this.position);
-        builder.append("incident", (Object)this.incident);
-        builder.append("serviceGroup", (Object)this.serviceGroup);
-        builder.append("direction", (Object)this.direction);
-        builder.append("affect", (Object)this.affect);
-        builder.append("effectiveFrom", (Object)this.effectiveFrom);
-        builder.append("delay", (Object)this.delay);
-        builder.append("freeform", (Object)this.freeform);
-        builder.append("alterations", (Object)this.alterations);
+        builder.append("incident", this.incident);
+        builder.append("serviceGroup", this.serviceGroup);
+        builder.append("direction", this.direction);
+        builder.append("affect", this.affect);
+        builder.append("effectiveFrom", this.effectiveFrom);
+        builder.append("delay", this.delay);
+        builder.append("freeform", this.freeform);
+        builder.append("alterations", this.alterations);
         return builder.toString();
     }
     

@@ -4,14 +4,13 @@
 		return true;
 	};
 		
-	aps.marquee = function marquee() {
+	aps.marquee = function marquee(speed) {
 		
 		var total_height = $("#scrollwindow").get(0).scrollHeight; 
 		var visible_height = $("#scrollwindow").height();
 		
 		var count = 0;
 				
-		var speed = 0.05;
 		var duration = (visible_height + total_height) / speed;
 		var refreshcount = Math.ceil(60000 / duration); // Refresh every minute or thereafter 
 				

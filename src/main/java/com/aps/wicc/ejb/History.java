@@ -10,8 +10,9 @@ import com.aps.wicc.model.Incident;
 import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.model.Status;
 
-public class History
-{
+public class History {
+	
+	private Long id;
     private Integer revision;
     private String title;
     private String description;
@@ -19,6 +20,7 @@ public class History
     private DateTime lastPublished;
     private DateTime nextReview;
     private Status status;
+    private Long serviceGroupAlterationId;
     private String serviceGroup;
     private Direction direction;
     private Affect affect;
@@ -30,6 +32,7 @@ public class History
         
     public History(final Integer revision, final Incident incident, final ServiceGroupAlteration serviceGroupAlteration, final Alteration alteration) {
         super();
+        this.id = incident.getId();
         this.revision = new Integer(revision);
         this.title = incident.getTitle();
         this.description = incident.getDescription();
@@ -37,7 +40,8 @@ public class History
         this.lastPublished = incident.getLastPublished();
         this.nextReview = incident.getNextReview();
         this.status = incident.getStatus();
-        this.serviceGroup = String.valueOf(serviceGroupAlteration.getServiceGroup().getHeadcode()) + ": " + serviceGroupAlteration.getServiceGroup().getDescription();
+        this.serviceGroupAlterationId = serviceGroupAlteration.getId();
+        this.serviceGroup = serviceGroupAlteration.getServiceGroup().getStandardDescription();
         this.direction = serviceGroupAlteration.getDirection();
         this.affect = serviceGroupAlteration.getAffect();
         this.effectiveFrom = serviceGroupAlteration.getEffectiveFrom();
@@ -49,6 +53,7 @@ public class History
     
     public History(final Integer revision, final Incident incident, final ServiceGroupAlteration serviceGroupAlteration) {
         super();
+        this.id = incident.getId();
         this.revision = new Integer(revision);
         this.title = incident.getTitle();
         this.description = incident.getDescription();
@@ -56,7 +61,8 @@ public class History
         this.lastPublished = incident.getLastPublished();
         this.nextReview = incident.getNextReview();
         this.status = incident.getStatus();
-        this.serviceGroup = String.valueOf(serviceGroupAlteration.getServiceGroup().getHeadcode()) + ": " + serviceGroupAlteration.getServiceGroup().getDescription();
+        this.serviceGroupAlterationId = serviceGroupAlteration.getId();
+        this.serviceGroup = serviceGroupAlteration.getServiceGroup().getStandardDescription();
         this.direction = serviceGroupAlteration.getDirection();
         this.affect = serviceGroupAlteration.getAffect();
         this.effectiveFrom = serviceGroupAlteration.getEffectiveFrom();
@@ -68,6 +74,7 @@ public class History
     
     public History(final Integer revision, final Incident incident) {
         super();
+        this.id = incident.getId();        
         this.revision = new Integer(revision);
         this.title = incident.getTitle();
         this.description = incident.getDescription();
@@ -75,6 +82,7 @@ public class History
         this.lastPublished = incident.getLastPublished();
         this.nextReview = incident.getNextReview();
         this.status = incident.getStatus();
+        this.serviceGroupAlterationId = null;
         this.serviceGroup = null;
         this.direction = null;
         this.affect = null;
@@ -85,7 +93,11 @@ public class History
         this.location = null;
     }
     
-    public Integer getRevision() {
+    public Long getId() {
+		return id;
+	}
+
+	public Integer getRevision() {
         return this.revision;
     }
     
@@ -112,8 +124,12 @@ public class History
     public Status getStatus() {
         return this.status;
     }
-    
-    public String getServiceGroup() {
+        
+    public Long getServiceGroupAlterationId() {
+		return serviceGroupAlterationId;
+	}
+
+	public String getServiceGroup() {
         return this.serviceGroup;
     }
     

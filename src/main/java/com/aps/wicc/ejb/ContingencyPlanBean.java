@@ -37,15 +37,25 @@ public class ContingencyPlanBean
     }
     
     public void addContingencyPlanToIncident(final Incident incident, ContingencyPlan contingencyPlan) {
+    	
         contingencyPlan = (ContingencyPlan)this.entityManager.find(ContingencyPlan.class, contingencyPlan.getId());
-        for (final ContingencyAlteration contingencyAlteration : contingencyPlan.getContingencyAlterations()) {
-            final ServiceGroupAlteration serviceGroupAlteration = new ServiceGroupAlteration();
+        
+        for (ContingencyAlteration contingencyAlteration : contingencyPlan.getContingencyAlterations()) {
+        	
+            ServiceGroupAlteration serviceGroupAlteration = new ServiceGroupAlteration();
+            
             serviceGroupAlteration.setServiceGroup(contingencyAlteration.getServiceGroup());
             serviceGroupAlteration.setDirection(contingencyAlteration.getDirection());
             serviceGroupAlteration.setAffect(contingencyAlteration.getAffect());
-            for (final Alteration alteration : contingencyAlteration.getAlterations()) {
+            serviceGroupAlteration.setDelay(contingencyAlteration.getDelay());
+            serviceGroupAlteration.setFreeform(contingencyAlteration.getFreeform());
+            
+            for (Alteration alteration : contingencyAlteration.getAlterations()) {
+            	
                 serviceGroupAlteration.addAlteration(new Alteration(alteration));
+                
             }
+            
             incident.addServiceGroupAlteration(serviceGroupAlteration);
         }
     }

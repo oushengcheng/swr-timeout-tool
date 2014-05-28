@@ -8,31 +8,29 @@
 	xmlns:of="http://omnifaces.org/functions"
 	template="/WEB-INF/default.xhtml">
 	<f:metadata>
-        <f:viewParam name="id" value="#{incidentViewBacking.id}" />
+        <f:viewParam name="id" value="#{scrollViewBacking.id}" />
+        <f:viewParam name="scrollspeed" value="#{scrollViewBacking.scrollspeed}" />
     </f:metadata>        
 	<ui:define name="content"> 		
 		<div class="well planviewscroll">
-			<h:panelGroup rendered="#{incidentViewBacking.incident == null}">
+			<h:panelGroup rendered="#{scrollViewBacking.incident == null}">
 				<h1>
 					#{msg.incident_view_no_incident}
 				</h1>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{incidentViewBacking.incident != null}">
+			<h:panelGroup rendered="#{scrollViewBacking.incident != null}">
 				<h1>
-					#{incidentViewBacking.incident.title}
-				</h1>	
-				<h2>
-					#{incidentViewBacking.incident.description}
-				</h2>
+					#{scrollViewBacking.incident.title}
+				</h1>					
 				<h3>
-					<span id="timestamp">
+					<span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
 						#{msg.incident_view_lastpublished} 
-						<h:outputText value="#{incidentViewBacking.incident.lastPublished}" converter="dateTimeConverter">
+						<h:outputText value="#{scrollViewBacking.incident.lastPublished}" converter="dateTimeConverter">
 							<f:attribute name="pattern" value="HH:mm"/>
 						</h:outputText>			
 						<h:outputText value=" - "/>
 						#{msg.incident_view_nextreview} 
-						<h:outputText value="#{incidentViewBacking.incident.nextReview}" converter="dateTimeConverter">
+						<h:outputText value="#{scrollViewBacking.incident.nextReview}" converter="dateTimeConverter">
 							<f:attribute name="pattern" value="HH:mm"/>
 						</h:outputText>
 					</span>
@@ -40,7 +38,10 @@
 				<br/>
 				<div id="scrollwindow">									
 					<ul id="marquee">
-						<ui:repeat var="serviceGroupAlteration" value="#{incidentViewBacking.incident.serviceGroupAlterations}">
+						<li>
+							<h:outputText value="#{scrollViewBacking.incident.description}" styleClass="preformatted"/>
+						</li>			
+						<ui:repeat var="serviceGroupAlteration" value="#{scrollViewBacking.incident.serviceGroupAlterations}">
 							<li>
 								#{func:format(serviceGroupAlteration)}																	
 								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
@@ -58,7 +59,7 @@
 								
 		<h:outputScript target="body">			
 			jQuery(function() {
-				aps.marquee();					    		
+				aps.marquee(#{scrollViewBacking.scrollspeed});					    		
 			});
 		</h:outputScript>
 		

@@ -14,5 +14,10 @@
         <function-name>shortFormat</function-name>
         <function-class>com.aps.wicc.web.formatter.Functions</function-class>
         <function-signature>java.lang.String shortFormat(com.aps.wicc.model.ServiceGroupAlteration)</function-signature>
-    </function>    
+    </function>   
+    <function>
+        <function-name>choice</function-name>
+        <function-class>com.aps.wicc.web.formatter.Functions</function-class>
+        <function-signature>java.lang.String choice(java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    </function>     
 </facelet-taglib>
