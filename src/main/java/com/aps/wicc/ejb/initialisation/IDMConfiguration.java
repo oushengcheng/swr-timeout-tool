@@ -19,18 +19,18 @@ import org.picketlink.idm.model.Relationship;
 import org.picketlink.internal.EEJPAContextInitializer;
 
 @ApplicationScoped
-public class IDMConfiguration
-{
-	@Inject
+public class IDMConfiguration {
+
+    @Inject
     private EEJPAContextInitializer contextInitializer;
-		
+
     private IdentityConfiguration identityConfig;
-    
+
     public IDMConfiguration() {
         super();
         this.identityConfig = null;
     }
-    
+
     @Produces
     IdentityConfiguration createConfig() {
         if (this.identityConfig == null) {
@@ -38,26 +38,26 @@ public class IDMConfiguration
         }
         return this.identityConfig;
     }
-    
+
     @SuppressWarnings("unchecked")
-	private void initConfig() {
+    private void initConfig() {
         final IdentityConfigurationBuilder builder = new IdentityConfigurationBuilder();
         builder.named("default")
-        		.stores()
-        		.jpa()
-        		.mappedEntity(
-	        		AccountTypeEntity.class, 
-	        		RoleTypeEntity.class, 
-	        		GroupTypeEntity.class, 
-	        		IdentityTypeEntity.class, 
-	        		RelationshipTypeEntity.class, 
-	        		RelationshipIdentityTypeEntity.class,
-	        		PartitionTypeEntity.class, 
-	        		PasswordCredentialTypeEntity.class, 
-	        		AttributeTypeEntity.class)
-        		.supportGlobalRelationship(Relationship.class)
-        		.addContextInitializer(this.contextInitializer)
-        		.supportAllFeatures();
+                .stores()
+                .jpa()
+                .mappedEntity(
+                    AccountTypeEntity.class,
+                    RoleTypeEntity.class,
+                    GroupTypeEntity.class,
+                    IdentityTypeEntity.class,
+                    RelationshipTypeEntity.class,
+                    RelationshipIdentityTypeEntity.class,
+                    PartitionTypeEntity.class,
+                    PasswordCredentialTypeEntity.class,
+                    AttributeTypeEntity.class)
+                .supportGlobalRelationship(Relationship.class)
+                .addContextInitializer(this.contextInitializer)
+                .supportAllFeatures();
         this.identityConfig = builder.build();
     }
 }

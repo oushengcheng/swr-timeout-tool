@@ -11,9 +11,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.apache.deltaspike.core.api.exclude.Exclude;
-import org.apache.deltaspike.core.api.projectstage.ProjectStage;
-
 import com.aps.wicc.ejb.ContingencyPlanBean;
 import com.aps.wicc.model.Affect;
 import com.aps.wicc.model.Alteration;
@@ -26,9 +23,8 @@ import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.persist.ServiceGroupDao;
 import com.aps.wicc.web.formatter.Functions;
 
-@Exclude(ifProjectStage = { ProjectStage.Production.class })
-@Secondary
-public class ContingencyAlterationInitialisation implements Initialisable
+@SeedingPhase(phaseNo=2)
+public class ContingencyAlterationInitialisation implements Seedable
 {
     private EntityManager entityManager;
     private ServiceGroupDao serviceGroupDao;
@@ -43,7 +39,7 @@ public class ContingencyAlterationInitialisation implements Initialisable
     }
 
     @Override
-    public void init() {
+    public void seed() {
 
         createPlans();
         savePlans();

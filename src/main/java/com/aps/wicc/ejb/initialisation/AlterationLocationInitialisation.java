@@ -1,31 +1,30 @@
 package com.aps.wicc.ejb.initialisation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
 
-import org.apache.deltaspike.core.api.exclude.Exclude;
-import org.apache.deltaspike.core.api.projectstage.ProjectStage;
+import com.aps.wicc.model.AlterationLocation;
+import com.aps.wicc.model.AlterationType;
+import com.aps.wicc.model.Direction;
+import com.aps.wicc.persist.ServiceGroupDao;
 
-import com.aps.wicc.persist.*;
-import com.aps.wicc.model.*;
+@SeedingPhase(phaseNo=2)
+public class AlterationLocationInitialisation implements Seedable {
 
-import java.util.*;
-
-@Exclude(ifProjectStage = { ProjectStage.Production.class })
-@Secondary
-public class AlterationLocationInitialisation implements Initialisable
-{
-	@Inject
+    @Inject
     private EntityManager entityManager;
-	
-	@Inject
+
+    @Inject
     private ServiceGroupDao serviceGroupDao;
-    
+
     @Override
-    public void init() {
-    	
+    public void seed() {
+
         final List<AlterationLocation> locations = new ArrayList<AlterationLocation>();
-        
+
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("1A"), Direction.FORWARD, AlterationType.NEWORIGIN, "Clapham Jn"));
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("1A"), Direction.FORWARD, AlterationType.NEWORIGIN, "Wimbledon"));
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("1A"), Direction.FORWARD, AlterationType.NEWORIGIN, "Surbiton"));
@@ -1177,11 +1176,11 @@ public class AlterationLocationInitialisation implements Initialisable
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("2T"), Direction.REVERSE, AlterationType.NEWDEST, "Fareham"));
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("2T"), Direction.REVERSE, AlterationType.NEWDEST, "Fratton"));
         locations.add(new AlterationLocation(this.serviceGroupDao.findByUid("2T"), Direction.REVERSE, AlterationType.NEWDEST, "Portsmouth & Southsea"));
-        
+
         for (final AlterationLocation alterationLocation : locations) {
-        	
+
             this.entityManager.persist((Object)alterationLocation);
-            
+
         }
     }
 }

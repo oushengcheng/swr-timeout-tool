@@ -1,6 +1,7 @@
 package com.aps.wicc.ejb.initialisation;
 
-public interface Initialisable
-{
+interface Initialisable {
+
     void init();
+
 }

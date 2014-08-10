@@ -1,29 +1,24 @@
 package com.aps.wicc.ejb.initialisation;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.deltaspike.core.api.exclude.Exclude;
 import org.flywaydb.core.Flyway;
 
-@Startup
-@Singleton
+@Exclude
+@Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class DbMigrationBean {
+public class DbMigrationBean implements Initialisable {
 
     @Inject
     private DataSource dataSource;
 
-    @PostConstruct
-    void atStartUp() {
-
-        ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
+    @Override
+    public void init() {
 
         Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);

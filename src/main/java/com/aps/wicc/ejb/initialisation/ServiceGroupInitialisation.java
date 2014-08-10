@@ -9,15 +9,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import org.apache.deltaspike.core.api.exclude.Exclude;
-import org.apache.deltaspike.core.api.projectstage.ProjectStage;
-
 import com.aps.wicc.model.ServiceGroup;
 import com.aps.wicc.model.ServiceGrouping;
 
-@Exclude(ifProjectStage = { ProjectStage.Production.class })
-@Primary
-public class ServiceGroupInitialisation implements Initialisable {
+@SeedingPhase
+public class ServiceGroupInitialisation implements Seedable {
 
     private EntityManager entityManager;
 
@@ -27,7 +23,7 @@ public class ServiceGroupInitialisation implements Initialisable {
     }
 
     @Override
-    public void init() {
+    public void seed() {
 
         final ServiceGrouping mainline = new ServiceGrouping("Mainline", 1);
         final ServiceGrouping suburban = new ServiceGrouping("Suburban", 2);
