@@ -3,40 +3,46 @@ package com.aps.wicc.ejb.initialisation;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
-import org.apache.deltaspike.core.api.exclude.*;
-import org.apache.deltaspike.core.api.projectstage.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
 
-import com.aps.wicc.model.*;
+import org.apache.deltaspike.core.api.exclude.Exclude;
+import org.apache.deltaspike.core.api.projectstage.ProjectStage;
 
-import java.util.*;
+import com.aps.wicc.model.ServiceGroup;
+import com.aps.wicc.model.ServiceGrouping;
 
 @Exclude(ifProjectStage = { ProjectStage.Production.class })
 @Primary
-public class ServiceGroupInitialisation implements Initialisable
-{
-	@Inject
+public class ServiceGroupInitialisation implements Initialisable {
+
     private EntityManager entityManager;
-    
+
+    @Inject
+    public ServiceGroupInitialisation(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     @Override
     public void init() {
-        
-    	final ServiceGrouping mainline = new ServiceGrouping("Mainline", 1);
+
+        final ServiceGrouping mainline = new ServiceGrouping("Mainline", 1);
         final ServiceGrouping suburban = new ServiceGrouping("Suburban", 2);
         final ServiceGrouping circular = new ServiceGrouping("Circular", 3);
         final ServiceGrouping windsor = new ServiceGrouping("Windsor", 4);
         final ServiceGrouping other = new ServiceGrouping("Other", 5);
-        
+
         this.entityManager.persist(mainline);
         this.entityManager.persist(suburban);
         this.entityManager.persist(circular);
         this.entityManager.persist(windsor);
         this.entityManager.persist(other);
-        
+
         final List<ServiceGroup> serviceGroups = new ArrayList<ServiceGroup>();
-        
+
         serviceGroups.add(new ServiceGroup(10L, "1A", "1A", FALSE, "Waterloo to Alton", "Alton to Waterloo", "Waterloo to/from Alton", suburban));
         serviceGroups.add(new ServiceGroup(20L, "2A", "2A", FALSE, "Waterloo to Farnham ", "Farnham to Waterloo", "Waterloo to/from Farnham", suburban));
         serviceGroups.add(new ServiceGroup(30L, "1B", "1B", FALSE, "Waterloo to Southampton/Poole", "Southampton/Poole to Waterloo", "Waterloo to/from Southampton/Poole", mainline));
@@ -66,7 +72,7 @@ public class ServiceGroupInitialisation implements Initialisable
         serviceGroups.add(new ServiceGroup(270L, "2R-R", "2R", TRUE, "", "", "Salisbury to Romsey SC-EH", mainline));
         serviceGroups.add(new ServiceGroup(280L, "2R-W", "2R", TRUE, "", "", "Waterloo to Waterloo TW-B via Twickenham/Brentford", windsor));
         serviceGroups.add(new ServiceGroup(290L, "2S", "2S", FALSE, "Waterloo to Weybridge (via Hounslow)", "Weybridge to Waterloo via Hounslow / Staines", "Waterloo to/from Weybridge (via Hounslow)", windsor));
-        serviceGroups.add(new ServiceGroup(300L, "2S-S", "2S", TRUE, "", "", "Salisbury to Romsey EH-SC", mainline));
+        serviceGroups.add(new ServiceGroup(300L, "2S-R", "2S", TRUE, "", "", "Salisbury to Romsey EH-SC", mainline));
         serviceGroups.add(new ServiceGroup(310L, "1T", "1T", FALSE, "Waterloo to Portsmouth Harbour (via Eastleigh)", "Portsmouth Harbour to Waterloo (via Eastleigh)", "Waterloo to/from Portsmouth Harbour (via Eastleigh)", mainline));
         serviceGroups.add(new ServiceGroup(320L, "2T", "2T", FALSE, "Basingstoke to Portsmouth Harbour (stopping)", "Portsmouth Harbour to Basingstoke (stopping)", "Basingstoke to/from Portsmouth Harbour (stopping)", mainline));
         serviceGroups.add(new ServiceGroup(330L, "2U", "2U", FALSE, "Waterloo to Windsor", "Windsor to Waterloo", "Waterloo to/from Windsor", windsor));
@@ -93,7 +99,7 @@ public class ServiceGroupInitialisation implements Initialisable
         serviceGroups.add(new ServiceGroup(520L, "FGW-WW", "", FALSE, "FGW Westbury to Weymouth", "FGW Weymouth to Westbury", "FGW Westbury to/from Weymouth", other));
         serviceGroups.add(new ServiceGroup(530L, "FGW-PP", "", FALSE, "FGW HST Paddington to Penzance", "FGW HST Penzance to Paddington", "FGW HST Paddington to/from Penzance", other));
 
-        
+
         for (final ServiceGroup serviceGroup : serviceGroups) {
             this.entityManager.persist((Object)serviceGroup);
         }

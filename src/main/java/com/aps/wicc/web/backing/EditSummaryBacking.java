@@ -1,40 +1,50 @@
 package com.aps.wicc.web.backing;
 
-import java.io.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.inject.*;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
-import com.aps.wicc.ejb.*;
+import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.apache.deltaspike.jsf.api.message.JsfMessage;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalTime;
+import org.joda.time.MutableDateTime;
+import org.omnifaces.util.Exceptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.deltaspike.jsf.api.message.*;
-
-import javax.enterprise.context.*;
-
-import java.util.*;
-
-import javax.annotation.*;
-
-import com.aps.wicc.model.*;
-
-import javax.faces.event.*;
-
-import org.apache.deltaspike.core.api.config.view.*;
-
-import com.aps.wicc.web.*;
+import com.aps.wicc.ejb.AlterationLocationBean;
+import com.aps.wicc.ejb.ContingencyPlanBean;
+import com.aps.wicc.ejb.IncidentBean;
+import com.aps.wicc.ejb.ServiceGroupBean;
+import com.aps.wicc.ejb.Sorter;
+import com.aps.wicc.ejb.exceptions.StaleDataException;
+import com.aps.wicc.model.Affect;
+import com.aps.wicc.model.Alteration;
+import com.aps.wicc.model.AlterationType;
+import com.aps.wicc.model.ContingencyPlan;
+import com.aps.wicc.model.Direction;
+import com.aps.wicc.model.Incident;
+import com.aps.wicc.model.ServiceGroup;
+import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.web.Messages;
-import com.aps.wicc.ejb.exceptions.*;
-
-import org.omnifaces.util.*;
-
-import javax.ejb.*;
-
-import org.joda.time.*;
+import com.aps.wicc.web.Pages;
 
 @Named
 @ConversationScoped
-public class EditSummaryBacking implements Serializable
-{
+public class EditSummaryBacking implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(EditSummaryBacking.class);
 
     private static final long serialVersionUID = 1L;
     private IncidentBean incidentBean;
@@ -49,17 +59,17 @@ public class EditSummaryBacking implements Serializable
     private Conversation conversation;
     private Incident editIncident;
     private ServiceGroupAlteration editServiceGroupAlteration;
-    
+
     @NotNull(message="{editsummarybacking_nextreview_notnull}")
     private LocalTime nextReview;
     private Alteration editAlteration;
     private List<Alteration> sortedAlterations;
     private boolean sortedAlterationsChanged;
     private List<ServiceGroupAlteration> sortedServiceGroupAlterations;
-    
+
     @NotNull(message="{editsummarybacking_contingencyplan_notnull}")
     private ContingencyPlan contingencyPlan;
-    
+
     public EditSummaryBacking() {
         super();
         this.serviceGroups = new ArrayList<ServiceGroup>();
@@ -71,7 +81,7 @@ public class EditSummaryBacking implements Serializable
         this.sortedAlterationsChanged = false;
         this.sortedServiceGroupAlterations = new ArrayList<ServiceGroupAlteration>();
     }
-    
+
     @Inject
     public EditSummaryBacking(final IncidentBean incidentBean, final ServiceGroupBean serviceGroupBean, final AlterationLocationBean alterationLocationBean, final ContingencyPlanBean contingencyPlanBean, final Sorter sorter, final JsfMessage<Messages> messages, final DateTimeZone dateTimeZone, final Conversation conversation) {
         super();
@@ -92,70 +102,70 @@ public class EditSummaryBacking implements Serializable
         this.dateTimeZone = dateTimeZone;
         this.conversation = conversation;
     }
-    
+
     @PostConstruct
     void init() {
         this.serviceGroups = this.serviceGroupBean.getServiceGroups();
         this.contingencyPlans = this.contingencyPlanBean.findAll();
     }
-    
+
     // ========================== Edit Detail Modal ==========================================
-    
+
     public List<ServiceGroup> getServiceGroups() {
         return this.serviceGroups;
     }
-    
+
     public List<String> getLocations() {
         return this.alterationLocationBean.getLocations(this.editServiceGroupAlteration.getServiceGroup(), this.editServiceGroupAlteration.getDirection(), this.editAlteration.getAlterationType());
     }
-    
+
     public Direction[] getDirections() {
         return Direction.values();
     }
-    
+
     public Affect[] getAffects() {
         return Affect.values();
     }
-    
+
     public AlterationType[] getAlterationTypes() {
         return AlterationType.values();
     }
-    
+
     public Alteration getAlteration() {
         return this.editAlteration;
     }
-    
+
     public void setAlteration(final Alteration alteration) {
         this.editAlteration = alteration;
     }
-    
+
     public List<Alteration> getSortedAlterations() {
         return this.sortedAlterations;
     }
-    
+
     public void setSortedAlterations(final List<Alteration> sortedAlterations) {
         this.sortedAlterations = sortedAlterations;
     }
-    
+
     public void saveServiceGroupAlteration() {
         if (this.sortedAlterationsChanged) {
             this.editServiceGroupAlteration.setAlterations(this.sortedAlterations);
         }
         this.editIncident.addServiceGroupAlteration(this.editServiceGroupAlteration);
     }
-    
+
     public void orderingValueChangeListener() {
         this.sortedAlterationsChanged = true;
     }
-    
+
     public void delayValueChangeListener(final AjaxBehaviorEvent event) {
         this.editServiceGroupAlteration.setAffect(Affect.DELAYED);
     }
-    
+
     public void setEffectiveNow() {
-    	this.editServiceGroupAlteration.setEffectiveFrom(new StringBuilder("from ").append(new LocalTime(dateTimeZone).toString("HH:mm")).toString());
+        this.editServiceGroupAlteration.setEffectiveFrom(new StringBuilder("from ").append(new LocalTime(dateTimeZone).toString("HH:mm")).toString());
     }
-    
+
     public void deleteFirstAlteration() {
         if (this.sortedAlterationsChanged && !this.sortedAlterations.isEmpty()) {
             this.sortedAlterations.remove(0);
@@ -167,7 +177,7 @@ public class EditSummaryBacking implements Serializable
             this.editServiceGroupAlteration.removeAlteration(this.editServiceGroupAlteration.getAlterations().get(0));
         }
     }
-    
+
     public void deleteLastAlteration() {
         if (this.sortedAlterationsChanged && !this.sortedAlterations.isEmpty()) {
             this.sortedAlterations.remove(this.sortedAlterations.size() - 1);
@@ -179,127 +189,129 @@ public class EditSummaryBacking implements Serializable
             this.editServiceGroupAlteration.removeAlteration(this.editServiceGroupAlteration.getAlterations().size() - 1);
         }
     }
-    
+
     public void addAlteration() {
-    	if (this.editServiceGroupAlteration.getAffect() != Affect.PARTRESTORED) {
-    		this.editServiceGroupAlteration.setAffect(Affect.ALTERED);
-    	}
+        if (this.editServiceGroupAlteration.getAffect() != Affect.PARTRESTORED) {
+            this.editServiceGroupAlteration.setAffect(Affect.ALTERED);
+        }
         this.editServiceGroupAlteration.addAlteration(this.editAlteration);
         this.editAlteration = new Alteration();
         this.sortedAlterations = new ArrayList<Alteration>();
         this.sortedAlterationsChanged = false;
     }
-    
+
     // ========================== Edit Summary ==========================================
-    
+
     public List<Incident> getIncidents() {
         return this.incidentBean.getAllForPreviousWeek();
     }
-    
+
     public Class<? extends ViewConfig> newIncident() {
         this.editIncident = new Incident();
         this.conversation.begin();
         return Pages.Editdetail.class;
     }
-    
+
     public Class<? extends ViewConfig> viewPlanStatic() {
         return Pages.Planview.class;
     }
-    
+
     public Class<? extends ViewConfig> viewPlanScroll() {
         return Pages.Planviewscroll.class;
     }
-    
+
     public Class<? extends ViewConfig> editIncident(final Incident incident) {
         this.editIncident = incident;
-        this.conversation.begin();        
+        this.conversation.begin();
         return Pages.Editdetail.class;
     }
-    
+
     public List<ServiceGroupAlteration> getSortedServiceGroupAlterations() {
         return this.sortedServiceGroupAlterations;
     }
-    
+
     public void setSortedServiceGroupAlterations(final List<ServiceGroupAlteration> sortedServiceGroupAlterations) {
         this.sortedServiceGroupAlterations = sortedServiceGroupAlterations;
     }
-    
+
     public Class<? extends ViewConfig> saveSortServiceGroupAlteration() {
         this.editIncident.setServiceGroupAlterations(this.sortedServiceGroupAlterations);
         return Pages.Editdetail.class;
     }
-    
+
     public Class<? extends ViewConfig> startSortServiceGroupAlteration() {
         this.sortedServiceGroupAlterations = new ArrayList<ServiceGroupAlteration>();
         return Pages.Sort.class;
     }
-    
+
     public Class<? extends ViewConfig> cancelSortServiceGroupAlteration() {
         return Pages.Editdetail.class;
     }
-    
-    // ========================== Edit Detail ========================================== 
+
+    // ========================== Edit Detail ==========================================
     public Incident getEditIncident() {
         return this.editIncident;
     }
-    
+
     public LocalTime getNextReview() {
         return this.nextReview;
     }
-    
+
     public void setNextReview(final LocalTime nextReview) {
         this.nextReview = nextReview;
     }
-    
+
     public void setNextReviewPlus(final Integer plus) {
         this.nextReview = new LocalTime(this.dateTimeZone).plusMinutes(plus);
     }
-    
+
     public void autoSort() {
         this.editIncident.setServiceGroupAlterations(this.sorter.sort(this.editIncident.getServiceGroupAlterations()));
     }
-    
+
     public ServiceGroupAlteration getServiceGroupAlteration() {
         return this.editServiceGroupAlteration;
     }
-    
+
     public void setServiceGroupAlteration(final ServiceGroupAlteration serviceGroupAlteration) {
         this.editServiceGroupAlteration = serviceGroupAlteration;
         this.sortedAlterations = new ArrayList<Alteration>();
         this.sortedAlterationsChanged = false;
     }
-    
+
     public void editServiceGroupAlteration(final ServiceGroupAlteration serviceGroupAlteration) {
         this.editServiceGroupAlteration = serviceGroupAlteration.fullCopy();
         this.sortedAlterations = new ArrayList<Alteration>();
         this.sortedAlterationsChanged = false;
     }
-    
+
     public void copyServiceGroupAlteration(final ServiceGroupAlteration serviceGroupAlteration) {
+        logger.info("Incoming" + serviceGroupAlteration);
         this.editServiceGroupAlteration = serviceGroupAlteration.partialCopy();
+        logger.info("Partial Copy" + editServiceGroupAlteration);
         this.sortedAlterations = new ArrayList<Alteration>();
         this.sortedAlterationsChanged = false;
     }
-    
+
     public void newServiceGroupAlteration() {
         this.editServiceGroupAlteration = new ServiceGroupAlteration();
         this.sortedAlterations = new ArrayList<Alteration>();
         this.sortedAlterationsChanged = false;
     }
-    
+
     public void deleteServiceGroupAlteration() {
         this.editIncident.removeServiceGroupAlteration(this.editServiceGroupAlteration);
     }
-    
+
     public Class<?> saveIncident() {
-        
-    	final MutableDateTime now = new LocalTime().isAfter(this.nextReview) ? new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone) : new DateTime().toMutableDateTime(this.dateTimeZone);
-        
+
+        final MutableDateTime now = new LocalTime().isAfter(this.nextReview) ? new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone) : new DateTime().toMutableDateTime(this.dateTimeZone);
+
         now.setHourOfDay(this.nextReview.getHourOfDay());
         now.setMinuteOfHour(this.nextReview.getMinuteOfHour());
-        
+
         this.editIncident.setNextReview(now.toDateTime());
-        
+
         try {
             this.incidentBean.save(this.editIncident);
             this.conversation.end();
@@ -313,34 +325,34 @@ public class EditSummaryBacking implements Serializable
             throw e;
         }
     }
-    
+
     public Class<?> cancelIncident() {
         this.conversation.end();
         return Pages.Editsummary.class;
     }
-    
+
     // =============== Contingency Plan ==============================
     public Class<?> selectContingencyPlan() {
         return Pages.Contingency.class;
     }
-    
+
     public ContingencyPlan getContingencyPlan() {
         return this.contingencyPlan;
     }
-    
-    public void setContingencyPlan(final ContingencyPlan contingencyPlan) {    	
+
+    public void setContingencyPlan(final ContingencyPlan contingencyPlan) {
         this.contingencyPlan = contingencyPlan;
     }
-    
+
     public List<ContingencyPlan> getContingencyPlans() {
         return this.contingencyPlans;
     }
-    
-    public Class<? extends ViewConfig> addContingencyPlan() {    	
+
+    public Class<? extends ViewConfig> addContingencyPlan() {
         this.contingencyPlanBean.addContingencyPlanToIncident(this.editIncident, this.contingencyPlan);
         return Pages.Editdetail.class;
     }
-    
+
     public Class<? extends ViewConfig> cancelContingencyPlan() {
         return Pages.Editdetail.class;
     }
