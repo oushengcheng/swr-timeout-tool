@@ -1,4 +1,4 @@
-package com.aps.wicc.ejb.initialisation;
+package com.aps.wicc.ejb.parameters;
 
 import org.apache.deltaspike.core.spi.config.*;
 import javax.enterprise.inject.spi.*;

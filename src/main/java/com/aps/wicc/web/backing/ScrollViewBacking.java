@@ -14,6 +14,8 @@ import org.apache.deltaspike.core.api.config.view.navigation.*;
 
 import com.aps.wicc.model.*;
 import com.aps.wicc.ejb.initialisation.*;
+import com.aps.wicc.ejb.parameters.PlanViewIdParameter;
+import com.aps.wicc.ejb.parameters.ScrollSpeed;
 import com.aps.wicc.web.*;
 
 import org.apache.deltaspike.core.api.config.view.controller.*;

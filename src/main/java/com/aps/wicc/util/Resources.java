@@ -1,91 +1,101 @@
 package com.aps.wicc.util;
 
-import javax.persistence.*;
-import javax.enterprise.inject.spi.*;
+import java.util.logging.Logger;
 
-import java.util.logging.*;
+import javax.annotation.Resource;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.sql.DataSource;
 
-import javax.enterprise.inject.*;
-import javax.faces.context.*;
-import javax.enterprise.context.*;
+import org.joda.time.DateTimeZone;
+import org.picketlink.annotations.PicketLink;
 
-import org.picketlink.annotations.*;
-import org.joda.time.*;
+import com.aps.wicc.ejb.parameters.NotificationLower;
+import com.aps.wicc.ejb.parameters.NotificationUpper;
+import com.aps.wicc.ejb.parameters.PlanViewIdParameter;
+import com.aps.wicc.ejb.parameters.ScrollSpeed;
 
-import com.aps.wicc.ejb.initialisation.NotificationLower;
-import com.aps.wicc.ejb.initialisation.NotificationUpper;
-import com.aps.wicc.ejb.initialisation.PlanViewIdParameter;
-import com.aps.wicc.ejb.initialisation.ScrollSpeed;
+public class Resources {
 
-import javax.inject.*;
-
-public class Resources
-{
-	@PersistenceContext
+    @PersistenceContext
     private EntityManager em;
-	
-	@Inject
-	@PlanViewIdParameter
+
+    @Resource(mappedName="java:jboss/wicc")
+    private DataSource dataSource;
+
+    @Inject
+    @PlanViewIdParameter
     private String planViewIdParameter;
-	
-	@Inject
-	@ScrollSpeed
+
+    @Inject
+    @ScrollSpeed
     private String scrollSpeed;
-	
-	@Inject
-	@NotificationLower
+
+    @Inject
+    @NotificationLower
     private Integer notificationLower;
-    
-	@Inject
-	@NotificationUpper
+
+    @Inject
+    @NotificationUpper
     private Integer notificationUpper;
-	
+
     @Produces
     public Logger produceLog(final InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
     }
-    
+
     @Produces
     @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
     }
-    
+
     @Produces
     @PicketLink
     public EntityManager getPicketLinkEntityManager() {
         return this.em;
     }
-    
+
     @Produces
     public EntityManager getManager() {
         return this.em;
     }
-    
+
+    @Produces
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
     @Produces
     @Named
     public DateTimeZone getDateTimeZone() {
         return DateTimeZone.forID("Europe/London");
     }
-    
+
     @Produces
     @Named
     public String getPlanViewIdParameter() {
         return this.planViewIdParameter;
     }
-    
+
     @Produces
     @Named
     public String getScrollSpeed() {
         return this.scrollSpeed;
     }
-    
+
     @Produces
     @Named
     public Integer getNotificationLower() {
         return this.notificationLower;
     }
-    
+
     @Produces
     @Named
     public Integer getNotificationUpper() {

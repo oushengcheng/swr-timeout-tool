@@ -9,75 +9,76 @@
     <packaging>war</packaging>
     <name>WICC timeout tool</name>
     <description>A tool for use in the WICC for timeouts</description>
-	
-	<repositories>
-		<repository>
-			<id>eap</id>
-			<url>http://maven.repository.redhat.com/techpreview/all</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		
-		<repository>
-        	<id>jr-ce-releases</id>
-        	<url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
-    	</repository>
-    
-	</repositories>
-	
-	<pluginRepositories>
-		<pluginRepository>
-			<id>eap</id>
-			<url>http://maven.repository.redhat.com/techpreview/all</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		
-		<pluginRepository>
-        	<id>jr-ce-releases</id>
-        	<url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
-    	</pluginRepository>
-    	
-	</pluginRepositories>
-	
+
+    <repositories>
+        <repository>
+            <id>eap</id>
+            <url>http://maven.repository.redhat.com/techpreview/all</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>jr-ce-releases</id>
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+        </repository>
+
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>eap</id>
+            <url>http://maven.repository.redhat.com/techpreview/all</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>jr-ce-releases</id>
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+        </pluginRepository>
+
+    </pluginRepositories>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		
-		<version.deltaspike>0.7</version.deltaspike>
-		<version.richfaces>5.0.0.Alpha3</version.richfaces>   
-		<version.richfaces-push-depchain>5.0.0.Alpha3</version.richfaces-push-depchain> 					
-		<version.omnifaces>1.6.3</version.omnifaces>
-		<version.commons-lang3>3.1</version.commons-lang3>
-		<version.joda-time>2.1</version.joda-time>
-		<version.usertype.core>3.1.0.CR1</version.usertype.core>
-		<version.prettytime>3.2.4.Final</version.prettytime>
-		<version.picketlink>2.6.0.Beta3</version.picketlink>
-		<version.jasperreports>5.2.0</version.jasperreports>
-		<version.poi>3.9</version.poi>
-		<version.poi-scratchpad>3.8</version.poi-scratchpad>    
-		<jboss.bom.version>1.0.0.M6</jboss.bom.version>
-		<!-- <jboss.bom.version>1.0.0.M6-redhat-1</jboss.bom.version>> -->
-		
-		<plugin.maven-compiler-plugin.version>3.0</plugin.maven-compiler-plugin.version>
-		<plugin.maven-war-plugin.version>2.4</plugin.maven-war-plugin.version>
-		<plugin.jasperreports-maven-plugin.version>1.0-beta-2</plugin.jasperreports-maven-plugin.version>
-		<plugin.build-helper-maven-plugin.version>1.8</plugin.build-helper-maven-plugin.version>
-		
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+
+        <version.deltaspike>0.7</version.deltaspike>
+        <version.richfaces>5.0.0.Alpha3</version.richfaces>
+        <version.richfaces-push-depchain>5.0.0.Alpha3</version.richfaces-push-depchain>
+        <version.omnifaces>1.6.3</version.omnifaces>
+        <version.commons-lang3>3.1</version.commons-lang3>
+        <version.joda-time>2.1</version.joda-time>
+        <version.usertype.core>3.1.0.CR1</version.usertype.core>
+        <version.prettytime>3.2.4.Final</version.prettytime>
+        <version.picketlink>2.6.0.Beta3</version.picketlink>
+        <version.jasperreports>5.2.0</version.jasperreports>
+        <version.poi>3.9</version.poi>
+        <version.poi-scratchpad>3.8</version.poi-scratchpad>
+        <version.flyway>3.0</version.flyway>
+        <jboss.bom.version>1.0.0.M6</jboss.bom.version>
+        <!-- <jboss.bom.version>1.0.0.M6-redhat-1</jboss.bom.version>> -->
+
+        <plugin.maven-compiler-plugin.version>3.0</plugin.maven-compiler-plugin.version>
+        <plugin.maven-war-plugin.version>2.4</plugin.maven-war-plugin.version>
+        <plugin.jasperreports-maven-plugin.version>1.0-beta-2</plugin.jasperreports-maven-plugin.version>
+        <plugin.build-helper-maven-plugin.version>1.8</plugin.build-helper-maven-plugin.version>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
-        
+
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
@@ -85,7 +86,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.jboss.bom</groupId>
                 <artifactId>jboss-javaee-6.0-with-hibernate</artifactId>
@@ -93,12 +94,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            
+
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
-		         
+
        <!-- Import the CDI API, we use provided scope as the API is included in JBoss AS 7 -->
         <dependency>
             <groupId>javax.enterprise</groupId>
@@ -134,12 +135,12 @@
             <scope>provided</scope>
         </dependency>
 
-		<!-- Import the Servlet API, we use provided scope as the API is included in JBoss AS 7 -->
-		<dependency>
-			<groupId>org.jboss.spec.javax.servlet</groupId>
-			<artifactId>jboss-servlet-api_3.0_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <!-- Import the Servlet API, we use provided scope as the API is included in JBoss AS 7 -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.servlet</groupId>
+            <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- JSR-303 (Bean Validation) Implementation -->
         <!-- Provides portable constraints such as @Email -->
@@ -162,15 +163,15 @@
             <artifactId>jboss-jsf-api_2.0_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- Import for catch Weld specific exception -->
-		<dependency>
-        	<groupId>org.jboss.weld</groupId>
-        	<artifactId>weld-core</artifactId>
-        	<version>1.1.13.Final</version>
-        	<scope>provided</scope>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+            <version>1.1.13.Final</version>
+            <scope>provided</scope>
         </dependency>
-        
+
         <!-- Now we declare any tools needed -->
 
         <!-- Annotation processor to generate the JPA 2.0 metamodel classes for typesafe criteria queries -->
@@ -187,183 +188,190 @@
             <scope>provided</scope>
         </dependency>
 
-		<dependency>
-        	<groupId>org.hibernate</groupId>
-        	<artifactId>hibernate-core</artifactId>
-        	<scope>provided</scope>        	
-        </dependency>
-        
         <dependency>
-        	<groupId>org.hibernate</groupId>
-        	<artifactId>hibernate-envers</artifactId>
-        	<scope>provided</scope>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <scope>provided</scope>
         </dependency>
-        
-		<!-- Richfaces -->
-		<dependency>
-    		<groupId>org.richfaces</groupId>
-    		<artifactId>richfaces</artifactId>    		
-    		<version>${version.richfaces}</version> 
-		</dependency>
-				
-		<!-- Deltaspike -->	
-		<dependency>
-		    <groupId>org.apache.deltaspike.core</groupId>
-		    <artifactId>deltaspike-core-api</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.deltaspike.core</groupId>
-		    <artifactId>deltaspike-core-impl</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>runtime</scope>
-		</dependency>
 
-		<dependency>
-		    <groupId>org.apache.deltaspike.modules</groupId>
-		    <artifactId>deltaspike-security-module-api</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.deltaspike.modules</groupId>
-		    <artifactId>deltaspike-security-module-impl</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.deltaspike.modules</groupId>
-		    <artifactId>deltaspike-jsf-module-api</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.deltaspike.modules</groupId>
-		    <artifactId>deltaspike-jsf-module-impl</artifactId>
-		    <version>${version.deltaspike}</version>
-		    <scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.omnifaces</groupId>
-			<artifactId>omnifaces</artifactId>
-			<version>${version.omnifaces}</version>
-			<scope>compile</scope>
-		</dependency>	
-		
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<scope>compile</scope>
-			<version>${version.commons-lang3}</version>			
-		</dependency>
-		
-		<!-- Joda -->
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>			
-			<scope>compile</scope>
-			<version>${version.joda-time}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<scope>compile</scope>
-			<version>${version.usertype.core}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-entitymanager</artifactId>
-				</exclusion>
-			</exclusions>		
-		</dependency>
-		
-		<!-- Prettytime -->		
-		<dependency>
-		   <groupId>org.ocpsoft.prettytime</groupId>
-		   <artifactId>prettytime</artifactId>
-		   <version>${version.prettytime}</version>
-		</dependency>
-
-		<dependency>
-   			<groupId>org.ocpsoft.prettytime</groupId>
-   			<artifactId>prettytime-integration-jsf</artifactId>
-   			<version>${version.prettytime}</version>   			
-		</dependency>
-
-		<!-- PicketLink -->
-    	<dependency>
-     		<groupId>org.picketlink</groupId>
-      		<artifactId>picketlink-api</artifactId>
-      		<version>${version.picketlink}</version>      	
-    	</dependency>
-    	
- 	   	<dependency>
-      		<groupId>org.picketlink</groupId>
-      		<artifactId>picketlink-impl</artifactId>
-      		<version>${version.picketlink}</version>
-      	</dependency>         
-    
-    	<dependency>
-      		<groupId>org.picketlink</groupId>
-      		<artifactId>picketlink-idm-api</artifactId>
-      		<version>${version.picketlink}</version> 
-    	</dependency>
-
-    	<dependency>
-      		<groupId>org.picketlink</groupId>
-      		<artifactId>picketlink-idm-impl</artifactId>
-      		<scope>runtime</scope>
-      		<version>${version.picketlink}</version> 
-    	</dependency>
-
-    	<dependency>
-      		<groupId>org.picketlink</groupId>
-      		<artifactId>picketlink-idm-simple-schema</artifactId>
-      		<version>${version.picketlink}</version> 
-    	</dependency>
-    	
-    	<!-- Jasperreports -->
-		<dependency>
-	       <groupId>net.sf.jasperreports</groupId>
-	       <artifactId>jasperreports</artifactId>
-	       <scope>compile</scope>
-	       <version>${version.jasperreports}</version>	       
-        </dependency>
-               
         <dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<scope>compile</scope>
-			<version>${version.poi}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-scratchpad</artifactId>
-			<scope>compile</scope>
-			<version>${version.poi-scratchpad}</version>
-		</dependency>
-		
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Richfaces -->
+        <dependency>
+            <groupId>org.richfaces</groupId>
+            <artifactId>richfaces</artifactId>
+            <version>${version.richfaces}</version>
+        </dependency>
+
+        <!-- Deltaspike -->
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-security-module-api</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-security-module-impl</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jsf-module-api</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-jsf-module-impl</artifactId>
+            <version>${version.deltaspike}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>${version.omnifaces}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <scope>compile</scope>
+            <version>${version.commons-lang3}</version>
+        </dependency>
+
+        <!-- Joda -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <scope>compile</scope>
+            <version>${version.joda-time}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <scope>compile</scope>
+            <version>${version.usertype.core}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Prettytime -->
+        <dependency>
+           <groupId>org.ocpsoft.prettytime</groupId>
+           <artifactId>prettytime</artifactId>
+           <version>${version.prettytime}</version>
+        </dependency>
+
+        <dependency>
+               <groupId>org.ocpsoft.prettytime</groupId>
+               <artifactId>prettytime-integration-jsf</artifactId>
+               <version>${version.prettytime}</version>
+        </dependency>
+
+        <!-- PicketLink -->
+        <dependency>
+             <groupId>org.picketlink</groupId>
+              <artifactId>picketlink-api</artifactId>
+              <version>${version.picketlink}</version>
+        </dependency>
+
+            <dependency>
+              <groupId>org.picketlink</groupId>
+              <artifactId>picketlink-impl</artifactId>
+              <version>${version.picketlink}</version>
+          </dependency>
+
+        <dependency>
+              <groupId>org.picketlink</groupId>
+              <artifactId>picketlink-idm-api</artifactId>
+              <version>${version.picketlink}</version>
+        </dependency>
+
+        <dependency>
+              <groupId>org.picketlink</groupId>
+              <artifactId>picketlink-idm-impl</artifactId>
+              <scope>runtime</scope>
+              <version>${version.picketlink}</version>
+        </dependency>
+
+        <dependency>
+              <groupId>org.picketlink</groupId>
+              <artifactId>picketlink-idm-simple-schema</artifactId>
+              <version>${version.picketlink}</version>
+        </dependency>
+
+        <!-- Jasperreports -->
+        <dependency>
+           <groupId>net.sf.jasperreports</groupId>
+           <artifactId>jasperreports</artifactId>
+           <scope>compile</scope>
+           <version>${version.jasperreports}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <scope>compile</scope>
+            <version>${version.poi}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <scope>compile</scope>
+            <version>${version.poi-scratchpad}</version>
+        </dependency>
+
+        <!-- Flyway -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${version.flyway}</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-       
+
     </dependencies>
 
-    <build>        
+    <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
-                    
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${plugin.maven-compiler-plugin.version}</version>
@@ -372,159 +380,159 @@
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-            
+
             <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-			    <artifactId>build-helper-maven-plugin</artifactId>
-			    <version>${plugin.build-helper-maven-plugin.version}</version>			    
-			    <executions>
-			        <execution>
-			            <id>add-source</id>
-			            <phase>generate-sources</phase>
-			            <goals>
-			                <goal>add-source</goal>
-			            </goals>
-			            <configuration>
-			                <sources>			             
-                    			<source>${project.build.directory}/generated-sources/apt/</source>                	                    
-			                    <source>src/main/jasperreports/</source>			                    
-			                </sources>
-			            </configuration>
-			        </execution>
-			    </executions>
-			</plugin>
-			
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${plugin.build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/apt/</source>
+                                <source>src/main/jasperreports/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${plugin.maven-war-plugin.version}</version>
                 <configuration>
-				   	<webResources>								   					   		
-				     	<resource>
-				       		<filtering>true</filtering>
-				       		<directory>src/main/webapp/WEB-INF</directory>
-				       		<targetPath>WEB-INF</targetPath>		       
-				    	</resource>
-				   	</webResources>														
-				</configuration>                
-            </plugin>            
-            
+                       <webResources>
+                         <resource>
+                               <filtering>true</filtering>
+                               <directory>src/main/webapp/WEB-INF</directory>
+                               <targetPath>WEB-INF</targetPath>
+                        </resource>
+                       </webResources>
+                </configuration>
+            </plugin>
+
             <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jasperreports-maven-plugin</artifactId>				
-				<version>${plugin.jasperreports-maven-plugin.version}</version>
-				<executions>					
-					<execution>
-						<phase>process-classes</phase>	
-						<!-- Bind to process-classes because user defined classes are referenced in jrxml -->					
-						<goals>							
-							<goal>compile-reports</goal>
-						</goals>
-					</execution>
-				</executions>
-			
-				<dependencies>
-					<!--note this must be repeated here to pick up correct xml validation -->
-					<dependency>
-						<groupId>net.sf.jasperreports</groupId>
-						<artifactId>jasperreports</artifactId>
-						<version>${version.jasperreports}</version>					
-					</dependency>
-					
-					 <dependency>
-			        	 <groupId>net.sf.jasperreports</groupId>
-			        	 <artifactId>jasperreports-functions</artifactId>		        	
-				         <version>${version.jasperreports}</version>						
-    				</dependency>
-    				    				        
-				</dependencies>
-			</plugin>
-			          
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jasperreports-maven-plugin</artifactId>
+                <version>${plugin.jasperreports-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <!-- Bind to process-classes because user defined classes are referenced in jrxml -->
+                        <goals>
+                            <goal>compile-reports</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <!--note this must be repeated here to pick up correct xml validation -->
+                    <dependency>
+                        <groupId>net.sf.jasperreports</groupId>
+                        <artifactId>jasperreports</artifactId>
+                        <version>${version.jasperreports}</version>
+                    </dependency>
+
+                     <dependency>
+                         <groupId>net.sf.jasperreports</groupId>
+                         <artifactId>jasperreports-functions</artifactId>
+                         <version>${version.jasperreports}</version>
+                    </dependency>
+
+                </dependencies>
+            </plugin>
+
         </plugins>
-        
+
         <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>org.codehaus.mojo</groupId>
-        								<artifactId>jasperreports-maven-plugin</artifactId>
-        								<versionRange>[0,)</versionRange>
-        								<goals>
-        									<goal>compile-reports</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<execute></execute>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>jasperreports-maven-plugin</artifactId>
+                                        <versionRange>[0,)</versionRange>
+                                        <goals>
+                                            <goal>compile-reports</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute></execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 
     <profiles>
-    	
-    	<!-- Development Profile -->
-		<profile>
-			<id>dev</id>						    
-			<build>		
-				
-				<filters>
-    				<filter>src/main/resources/application-dev.properties</filter>
-    			</filters>
-    							
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>						
-						<filtering>true</filtering>						      			        				          		
-          			</resource> 
-				</resources>
-						
-				<plugins>
-					
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>${plugin.maven-war-plugin.version}</version>											
-						<configuration>
-							<filters>
-    							<filter>src/main/resources/application-dev.properties</filter>
-    						</filters>											
-						   	<warName>wicc</warName>									
-						</configuration>
-					</plugin>
-										
-				</plugins>            
-            </build>            
-        </profile>
-                
-		<profile>		
-            <id>openshift</id>
-           	
+
+        <!-- Development Profile -->
+        <profile>
+            <id>dev</id>
             <build>
-            
-            	<filters>
-    				<filter>src/main/resources/application-prod.properties</filter>
-    			</filters>
-    							
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>						
-						<filtering>true</filtering>						      			        				          		
-          			</resource> 
-				</resources>
-				
-				<finalName>wicc</finalName>
+
+                <filters>
+                    <filter>src/main/resources/application-dev.properties</filter>
+                </filters>
+
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                      </resource>
+                </resources>
+
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${plugin.maven-war-plugin.version}</version>
+                        <configuration>
+                            <filters>
+                                <filter>src/main/resources/application-dev.properties</filter>
+                            </filters>
+                               <warName>wicc</warName>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>openshift</id>
+
+            <build>
+
+                <filters>
+                    <filter>src/main/resources/application-prod.properties</filter>
+                </filters>
+
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                      </resource>
+                </resources>
+
+                <finalName>wicc</finalName>
                 <plugins>
                     <plugin>
                         <artifactId>maven-war-plugin</artifactId>
@@ -532,8 +540,8 @@
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
                             <filters>
-    							<filter>src/main/resources/application-prod.properties</filter>
-    						</filters>	
+                                <filter>src/main/resources/application-prod.properties</filter>
+                            </filters>
                             <warName>ROOT</warName>
                         </configuration>
                     </plugin>
