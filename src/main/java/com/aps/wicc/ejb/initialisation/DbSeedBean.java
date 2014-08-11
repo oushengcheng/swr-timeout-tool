@@ -9,10 +9,12 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 
+import org.apache.deltaspike.core.api.exclude.Exclude;
+
 import com.aps.wicc.ejb.initialisation.SeedingPhase.SeedingPhaseLiteral;
 
 @Stateless
-//@Exclude
+@Exclude
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class DbSeedBean implements Initialisable {
 

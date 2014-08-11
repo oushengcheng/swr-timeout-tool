@@ -4,6 +4,12 @@ export JBOSS_HOME='/opt/jboss-eap-6.1'
 mysqlconnector=mysql-connector-java-5.1.25-bin.jar
 jbosscliconnect='/opt/jboss-eap-6.1/bin/jboss-cli.sh -c'
 
+MYSQL_CONNECTOR_VERSION=5.1.25
+MYSQL_CONNECTOR_NAME=mysql-connector-java
+MYSQL_CONNECTOR_FULL_NAME=$MYSQL_CONNECTOR_NAME-$MYSQL_CONNECTOR_VERSION-bin.jar
+DEPENDENCY_PLUGIN_VERSION=2.8
+MAVEN_DEPENDENCY_PLUGIN=org.apache.maven.plugins:maven-dependency-plugin:2.8
+
 #
 # Read in username & password
 #
@@ -11,10 +17,9 @@ jbosscliconnect='/opt/jboss-eap-6.1/bin/jboss-cli.sh -c'
 # mysqladmin create timeouttool
 # mysql -uroot -prootpw -e "GRANT ALL PRIVILEGES ON dbname.* TO username@hostname IDENTIFIED BY 'userpassword'"
 # FLush priveliges
-# Use maven to obtain mysqlconnector
 
-# Copy mysql connector to JBOSS_HOME
-cp $mysqlconnector "$JBOSS_HOME/$mysqlconnector"
+# Place mysql connector to JBOSS_HOME
+mvn $MAVEN_DEPENDENCY_PLUGIN:copy -Dartifact=mysql:mysql-connector-java:5.1.25:jar -DoutputDirectory=$JBOSS_HOME
 
 echo "Adding MySQL module"
 $jbosscliconnect --command="module add --name=com.mysql --resources=$JBOSS_HOME/$mysqlconnector --dependencies=javax.api,javax.transaction.api"
