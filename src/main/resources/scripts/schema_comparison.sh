@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -n "Enter root password form MySQL: "
+echo -n "Enter root password for MySQL: "
 read -s password
 echo "Processing..."
 
