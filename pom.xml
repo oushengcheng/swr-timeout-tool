@@ -405,15 +405,15 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${plugin.maven-war-plugin.version}</version>
-                <configuration>
-                       <webResources>
-                         <resource>
-                               <filtering>true</filtering>
-                               <directory>src/main/webapp/WEB-INF</directory>
-                               <targetPath>WEB-INF</targetPath>
-                        </resource>
-                       </webResources>
-                </configuration>
+<!--                 <configuration> -->
+<!--                        <webResources> -->
+<!--                          <resource> -->
+<!--                                <filtering>true</filtering> -->
+<!--                                <directory>src/main/webapp/WEB-INF</directory> -->
+<!--                                <targetPath>WEB-INF</targetPath> -->
+<!--                         </resource> -->
+<!--                        </webResources> -->
+<!--                 </configuration> -->
             </plugin>
 
             <plugin>
@@ -487,16 +487,16 @@
             <id>dev</id>
             <build>
 
-                <filters>
-                    <filter>src/main/resources/application-dev.properties</filter>
-                </filters>
+<!--                 <filters> -->
+<!--                     <filter>src/main/resources/application-dev.properties</filter> -->
+<!--                 </filters> -->
 
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                      </resource>
-                </resources>
+<!--                 <resources> -->
+<!--                     <resource> -->
+<!--                         <directory>src/main/resources</directory> -->
+<!--                         <filtering>true</filtering> -->
+<!--                       </resource> -->
+<!--                 </resources> -->
 
                 <plugins>
 
@@ -505,10 +505,10 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>${plugin.maven-war-plugin.version}</version>
                         <configuration>
-                            <filters>
-                                <filter>src/main/resources/application-dev.properties</filter>
-                            </filters>
-                               <warName>wicc</warName>
+<!--                             <filters> -->
+<!--                                 <filter>src/main/resources/application-dev.properties</filter> -->
+<!--                             </filters> -->
+                            <warName>wicc</warName>
                         </configuration>
                     </plugin>
 
@@ -521,16 +521,16 @@
 
             <build>
 
-                <filters>
-                    <filter>src/main/resources/application-prod.properties</filter>
-                </filters>
+<!--                 <filters> -->
+<!--                     <filter>src/main/resources/application-prod.properties</filter> -->
+<!--                 </filters> -->
 
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <filtering>true</filtering>
-                      </resource>
-                </resources>
+<!--                 <resources> -->
+<!--                     <resource> -->
+<!--                         <directory>src/main/resources</directory> -->
+<!--                         <filtering>true</filtering> -->
+<!--                       </resource> -->
+<!--                 </resources> -->
 
                 <finalName>wicc</finalName>
                 <plugins>
@@ -539,9 +539,9 @@
                         <version>${plugin.maven-war-plugin.version}</version>
                         <configuration>
                             <outputDirectory>deployments</outputDirectory>
-                            <filters>
-                                <filter>src/main/resources/application-prod.properties</filter>
-                            </filters>
+<!--                             <filters> -->
+<!--                                 <filter>src/main/resources/application-prod.properties</filter> -->
+<!--                             </filters> -->
                             <warName>ROOT</warName>
                         </configuration>
                     </plugin>
