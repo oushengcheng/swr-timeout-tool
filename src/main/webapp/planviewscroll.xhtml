@@ -1,75 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:func="http://aps.com/functions"
-	xmlns:r="http://richfaces.org"
-	xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/default.xhtml">
-	<f:metadata>
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:func="http://aps.com/functions"
+    xmlns:r="http://richfaces.org"
+    xmlns:of="http://omnifaces.org/functions"
+    template="/WEB-INF/default.xhtml">
+    <f:metadata>
         <f:viewParam name="id" value="#{scrollViewBacking.id}" />
         <f:viewParam name="scrollspeed" value="#{scrollViewBacking.scrollspeed}" />
-    </f:metadata>        
-	<ui:define name="content"> 		
-		<div class="well planviewscroll">
-			<h:panelGroup rendered="#{scrollViewBacking.incident == null}">
-				<h1>
-					#{msg.incident_view_no_incident}
-				</h1>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{scrollViewBacking.incident != null}">
-				<h1>
-					#{scrollViewBacking.incident.title}
-				</h1>					
-				<h3>
-					<span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
-						#{msg.incident_view_lastpublished} 
-						<h:outputText value="#{scrollViewBacking.incident.lastPublished}" converter="dateTimeConverter">
-							<f:attribute name="pattern" value="HH:mm"/>
-						</h:outputText>			
-						<h:outputText value=" - "/>
-						#{msg.incident_view_nextreview} 
-						<h:outputText value="#{scrollViewBacking.incident.nextReview}" converter="dateTimeConverter">
-							<f:attribute name="pattern" value="HH:mm"/>
-						</h:outputText>
-					</span>
-				</h3>
-				<br/>
-				<div id="scrollwindow">									
-					<ul id="marquee">
-						<li>
-							<h:outputText value="#{scrollViewBacking.incident.description}" styleClass="preformatted"/>
-						</li>			
-						<ui:repeat var="serviceGroupAlteration" value="#{scrollViewBacking.incident.serviceGroupAlterations}">
-							<li>
-								#{func:format(serviceGroupAlteration)}																	
-								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
-									<br/>
-									#{serviceGroupAlteration.freeform}
-								</h:panelGroup>								
-							</li>
-						</ui:repeat>
-					</ul>							
-				</div>
-			</h:panelGroup>
-		</div>
-		
-		<h:outputStylesheet name="css/marquee.css" />
-								
-		<h:outputScript target="body">			
-			jQuery(function() {
-				aps.marquee(#{scrollViewBacking.scrollspeed});					    		
-			});
-		</h:outputScript>
-		
-	</ui:define>
-	
-	<ui:define name="footer">
-		#{msg.incident_view_lastupdated} 
-		#{of:formatDateWithTimezone(now, 'HH:mm:ss', dateTimeZone.ID)}		
-	</ui:define>
-	
-	
-	
+    </f:metadata>
+    <ui:define name="content">
+        <div class="well planviewscroll">
+            <h:panelGroup rendered="#{scrollViewBacking.incident == null}">
+                <h1>
+                    #{msg.incident_view_no_incident}
+                </h1>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{scrollViewBacking.incident != null}">
+                <h1>
+                    #{scrollViewBacking.incident.title}
+                </h1>
+                <h3>
+                    <span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
+                        #{msg.incident_view_lastpublished}
+                        <h:outputText value="#{scrollViewBacking.incident.lastPublished}" converter="dateTimeConverter">
+                            <f:attribute name="pattern" value="HH:mm"/>
+                        </h:outputText>
+                        <h:outputText value=" - "/>
+                        #{msg.incident_view_nextreview}
+                        <h:outputText value="#{scrollViewBacking.incident.nextReview}" converter="dateTimeConverter">
+                            <f:attribute name="pattern" value="HH:mm"/>
+                        </h:outputText>
+                    </span>
+                </h3>
+                <br/>
+                <div id="scrollwindow">
+                    <div id="marquee" class="col-xs-12">
+                       <h:outputText value="#{scrollViewBacking.incident.description}" styleClass="preformatted"/>
+                       <hr/>
+                       <ul>
+                            <ui:repeat var="serviceGroupAlteration" value="#{scrollViewBacking.incident.serviceGroupAlterations}">
+                                <li>
+                                    #{func:format(serviceGroupAlteration)}
+                                    <h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
+                                        <br/>
+                                        #{serviceGroupAlteration.freeform}
+                                    </h:panelGroup>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
+
+        <h:outputStylesheet name="css/marquee.css" />
+
+        <h:outputScript target="body">
+            jQuery(function() {
+                aps.marquee(#{scrollViewBacking.scrollspeed});
+            });
+        </h:outputScript>
+
+    </ui:define>
+
+    <ui:define name="footer">
+        #{msg.incident_view_lastupdated}
+        #{of:formatDateWithTimezone(now, 'HH:mm:ss', dateTimeZone.ID)}
+    </ui:define>
+
+
+
 </ui:composition>

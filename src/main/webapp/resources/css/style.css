@@ -1,13 +1,13 @@
 /*
-	orange:     #F49712
-	dark blue:  #002C50
-	            #0098D8
-	            #8AC2EB
-	light blue: #B5DDF7
+    orange:     #F49712
+    dark blue:  #002C50
+                #0098D8
+                #8AC2EB
+    light blue: #B5DDF7
 */
 
 .navbar-text a:hover, .navbar-text a:active, .navbar-text a:link, .navbar-text a:visited {
-	color: #999999;
+    color: #999999;
 }
 
 .preformatted {
@@ -15,11 +15,11 @@
 }
 
 span.newchange {
-	color: red;	
+    color: red;
 }
 
 span.oldchange {
-	color: orange;	
+    color: orange;
 }
 
 code {
@@ -28,7 +28,7 @@ code {
 
 /* Richfaces Calendar */
 .rf-cal-extr {
-	background-color: #B5DDF7;	
+    background-color: #B5DDF7;
 }
 
 /* Richfaces Tab */
@@ -41,25 +41,25 @@ code {
 }
 
 div.rf-tab-hdr-brd {
-	color: #F49712;
+    color: #F49712;
 }
-	
+
 .rf-tab-hdr-top {
-	background-color: #B5DDF7;
+    background-color: #B5DDF7;
 }
 
 .rf-tab-hdr {
-	border-color: #002C50;
+    border-color: #002C50;
 }
 
-/* Richfaces Popup Panel*/	
+/* Richfaces Popup Panel*/
 div.rf-pp-shdw {
-	background: none;
-	position: none
+    background: none;
+    position: none
 }
 
 .rf-pp-cntr {
-	border-style: none 
+    border-style: none
 }
 
 /* Modal Dialog */
@@ -72,7 +72,7 @@ div.rf-pp-shdw {
 /* Bootstrap Navigation */
 .navbar-default {
     background-color: #002C50;
-    border-color: #002C50;    
+    border-color: #002C50;
 }
 
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
@@ -80,7 +80,7 @@ div.rf-pp-shdw {
 }
 
 .navbar-brand {
-	color: #FFFFFF;
+    color: #FFFFFF;
 }
 
 /* Sticky Footer Tweaks*/
@@ -102,16 +102,16 @@ body #footer {
 
 /* Bootstrap Theme */
 @media screen and (min-width: 1920px) {
-	.container {
-		width: 1570px;
-	}
+    .container {
+        width: 1570px;
+    }
 }
 
 .well {
     border-bottom-left-radius: 30px;
-	border-bottom-right-radius: 30px;
-	border-top-right-radius: 30px;	
-	border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
 }
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -125,91 +125,93 @@ h1, h2, h3 {
 
 @media only screen and (max-device-width : 1023px) {
 
-	.planview h1 {
-		font-weight: bold;	
-		font-size: 22px;	
-	} 	
-	
-	.planview h2 {
-		font-size: 22px;	
-	} 
-	
-	.planview h3 {
-		font-size: 16px;	
-	} 
-	
-	.planview li {
-	   font-size: 20px;	
-	}
-	
-	.planviewscroll h1 {
-		font-weight: bold;	
-		font-size: 22px;	
-	} 	
-	
-	.planviewscroll h2 {
-		font-size: 22px;	
-	} 
-	
-	.planviewscroll h3 {
-		font-size: 16px;	
-	}
-	
-	.planviewscroll li {
-	   font-size: 20px;	   
-	}
+    .planview h1 {
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .planview h2 {
+        font-size: 22px;
+    }
+
+    .planview h3 {
+        font-size: 16px;
+    }
+
+    .planview li, .planview span {
+       font-size: 20px;
+    }
+
+    .planviewscroll h1 {
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .planviewscroll h2 {
+        font-size: 22px;
+    }
+
+    .planviewscroll h3 {
+        font-size: 16px;
+    }
+
+    .planviewscroll li, .planviewscroll li {
+       font-size: 20px;
+    }
+
 }
 
 @media only screen and (min-device-width : 1024px) {
 
-	.planview h1 {
-		font-weight: bold;
-		font-size: 48px;	
-	} 	
-	
-	.planview h2 {
-		font-size: 36px;	
-	} 
-	
-	.planview h3 {
-		font-size: 26px;	
-	}
-	
-	.planview li {
-	   font-size: 26px;	
-	}
-	
-	.planviewscroll h1 {
-		font-weight: bold;
-		font-size: 64px;
-		height: 70px;
-		overflow: hidden;	
-	} 	
-	
-	.planviewscroll h2 {
-		font-size: 44px;
-		height: 50px;
-		overflow: hidden;			
-	} 
-	
-	.planviewscroll h3 {
-		font-size: 44px;
-		height: 50px;
-		overflow: hidden;	
-	}
-	
-	.planviewscroll li {
-	   font-size: 44px;
-	   font-weight: bold;
-	}
+    .planview h1 {
+        font-weight: bold;
+        font-size: 48px;
+    }
+
+    .planview h2 {
+        font-size: 36px;
+    }
+
+    .planview h3 {
+        font-size: 26px;
+    }
+
+    .planview li, .planview span {
+       font-size: 26px;
+    }
+
+    .planviewscroll h1 {
+        font-weight: bold;
+        font-size: 64px;
+        height: 70px;
+        overflow: hidden;
+    }
+
+    .planviewscroll h2 {
+        font-size: 44px;
+        height: 50px;
+        overflow: hidden;
+    }
+
+    .planviewscroll h3 {
+        font-size: 44px;
+        height: 50px;
+        overflow: hidden;
+    }
+
+    .planviewscroll li, .planviewscroll span {
+       font-size: 44px;
+       font-weight: bold;
+    }
+
 }
 
 a {
-	color: #0098D8;
+    color: #0098D8;
 }
 
 a:hover, a:focus {
-	color: #002C50;
+    color: #002C50;
 }
 
 .btn-default,

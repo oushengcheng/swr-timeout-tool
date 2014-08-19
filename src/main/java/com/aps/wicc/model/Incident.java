@@ -44,7 +44,6 @@ public class Incident
     private String title;
 
     @NotNull(message="{incident.descriptionnotnull}")
-    //@Length(max=255, message="{incident.descriptionlength}")
     @Type(type="text")
     private String description;
 

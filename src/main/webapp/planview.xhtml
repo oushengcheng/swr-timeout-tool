@@ -1,65 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:func="http://aps.com/functions"
-	xmlns:r="http://richfaces.org"
-	xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/default.xhtml">	
-	<ui:define name="content">			
-		<div class="well planview">
-			<h:panelGroup rendered="#{staticViewBacking.incident == null}">
-				<h1>
-					#{msg.incident_view_no_incident}
-				</h1>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{staticViewBacking.incident != null}">
-				<h1>
-					#{staticViewBacking.incident.title}
-				</h1>					
-				<h3>
-					<span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
-						#{msg.incident_view_lastpublished} 
-						<h:outputText value="#{staticViewBacking.incident.lastPublished}" converter="dateTimeConverter">
-							<f:attribute name="pattern" value="HH:mm"/>
-						</h:outputText>			
-						<h:outputText value=" - "/>
-						#{msg.incident_view_nextreview} 
-						<h:outputText value="#{staticViewBacking.incident.nextReview}" converter="dateTimeConverter">
-							<f:attribute name="pattern" value="HH:mm"/>
-						</h:outputText>
-					</span>
-				</h3>
-				<br/>
-				<div class="row clearfix">
-					<ul>
-						<li>
-							<h:outputText value="#{staticViewBacking.incident.description}" styleClass="preformatted"/>
-						</li>
-						<ui:repeat var="serviceGroupAlteration" value="#{staticViewBacking.incident.serviceGroupAlterations}">
-							<li>
-								#{func:format(serviceGroupAlteration)}																		
-								<h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
-									<br/>
-									#{serviceGroupAlteration.freeform}																			
-								</h:panelGroup>
-							</li>							
-						</ui:repeat>
-					</ul>					
-				</div>
-			</h:panelGroup>
-		</div>	
-		
-		<h:outputScript target="body">			
-			jQuery(function() {
-				setTimeout(function() {location.reload(true);}, 60000);		// 1 minute		    		
-			});
-		</h:outputScript>
-		
-	</ui:define>
-	<ui:define name="footer">
-		#{msg.incident_view_lastupdated} 
-		#{of:formatDateWithTimezone(now, 'HH:mm:ss', dateTimeZone.ID)}		
-	</ui:define>
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:func="http://aps.com/functions"
+    xmlns:r="http://richfaces.org"
+    xmlns:of="http://omnifaces.org/functions"
+    template="/WEB-INF/default.xhtml">
+    <ui:define name="content">
+        <div class="well planview">
+            <h:panelGroup rendered="#{staticViewBacking.incident == null}">
+                <h1>
+                    #{msg.incident_view_no_incident}
+                </h1>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{staticViewBacking.incident != null}">
+                <h1>
+                    #{staticViewBacking.incident.title}
+                </h1>
+                <h3>
+                    <span id="timestamp" class="#{func:choice(staticViewBacking.incidentAge, notificationLower, notificationUpper, 'newchange', 'oldchange', '')}">
+                        #{msg.incident_view_lastpublished}
+                        <h:outputText value="#{staticViewBacking.incident.lastPublished}" converter="dateTimeConverter">
+                            <f:attribute name="pattern" value="HH:mm"/>
+                        </h:outputText>
+                        <h:outputText value=" - "/>
+                        #{msg.incident_view_nextreview}
+                        <h:outputText value="#{staticViewBacking.incident.nextReview}" converter="dateTimeConverter">
+                            <f:attribute name="pattern" value="HH:mm"/>
+                        </h:outputText>
+                    </span>
+                </h3>
+                <br/>
+                <div class="row clearfix">
+                    <div class="col-xs-12">
+                        <h:outputText value="#{staticViewBacking.incident.description}" styleClass="preformatted"/>
+                        <hr/>
+                        <ul>
+                            <ui:repeat var="serviceGroupAlteration" value="#{staticViewBacking.incident.serviceGroupAlterations}">
+                                <li>
+                                    #{func:format(serviceGroupAlteration)}
+                                    <h:panelGroup rendered="#{not empty serviceGroupAlteration.freeform}" >
+                                        <br/>
+                                        #{serviceGroupAlteration.freeform}
+                                    </h:panelGroup>
+                                </li>
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </div>
+
+        <h:outputScript target="body">
+            jQuery(function() {
+                setTimeout(function() {location.reload(true);}, 60000);		// 1 minute
+            });
+        </h:outputScript>
+
+    </ui:define>
+    <ui:define name="footer">
+        #{msg.incident_view_lastupdated}
+        #{of:formatDateWithTimezone(now, 'HH:mm:ss', dateTimeZone.ID)}
+    </ui:define>
 </ui:composition>
