@@ -40,7 +40,7 @@ public class Incident
     private Long version;
 
     @NotNull(message="{incident.titlenotnull}")
-    @Length(max=40, message="{incident.titlelength}")
+    @Length(max=50, message="{incident.titlelength}")
     private String title;
 
     @NotNull(message="{incident.descriptionnotnull}")
