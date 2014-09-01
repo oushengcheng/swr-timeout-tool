@@ -116,16 +116,10 @@ public class EditDetailBacking implements Serializable {
     // ================= Save & Cancel ===================================
     public Class<?> saveIncident() {
 
-        final MutableDateTime now = new LocalTime().isAfter(this.nextReview) ? new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone) : new DateTime().toMutableDateTime(this.dateTimeZone);
-
-        now.setHourOfDay(this.nextReview.getHourOfDay());
-        now.setMinuteOfHour(this.nextReview.getMinuteOfHour());
-
-        getEditIncident().setNextReview(now.toDateTime());
-
         try {
 
-            this.incidentBean.save(getEditIncident());
+            setNextReviewTime();
+            incidentBean.save(getEditIncident());
             return Pages.Editsummary.class;
 
         } catch (EJBException e) {
@@ -142,8 +136,28 @@ public class EditDetailBacking implements Serializable {
         return Pages.Editsummary.class;
     }
 
+    private void setNextReviewTime() {
+        getEditIncident().setNextReview(adjustReviewTimeForOvernight());
+    }
 
+    private DateTime adjustReviewTimeForOvernight() {
 
+        final MutableDateTime review = new LocalTime().isAfter(nextReview) ? createMutableTimeInNextDay()
+                                                                           : createMutableTimeToday();
 
+        review.setHourOfDay(nextReview.getHourOfDay());
+        review.setMinuteOfHour(nextReview.getMinuteOfHour());
+
+        return review.toDateTime();
+
+    }
+
+    private MutableDateTime createMutableTimeInNextDay() {
+        return new DateTime().plusDays(1).toMutableDateTime(this.dateTimeZone);
+    }
+
+    private MutableDateTime createMutableTimeToday() {
+        return new DateTime().toMutableDateTime(this.dateTimeZone);
+    }
 
 }

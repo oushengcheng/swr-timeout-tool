@@ -21,7 +21,7 @@ public class SortBacking implements Serializable {
 
     private CurrentEdit currentEdit;
 
-    private List<ServiceGroupAlteration> serviceGroupAlterations;
+    private List<ServiceGroupAlteration> serviceGroupAlterations = new ArrayList<>();
 
     public SortBacking() {
     }
@@ -29,7 +29,10 @@ public class SortBacking implements Serializable {
     @Inject
     public SortBacking(CurrentEdit currentEdit) {
         this.currentEdit = currentEdit;
-        this.serviceGroupAlterations = new ArrayList<>(currentEdit.getIncident().getServiceGroupAlterations());
+    }
+
+    public List<ServiceGroupAlteration> getUnsortedServiceGroupAlterations() {
+        return currentEdit.getIncident().getServiceGroupAlterations();
     }
 
     public List<ServiceGroupAlteration> getServiceGroupAlterations() {

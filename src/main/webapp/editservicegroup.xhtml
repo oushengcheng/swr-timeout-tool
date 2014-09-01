@@ -190,11 +190,10 @@
                             <r:orderingList id="alterations"
                                             value="#{editServiceGroupBacking.alterations}"
                                             var="_alteration"
-                                            collectionType="java.util.ArrayList"
                                             itemValue="#{_alteration}">
                                 <r:ajax execute="alterations"/>
                                 <f:converter converterId="alterationSelectItemsConverter"/>
-<!--                                 <f:selectItems value="#{editServiceGroupBacking.alterations}" /> -->
+                                <f:selectItems value="#{editServiceGroupBacking.unsortedAlterations}" />
                                 <r:column>
                                     <f:facet name="header">#{msg.editservicegroup_alterations_type}</f:facet>
                                     #{msg[_alteration.alterationType.message]}

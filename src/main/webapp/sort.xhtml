@@ -19,6 +19,7 @@
                                 value="#{sortBacking.serviceGroupAlterations}"
                                 itemValue="#{_servicegroup}">
                     <f:converter converterId="serviceGroupAlterationSelectItemsConverter" />
+                    <f:selectItems value="#{sortBacking.unsortedServiceGroupAlterations}"  />
                     <r:column>
                         <f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
                         #{_servicegroup.serviceGroup.headcode}
@@ -41,7 +42,6 @@
                <p>
                    <h:commandButton value="#{msg.sort_save_button}"
                                        styleClass="btn btn-primary btn-block"
-                                       execute="ordering"
                                        render="mess"
                                        action="#{sortBacking.saveSortServiceGroupAlteration}" />
                    <h:commandButton value="#{msg.sort_cancel_button}"

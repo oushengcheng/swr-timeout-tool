@@ -79,26 +79,26 @@ public class EditServiceGroupBacking implements Serializable {
         return currentEdit.getServiceGroupAlteration();
     }
 
-    public List<Alteration> getAlterations() {
+    public List<Alteration> getUnsortedAlterations() {
         return alterations;
     }
 
-//    public List<Alteration> getSortedAlterations() {
-//        return new ArrayList<>();
-//    }
-//
-//    public void setSortedAlterations(final List<Alteration> sortedAlterations) {
-//        this.alterations = new ArrayList<>(sortedAlterations);
-//    }
+    public List<Alteration> getAlterations() {
+        return new ArrayList<>();
+    }
+
+    public void setAlterations(final List<Alteration> sortedAlterations) {
+        this.alterations = new ArrayList<>(sortedAlterations);
+    }
 
     public List<String> getLocations() {
-        return this.alterationLocationBean.getLocations(getServiceGroupAlteration().getServiceGroup(),
+        return alterationLocationBean.getLocations(getServiceGroupAlteration().getServiceGroup(),
                                                         getServiceGroupAlteration().getDirection(),
                                                         this.alteration.getAlterationType());
     }
 
     public Alteration getAlteration() {
-        return this.alteration;
+        return alteration;
     }
 
     public void setAlteration(final Alteration alteration) {
