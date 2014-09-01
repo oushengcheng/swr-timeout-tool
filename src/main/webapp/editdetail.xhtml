@@ -157,15 +157,16 @@
                         </h:column>
                     </h:dataTable>
                 </div>
-                <p>
-                <h:commandButton styleClass="btn btn-primary btn-block"
-                                 value="#{msg.editdetail_publish_button}"
-                                 action="#{editDetailBacking.saveIncident}"/>
-                <h:commandButton styleClass="btn btn-default btn-block"
-                                 value="#{msg.editdetail_cancel_button}"
-                                 immediate="true" action="#{editDetailBacking.cancelIncident}"/>
-                </p>
-
+                <div class="row">
+                    <div class="col-md-12 column">
+                        <h:commandButton styleClass="btn btn-primary btn-block"
+                                         value="#{msg.editdetail_publish_button}"
+                                         action="#{editDetailBacking.saveIncident}"/>
+                        <h:commandButton styleClass="btn btn-default btn-block"
+                                         value="#{msg.editdetail_cancel_button}"
+                                         immediate="true" action="#{editDetailBacking.cancelIncident}"/>
+                    </div>
+                </div>
                 <r:jsFunction name="remove"
                               action="#{editDetailBacking.deleteServiceGroupAlteration}"
                               render="dataTable"

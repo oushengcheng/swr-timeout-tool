@@ -39,17 +39,18 @@
                         #{_servicegroup.freeform}
                     </r:column>
                </r:orderingList>
-               <p>
-                   <h:commandButton value="#{msg.sort_save_button}"
-                                       styleClass="btn btn-primary btn-block"
-                                       render="mess"
-                                       action="#{sortBacking.saveSortServiceGroupAlteration}" />
-                   <h:commandButton value="#{msg.sort_cancel_button}"
-                                    styleClass="btn btn-default btn-block"
-                                    immediate="true"
-                                    action="#{sortBacking.cancelSortServiceGroupAlteration}" />
-
-                </p>
+               <div class="row">
+                    <div class="col-md-12 column">
+                        <h:commandButton value="#{msg.sort_save_button}"
+                                           styleClass="btn btn-primary btn-block"
+                                           render="mess"
+                                           action="#{sortBacking.saveSortServiceGroupAlteration}" />
+                       <h:commandButton value="#{msg.sort_cancel_button}"
+                                        styleClass="btn btn-default btn-block"
+                                        immediate="true"
+                                        action="#{sortBacking.cancelSortServiceGroupAlteration}" />
+                    </div>
+                </div>
             </h:form>
         </div>
 

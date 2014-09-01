@@ -12,7 +12,9 @@
         <div class="well">
             <h:form id="form" prependId="false">
                 <div class="form-group #{!contingencyplan.valid ? 'has-error' : ''}">
-                    <h:outputLabel for="contingencyplan" value="#{msg.contingencyplan_plan}" styleClass="control-label"/>
+                    <h:outputLabel for="contingencyplan"
+                                   value="#{msg.contingencyplan_plan}"
+                                   styleClass="control-label"/>
                     <h:selectOneMenu id="contingencyplan"
                                      value="#{editContingencyPlanBacking.contingencyPlan}"
                                      styleClass="form-control"
@@ -20,7 +22,10 @@
                                      binding="#{contingencyplan}">
                         <r:ajax/>
                         <f:selectItem noSelectionOption="true" itemLabel="#{msg.contingency_selectone}"/>
-                        <f:selectItems value="#{editContingencyPlanBacking.contingencyPlans}" var="contingencyPlan" itemValue="#{contingencyPlan}" itemLabel="#{contingencyPlan.code}: #{contingencyPlan.title}"/>
+                        <f:selectItems value="#{editContingencyPlanBacking.contingencyPlans}"
+                                       var="contingencyPlan"
+                                       itemValue="#{contingencyPlan}"
+                                       itemLabel="#{contingencyPlan.code}: #{contingencyPlan.title}"/>
                     </h:selectOneMenu>
                     <h:message for="contingencyplan"/>
                 </div>
@@ -48,10 +53,17 @@
                         </div>
                     </r:tab>
                 </r:tabPanel>
-                <p>
-                <h:commandButton styleClass="btn btn-primary btn-block" value="#{msg.contingency_add_button}" action="#{editContingencyPlanBacking.addContingencyPlan}"/>
-                <h:commandButton styleClass="btn btn-default btn-block" value="#{msg.contingency_cancel_button}" immediate="true" action="#{editContingencyPlanBacking.cancelContingencyPlan}"/>
-                </p>
+                <div class="row">
+                    <div class="col-md-12 column">
+                        <h:commandButton styleClass="btn btn-primary btn-block"
+                                         value="#{msg.contingency_add_button}"
+                                         action="#{editContingencyPlanBacking.addContingencyPlan}"/>
+                        <h:commandButton styleClass="btn btn-default btn-block"
+                                         value="#{msg.contingency_cancel_button}"
+                                         immediate="true"
+                                         action="#{editContingencyPlanBacking.cancelContingencyPlan}"/>
+                    </div>
+                </div>
             </h:form>
         </div>
 
