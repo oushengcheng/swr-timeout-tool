@@ -9,9 +9,9 @@
     template="/WEB-INF/default.xhtml">
 
     <ui:define name="viewswitcher">
-
+        <ui:include src="/WEB-INF/switcher.xhtml" />
     </ui:define>
-        Hello World
+
     <ui:define name="content">
         <div class="well planview">
             <h:panelGroup rendered="#{staticViewBacking.incident == null}">

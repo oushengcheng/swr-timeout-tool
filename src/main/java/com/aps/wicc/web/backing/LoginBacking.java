@@ -100,7 +100,7 @@ public class LoginBacking
             
         } else if (this.authorizationChecker.hasApplicationRole(Roles.VIEW_ROLE)) {
         	
-            return Pages.Planview.class;
+            return Pages.Staticview.class;
             
         }
         

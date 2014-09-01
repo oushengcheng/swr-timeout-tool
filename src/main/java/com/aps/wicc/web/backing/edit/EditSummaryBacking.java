@@ -3,6 +3,7 @@ package com.aps.wicc.web.backing.edit;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,6 +14,7 @@ import com.aps.wicc.model.Incident;
 import com.aps.wicc.web.Pages;
 
 @Named
+@RequestScoped
 public class EditSummaryBacking implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,11 +45,11 @@ public class EditSummaryBacking implements Serializable {
     }
 
     public Class<? extends ViewConfig> viewPlanStatic() {
-        return Pages.Planview.class;
+        return Pages.Staticview.class;
     }
 
     public Class<? extends ViewConfig> viewPlanScroll() {
-        return Pages.Planviewscroll.class;
+        return Pages.Scrollingview.class;
     }
 
 }

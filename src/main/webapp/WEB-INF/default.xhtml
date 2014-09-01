@@ -32,7 +32,6 @@
                               #{msg.brand}
                           </div>
                     </div>
-                    <ui:insert name="viewswitcher"/>
                     <span class="navbar-text navbar-right">
                         <h:form prependId="false">
                             <h:commandLink id="logout"
@@ -40,6 +39,9 @@
                                            action="#{logoutBacking.logout()}"
                                            rendered="#{identity.loggedIn}"/>
                         </h:form>
+                    </span>
+                    <span class="navbar-text navbar-right">
+                        <ui:insert name="viewswitcher"/>
                     </span>
                   </div>
 

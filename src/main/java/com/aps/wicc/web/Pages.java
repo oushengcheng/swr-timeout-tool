@@ -52,7 +52,13 @@ public interface Pages {
 
     @View(navigation = View.NavigationMode.REDIRECT)
     @Access(role={Roles.EDIT_ROLE, Roles.VIEW_ROLE})
-    public static class Planview implements ViewConfig, SecuredPages {
+    public static class Staticview implements ViewConfig, SecuredPages {
+    }
+
+    @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
+    @Access(role={Roles.EDIT_ROLE, Roles.VIEW_ROLE})
+    @NavigationParameter(key = "scrollspeed", value = "#{scrollSpeed}")
+    public static class Scrollingview implements ViewConfig {
     }
 
     @ViewControllerRef(ScrollViewBacking.class)

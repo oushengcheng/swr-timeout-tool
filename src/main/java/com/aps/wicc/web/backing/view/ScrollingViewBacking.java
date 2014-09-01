@@ -20,7 +20,7 @@ import com.aps.wicc.web.Pages;
 
 @Named
 @ViewScoped
-public class ScrollViewBacking implements Serializable
+public class ScrollingViewBacking implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private String id;
@@ -31,12 +31,12 @@ public class ScrollViewBacking implements Serializable
     private ViewNavigationHandler viewNavigationHandler;
     private Incident incident;
 
-    public ScrollViewBacking() {
+    public ScrollingViewBacking() {
         super();
     }
 
     @Inject
-    public ScrollViewBacking(IncidentBean incidentBean,
+    public ScrollingViewBacking(IncidentBean incidentBean,
                                ViewNavigationHandler viewNavigationHandler,
                                @PlanViewIdParameter String requiredid,
                                @ScrollSpeed String defaultscrollspeed) {
