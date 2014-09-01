@@ -1,62 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:r="http://richfaces.org"
-	xmlns:func="http://aps.com/functions"
-	xmlns:of="http://omnifaces.org/functions"
-	template="/WEB-INF/default.xhtml">
-	<ui:define name="content">
-		<div class="well">
-			<h1>#{msg.sort_title}</h1>			
-			<br/>			
-			<h:form>
-				<h:messages id="mess" />
-								
-				<r:orderingList id="ordering" 					            						            				                
-					            var="_servicegroup"
-					            value="#{editSummaryBacking.sortedServiceGroupAlterations}"
-					            collectionType="java.util.ArrayList"									                						               
-					            itemValue="#{_servicegroup}">					            					            		           									
-					<f:selectItems value="#{editSummaryBacking.editIncident.serviceGroupAlterations}"/>					
-					<f:converter converterId="serviceGroupAlterationSelectItemsConverter" />					                										
-					<r:column>
-						<f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
-						#{_servicegroup.serviceGroup.headcode}
-						<h:outputText value=": " />
-	                	#{_servicegroup.serviceGroup.description}
-	            	</r:column>
-					<r:column>
-						<f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
-	                	#{msg[_servicegroup.direction.message]}
-	            	</r:column>
-					<r:column>
-						<f:facet name="header">#{msg.editdetail_alteration_column}</f:facet>
-							#{func:shortFormat(_servicegroup)}
-	            	</r:column>	
-	            	<r:column>
-						<f:facet name="header">#{msg.editdetail_freeform_column}</f:facet>
-	                	#{_servicegroup.freeform}
-	            	</r:column>	
-	           </r:orderingList>
-	           <p>
-		           <r:commandButton value="#{msg.sort_save_button}" 			           				                  
-	   				                styleClass="btn btn-primary btn-block"   
-	   				                execute="ordering"  
-	   				                render="mess"         				                       				                
-	   				                action="#{editSummaryBacking.saveSortServiceGroupAlteration}" />
-				   <r:commandButton value="#{msg.sort_cancel_button}" 
-								    styleClass="btn btn-default btn-block"
-								    immediate="true" 
-							        action="#{editSummaryBacking.cancelSortServiceGroupAlteration}" />
-	   			   	   				                
-				</p>
-			</h:form>	          				                 
-		</div>
-		
-		<ui:include src="/WEB-INF/polling.xhtml" />	
-		
-	</ui:define>
-	
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:r="http://richfaces.org"
+    xmlns:func="http://aps.com/functions"
+    xmlns:of="http://omnifaces.org/functions"
+    template="/WEB-INF/default.xhtml">
+    <ui:define name="content">
+        <div class="well">
+            <h1>#{msg.sort_title}</h1>
+            <br/>
+            <h:form>
+                <h:messages id="mess" />
+
+                <r:orderingList id="ordering"
+                                var="_servicegroup"
+                                value="#{sortBacking.serviceGroupAlterations}"
+                                itemValue="#{_servicegroup}">
+                    <f:converter converterId="serviceGroupAlterationSelectItemsConverter" />
+                    <r:column>
+                        <f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
+                        #{_servicegroup.serviceGroup.headcode}
+                        <h:outputText value=": " />
+                        #{_servicegroup.serviceGroup.standardDescription}
+                    </r:column>
+                    <r:column>
+                        <f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
+                        #{msg[_servicegroup.direction.message]}
+                    </r:column>
+                    <r:column>
+                        <f:facet name="header">#{msg.editdetail_alteration_column}</f:facet>
+                            #{func:shortFormat(_servicegroup)}
+                    </r:column>
+                    <r:column>
+                        <f:facet name="header">#{msg.editdetail_freeform_column}</f:facet>
+                        #{_servicegroup.freeform}
+                    </r:column>
+               </r:orderingList>
+               <p>
+                   <h:commandButton value="#{msg.sort_save_button}"
+                                       styleClass="btn btn-primary btn-block"
+                                       execute="ordering"
+                                       render="mess"
+                                       action="#{sortBacking.saveSortServiceGroupAlteration}" />
+                   <h:commandButton value="#{msg.sort_cancel_button}"
+                                    styleClass="btn btn-default btn-block"
+                                    immediate="true"
+                                    action="#{sortBacking.cancelSortServiceGroupAlteration}" />
+
+                </p>
+            </h:form>
+        </div>
+
+        <ui:include src="/WEB-INF/polling.xhtml" />
+
+    </ui:define>
+
 </ui:composition>

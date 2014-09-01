@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:r="http://richfaces.org"
+    xmlns:func="http://aps.com/functions"
+    template="/WEB-INF/default.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-6 column">
+                        <div class="form-group #{!servicegroup.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="servicegroup"
+                                           value="#{msg.editservicegroup_servicegroup}"
+                                           styleClass="control-label"/>
+                            <h:selectOneMenu id="servicegroup"
+                                             value="#{editServiceGroupBacking.serviceGroupAlteration.serviceGroup}"
+                                             styleClass="form-control"
+                                             converter="serviceGroupSelectItemsConverter"
+                                             binding="#{servicegroup}">
+                                <r:ajax execute="servicegroup" render="locations"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
+                                <f:selectItems value="#{editServiceGroupBacking.serviceGroups}"
+                                               var="serviceGroup"
+                                               itemValue="#{serviceGroup}"
+                                               itemLabel="#{serviceGroup.standardDescription}"/>
+                            </h:selectOneMenu>
+                            <h:message for="servicegroup"/>
+                        </div>
+                        <div class="form-group #{!direction.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="direction"
+                                           value="#{msg.editservicegroup_direction}"
+                                           styleClass="control-label"/>
+                            <h:selectOneMenu id="direction"
+                                             value="#{editServiceGroupBacking.serviceGroupAlteration.direction}"
+                                             styleClass="form-control"
+                                             binding="#{direction}">
+                                <r:ajax execute="direction" render="locations"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
+                                <f:selectItems value="#{editServiceGroupBacking.directions}"
+                                               var="direction"
+                                               itemValue="#{direction}"
+                                               itemLabel="#{msg[direction.message]}"/>
+                            </h:selectOneMenu>
+                            <h:message for="direction"/>
+                        </div>
+                        <div class="form-group #{!affect.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="affect" value="#{msg.editservicegroup_affect}" styleClass="control-label"/>
+                            <h:selectOneMenu id="affect"
+                                             value="#{editServiceGroupBacking.serviceGroupAlteration.affect}"
+                                             styleClass="form-control"
+                                             binding="#{affect}">
+                                <r:ajax/>
+                                <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
+                                <f:selectItems value="#{editServiceGroupBacking.affects}"
+                                               var="affect"
+                                               itemValue="#{affect}"
+                                               itemLabel="#{msg[affect.message]}"/>
+                            </h:selectOneMenu>
+                            <h:message for="affect"/>
+                        </div>
+                        <div class="form-group #{!effective.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="effective"
+                                           value="#{msg.editservicegroup_effectiveFrom}"
+                                           styleClass="control-label"/>
+                            <div class="input-group">
+                                <h:inputText id="effective"
+                                              value="#{editServiceGroupBacking.serviceGroupAlteration.effectiveFrom}"
+                                              styleClass="form-control"
+                                              binding="#{effective}">
+                                    <r:ajax/>
+                                </h:inputText>
+                                <span class="input-group-btn">
+                                    <r:commandButton execute="@this"
+                                                     render="effective"
+                                                     action="#{editServiceGroupBacking.setEffectiveNow}"
+                                                     styleClass="btn btn-default"
+                                                     value="#{msg.editservicegroup_effective_now}"/>
+                                    <r:commandButton execute="@this"
+                                                     render="effective"
+                                                     action="#{editServiceGroupBacking.serviceGroupAlteration.setEffectiveFrom(msg.editservicegroup_effective_start_peak_value)}"
+                                                     styleClass="btn btn-default"
+                                                     value="#{msg.editservicegroup_effective_start_peak}"/>
+                                    <r:commandButton execute="@this"
+                                                     render="effective"
+                                                     action="#{editServiceGroupBacking.serviceGroupAlteration.setEffectiveFrom(msg.editservicegroup_effective_end_peak_value)}"
+                                                     styleClass="btn btn-default"
+                                                     value="#{msg.editservicegroup_effective_end_peak}"/>
+                                </span>
+                            </div>
+                            <h:message for="effective"/>
+                        </div>
+                        <div class="form-group #{!delay.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="delay" value="#{msg.editservicegroup_delay}" styleClass="control-label"/>
+                            <h:inputText id="delay"
+                                          value="#{editServiceGroupBacking.serviceGroupAlteration.delay}"
+                                          styleClass="form-control"
+                                          binding="#{delay}">
+                                <r:ajax event="change"
+                                        execute="@this"
+                                        listener="#{editServiceGroupBacking.delayValueChangeListener}"
+                                        render="affect"/>
+                            </h:inputText>
+                            <h:message for="delay"/>
+                        </div>
+                        <div class="form-group #{!freeform.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="freeform"
+                                           value="#{msg.editservicegroup_freeform}"
+                                           styleClass="control-label"/>
+                            <h:inputText id="freeform"
+                                         value="#{editServiceGroupBacking.serviceGroupAlteration.freeform}"
+                                         styleClass="form-control"
+                                         binding="#{freeform}">
+                                <r:ajax/>
+                            </h:inputText>
+                            <h:message for="freeform"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6 column">
+                        <h:panelGroup id="alterationparent" styleClass="form-group">
+                            <h:outputLabel for="alterationtypes"
+                                           value="#{msg.editservicegroup_alterations}"
+                                           styleClass="control-label"/>
+                            <div>
+                                <h:message id="alterationsmessages" for="alterationtypes"/>
+                            </div>
+                            <div>
+                                <h:message id="locationsmessages" for="locations"/>
+                            </div>
+                            <div class="form-inline  #{!alterations.valid ? 'has-error' : ''}">
+                                 <div class="form-group">
+                                    <h:selectOneMenu id="alterationtypes"
+                                                     value="#{editServiceGroupBacking.alteration.alterationType}"
+                                                     styleClass="form-control"
+                                                     binding="#{alterations}">
+                                        <r:ajax execute="alterationtypes" render="locations"/>
+                                        <f:selectItem noSelectionOption="true"
+                                                      itemLabel="#{msg.editservicegroup_selectone}"/>
+                                        <f:selectItems value="#{editServiceGroupBacking.alterationTypes}"
+                                                       var="alterationtype"
+                                                       itemValue="#{alterationtype}"
+                                                       itemLabel="#{msg[alterationtype.message]}"/>
+                                    </h:selectOneMenu>
+                                 </div>
+                                 <div class="form-group">
+                                    <div id="locationsparent" class="#{!locations.valid ? 'has-error' : ''}">
+                                        <r:autocomplete id="locations"
+                                                        mode="client"
+                                                        minChars="0"
+                                                        styleClass="form-control"
+                                                        value="#{editServiceGroupBacking.alteration.location}"
+                                                        autocompleteList="#{editServiceGroupBacking.locations}"
+                                                        binding="#{locations}"
+                                                        autofill="false"
+                                                        selectFirst="false"
+                                                        showButton="true"
+                                                        clientFilterFunction="aps.noopFilter">
+                                            <r:ajax execute="locations"/>
+                                        </r:autocomplete>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <r:commandButton execute="alterationtypes locations"
+                                                         render="affect alterationparent alterations"
+                                                         action="#{editServiceGroupBacking.addAlteration}"
+                                                         styleClass="btn btn-default"
+                                                         value="#{msg.editservicegroup_alteration_add}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                        <p/>
+                        <div class="btn-group">
+                            <r:commandButton value="#{msg.editservicegroup_deletefirst}"
+                                             render="alterations"
+                                             execute="@this"
+                                             action="#{editServiceGroupBacking.deleteFirstAlteration}"
+                                             styleClass="btn btn-default"/>
+                            <r:commandButton value="#{msg.editservicegroup_deletelast}"
+                                             render="alterations"
+                                             execute="@this"
+                                             action="#{editServiceGroupBacking.deleteLastAlteration}"
+                                             styleClass="btn btn-default"/>
+                        </div>
+                        <p/>
+                        <div class="form-group">
+                            <r:orderingList id="alterations"
+                                            value="#{editServiceGroupBacking.alterations}"
+                                            var="_alteration"
+                                            collectionType="java.util.ArrayList"
+                                            itemValue="#{_alteration}">
+                                <r:ajax execute="alterations"/>
+                                <f:converter converterId="alterationSelectItemsConverter"/>
+<!--                                 <f:selectItems value="#{editServiceGroupBacking.alterations}" /> -->
+                                <r:column>
+                                    <f:facet name="header">#{msg.editservicegroup_alterations_type}</f:facet>
+                                    #{msg[_alteration.alterationType.message]}
+                                </r:column>
+                                <r:column>
+                                    <f:facet name="header">#{msg.editservicegroup_alterations_location}</f:facet>
+                                    #{_alteration.location}
+                                </r:column>
+                            </r:orderingList>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 column">
+                        <r:commandButton styleClass="btn btn-primary btn-block"
+                                         value="#{msg.editservicegroup_save_button}"
+                                         execute="servicegroup direction affect effective delay freeform"
+                                         render="@form"
+                                         action="#{editServiceGroupBacking.saveServiceGroupAlteration}"/>
+                        <h:commandButton styleClass="btn btn-default btn-block"
+                                         value="#{msg.editservicegroup_cancel_button}"
+                                         immediate="true"
+                                         action="#{editServiceGroupBacking.cancelServiceGroupAlteration}"/>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <ui:include src="/WEB-INF/polling.xhtml" />
+    </ui:define>
+</ui:composition>

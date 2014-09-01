@@ -1,4 +1,4 @@
-package com.aps.wicc.web.backing;
+package com.aps.wicc.web.backing.view;
 
 import java.io.*;
 

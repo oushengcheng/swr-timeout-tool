@@ -1,360 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:r="http://richfaces.org"	
-	xmlns:func="http://aps.com/functions"
-	template="/WEB-INF/default.xhtml">
-	<ui:define name="content">
-		<div class="well">			
-			<h:form id="form">			
-				<h:panelGroup rendered="#{(not facesContext.validationFailed) and (not empty facesContext.messageList)}">
-					<div class="alert alert-danger">
-						<a class="close" data-dismiss="alert">×</a>
-						<h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning" globalOnly="true" />
-					</div>
-				</h:panelGroup>
-						
-				<div class="form-group #{!title.valid ? 'has-error' : ''}">
-					 <h:outputLabel for="title" value="#{msg.editdetail_title_label}" styleClass="control-label"/>
-					 <h:inputText id="title" styleClass="form-control" value="#{editSummaryBacking.editIncident.title}" binding="#{title}" >
-					 	<r:ajax/>
-					 </h:inputText>
-					 <h:message for="title"/>
-				</div>
-				<div class="form-group #{!description.valid ? 'has-error' : ''}">
-					 <h:outputLabel for="description" value="#{msg.editdetail_description_label}" styleClass="control-label"/>
-					 <h:inputTextarea id="description" styleClass="form-control" value="#{editSummaryBacking.editIncident.description}" binding="#{description}">
-					 	<r:ajax/>
-					 </h:inputTextarea>
-					 <h:message for="description"/>
-				</div>
-				<h:panelGroup id="nextreviewparent"  styleClass="form-group #{!nextreview.valid ? 'has-error' : ''}" layout="block">
-					<h:outputLabel for="nextreview" value="#{msg.editdetail_nextreview_label}" styleClass="control-label"/>	
-					<div class="input-group">										 
-						<h:inputText id="nextreview" 
-						             value="#{editSummaryBacking.nextReview}" 
-						             styleClass="form-control"
-						             converter="localTimeConverter"
-						             binding="#{nextreview}">							             
-							<r:placeholder value="hh:mm"/>
-							<r:ajax/>						             	
-						</h:inputText>
-						<span class="input-group-btn">
-							<r:commandButton execute="@this"
-					  						 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(30)}"
-					  		                 styleClass="btn btn-default" 
-					  		                 value="#{msg.editdetail_edit_nextreview_30_mins}"/>
-					  		<r:commandButton execute="@this"
-					  						 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(60)}"
-					  		                 styleClass="btn btn-default" 
-					  		                 value="#{msg.editdetail_edit_nextreview_1_hour}"/>
-					  		<r:commandButton execute="@this"
-					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(120)}"
-					  		                 styleClass="btn btn-default" 
-					  		                 value="#{msg.editdetail_edit_nextreview_2_hour}"/>
-					  		<r:commandButton execute="@this"
-					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(180)}"
-					  		                 styleClass="btn btn-default" 
-					  		                 value="#{msg.editdetail_edit_nextreview_3_hour}"/>	
-							<r:commandButton execute="@this"
-					  		                 render="nextreviewparent"
-					  		                 action="#{editSummaryBacking.setNextReviewPlus(240)}"
-					  		                 styleClass="btn btn-default" 
-					  		                 value="#{msg.editdetail_edit_nextreview_4_hour}"/>								  		                									
-						</span>
-					</div>									             								
-					<h:message for="nextreview"/>											
-				</h:panelGroup>
-				<div class="form-group">					
-					<div class="btn-group">
-						<r:commandLink value="#{msg.editdetail_newservicegroupalteration_button}" styleClass="btn btn-default" oncomplete="create()" render="editPane" />						
-						<h:commandLink value="#{msg.editdetail_contigency_button}" styleClass="btn btn-default" immediate="true" action="#{editSummaryBacking.selectContingencyPlan}" />
-						<r:commandLink value="#{msg.editdetail_manual_sort_button}" styleClass="btn btn-default" execute="@this" action="#{editSummaryBacking.startSortServiceGroupAlteration}" /> 				 							 			
-						<r:commandLink value="#{msg.editdetail_auto_sort_button}" styleClass="btn btn-default" execute="@this" action="#{editSummaryBacking.autoSort}" render="dataTable" />
-					</div>					
-				</div>
-				<div class="table-responsive">
-					<h:dataTable id="dataTable" var="_alteration" value="#{editSummaryBacking.editIncident.serviceGroupAlterations}" styleClass="table table-striped table-bordered">
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
-							#{_alteration.serviceGroup.standardDescription}
-		            	</h:column>
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
-		                	#{msg[_alteration.direction.message]}
-		            	</h:column>
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_alteration_column}</f:facet>
-								#{func:shortFormat(_alteration)}
-		            	</h:column>	
-		            	<h:column>
-							<f:facet name="header">#{msg.editdetail_freeform_column}</f:facet>
-		                	#{_alteration.freeform}
-		            	</h:column>				
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_edit_column}</f:facet>																		                    						
-		                   	<r:commandLink execute="@this" value="#{msg.editdetail_edit_column}" render="editPane" oncomplete="#{r:component('editPane')}.show()">                    
-		                   		<r:actionListener listener="#{editSummaryBacking.editServiceGroupAlteration(_alteration)}"/>
-		                   	</r:commandLink>
-						</h:column>	
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_edit_copy}</f:facet>																		                    						
-		                   	<r:commandLink execute="@this" value="#{msg.editdetail_edit_copy}" render="editPane" oncomplete="#{r:component('editPane')}.show()">                    
-		                   		<r:actionListener listener="#{editSummaryBacking.copyServiceGroupAlteration(_alteration)}"/>
-		                   	</r:commandLink>
-						</h:column>			
-						<h:column>
-							<f:facet name="header">#{msg.editdetail_delete_column}</f:facet>
-							<r:commandLink execute="@this" value="#{msg.editdetail_delete_column}" render="@none" oncomplete="#{r:component('confirmPane')}.show()">                    
-		                   		<f:setPropertyActionListener value="#{_alteration}" target="#{editSummaryBacking.serviceGroupAlteration}" />
-		                   	</r:commandLink>
-						</h:column>
-					</h:dataTable>
-				</div>
-				<p>
-				<h:commandButton styleClass="btn btn-primary btn-block" value="#{msg.editdetail_publish_button}" action="#{editSummaryBacking.saveIncident}"/>
-				<h:commandButton styleClass="btn btn-default btn-block" value="#{msg.editdetail_cancel_button}" immediate="true" action="#{editSummaryBacking.cancelIncident}"/>
-				</p>
-										
-				<r:jsFunction name="remove" action="#{editSummaryBacking.deleteServiceGroupAlteration}" render="dataTable" execute="@this" oncomplete="#{r:component('confirmPane')}.hide();" />
-				<r:jsFunction name="create" action="#{editSummaryBacking.newServiceGroupAlteration}" render="editPane" execute="@this" oncomplete="#{r:component('editPane')}.show();" />											        													
-											
-			</h:form>
-		</div>	
-			
-		<h:form id="confirmform">
-			<r:popupPanel id="confirmPane" autosized="true" styleClass="modal-dialog" aria-labelledby="confirmPaneLabel" aria-hidden="true" domElementAttachment="form">		            
-				<div class="modal-content">
-					<div class="modal-header">
-						<h:button value="x"  styleClass="close" data-dismiss="modal" aria-hidden="true" onclick="#{r:component('confirmPane')}.hide(); return false;" />
-						<h4 class="modal-title" id="confirmPaneLabel">
-							#{msg.editdetail_confirm_title}
-						</h4>
-					</div>
-					<div class="modal-body">
-						<p>#{msg.editdetail_confirm_question}</p>
-					</div>
-					<div class="modal-footer">
-						<r:commandButton value="#{msg.editdetail_confirm_cancel_button}" styleClass="btn btn-default" onclick="#{r:component('confirmPane')}.hide(); return false;" />
-           				<r:commandButton value="#{msg.editdetail_confirm_yes_button}" styleClass="btn btn-primary" onclick="remove(); return false;" /> 
-					</div>
-				</div>												
-	        </r:popupPanel>		
-		</h:form>
-			
-		<h:form id="editform">			   
-			<r:popupPanel id="editPane" autosized="true" moveable="true" styleClass="modal-dialog large-modal" aria-labelledby="editPaneLabel" aria-hidden="true" domElementAttachment="form">						            
-				<div class="modal-content">								
-					<div class="modal-header">
-						<h:button value="x"  styleClass="close" data-dismiss="modal" aria-hidden="true" onclick="#{r:component('editPane')}.hide(); return false;" />
-						<h4 class="modal-title" id="editPaneLabel">
-							#{msg.editdetail_edit_title}
-						</h4>
-					</div>
-					<div class="modal-body">
-						<div class="row">	
-							<div class="col-md-6 column">
-								
-								<h:messages/>
-																																		
-								<div class="form-group #{!servicegroup.valid ? 'has-error' : ''}">
-									<h:outputLabel for="servicegroup" value="#{msg.editdetail_edit_servicegroup}" styleClass="control-label"/>
-									<h:selectOneMenu id="servicegroup" 
-									                 value="#{editSummaryBacking.serviceGroupAlteration.serviceGroup}" 
-									                 styleClass="form-control" 
-									                 converter="serviceGroupSelectItemsConverter"
-									                 binding="#{servicegroup}">
-										<r:ajax execute="servicegroup" render="locations"/>
-										<f:selectItem noSelectionOption="true" itemLabel="#{msg.editdetail_edit_selectone}"/>
-										<f:selectItems value="#{editSummaryBacking.serviceGroups}" 
-										               var="serviceGroup" 
-										               itemValue="#{serviceGroup}" 
-										               itemLabel="#{serviceGroup.standardDescription}"/>																					
-									</h:selectOneMenu>
-									<h:message for="servicegroup"/>
-								</div>									
-								<div class="form-group #{!direction.valid ? 'has-error' : ''}">
-									<h:outputLabel for="direction" value="#{msg.editdetail_edit_direction}" styleClass="control-label"/>											 
-									<h:selectOneMenu id="direction" 
-									                 value="#{editSummaryBacking.serviceGroupAlteration.direction}" 
-									                 styleClass="form-control"  							                 
-									                 binding="#{direction}">
-										<r:ajax execute="direction" render="locations"/>
-										<f:selectItem noSelectionOption="true" itemLabel="#{msg.editdetail_edit_selectone}"/>
-										<f:selectItems value="#{editSummaryBacking.directions}" var="direction" itemValue="#{direction}" itemLabel="#{msg[direction.message]}"/>
-									</h:selectOneMenu>
-									<h:message for="direction"/>											
-								</div>								
-								<div class="form-group #{!affect.valid ? 'has-error' : ''}">
-									<h:outputLabel for="affect" value="#{msg.editdetail_edit_affect}" styleClass="control-label"/>											 
-									<h:selectOneMenu id="affect" 
-									                 value="#{editSummaryBacking.serviceGroupAlteration.affect}" 
-									                 styleClass="form-control"
-									                 binding="#{affect}">
-										<r:ajax/>
-										<f:selectItem noSelectionOption="true" itemLabel="#{msg.editdetail_edit_selectone}"/>
-										<f:selectItems value="#{editSummaryBacking.affects}" var="affect" itemValue="#{affect}" itemLabel="#{msg[affect.message]}"/>
-									</h:selectOneMenu>
-									<h:message for="affect"/>											
-								</div>
-								<div class="form-group #{!effective.valid ? 'has-error' : ''}">									
-									<h:outputLabel for="effective" value="#{msg.editdetail_edit_effectiveFrom}" styleClass="control-label"/>
- 									<div class="input-group">												 
-										<h:inputText id="effective" 
-										              value="#{editSummaryBacking.serviceGroupAlteration.effectiveFrom}" 
-										              styleClass="form-control"										              
-										              binding="#{effective}">
-											<r:ajax/>
-										</h:inputText> 										
-										<span class="input-group-btn">
-									  		<r:commandButton execute="@this"
-									  						 render="effective"
-									  		                 action="#{editSummaryBacking.setEffectiveNow}"
-									  		                 styleClass="btn btn-default" 
-									  		                 value="#{msg.editdetail_edit_effective_now}"/>
-									  		<r:commandButton execute="@this"
-									  		                 render="effective"
-									  		                 action="#{editSummaryBacking.serviceGroupAlteration.setEffectiveFrom(msg.editdetail_edit_effective_start_peak_value)}"
-									  		                 styleClass="btn btn-default" 
-									  		                 value="#{msg.editdetail_edit_effective_start_peak}"/>
-									  		<r:commandButton execute="@this"
-									  		                 render="effective"
-									  		                 action="#{editSummaryBacking.serviceGroupAlteration.setEffectiveFrom(msg.editdetail_edit_effective_end_peak_value)}"
-									  		                 styleClass="btn btn-default" 
-									  		                 value="#{msg.editdetail_edit_effective_end_peak}"/>										
-										</span>
-									</div>
-									<h:message for="effective"/>
-								</div>																							
-								<div class="form-group #{!delay.valid ? 'has-error' : ''}">
-									<h:outputLabel for="delay" value="#{msg.editdetail_edit_delay}" styleClass="control-label"/>												 
-									<h:inputText id="delay" 
-									              value="#{editSummaryBacking.serviceGroupAlteration.delay}" 
-									              styleClass="form-control"
-									              binding="#{delay}">
-										<r:ajax event="change" execute="@this" listener="#{editSummaryBacking.delayValueChangeListener}" render="affect"/>
-									</h:inputText>																							
-									<h:message for="delay"/>
-								</div>
-								<div class="form-group #{!freeform.valid ? 'has-error' : ''}">
-									<h:outputLabel for="freeform" value="#{msg.editdetail_edit_freeform}" styleClass="control-label"/>
-									<h:inputText id="freeform" 
-												 value="#{editSummaryBacking.serviceGroupAlteration.freeform}" 
-												 styleClass="form-control"
-												 binding="#{freeform}">
-										<r:ajax/>
-									</h:inputText>					
-									<h:message for="freeform"/>					
-								</div>	
-							</div>
-							<div class="col-md-6 column">		
-								<h:panelGroup id="alterationparent" styleClass="form-group">
-									<h:outputLabel for="alterationtypes" value="#{msg.editdetail_edit_alterations}" styleClass="control-label"/>
-									<div>
-										<h:message id="alterationsmessages" for="alterationtypes"/>
-									</div>
-									<div>							
-										<h:message id="locationsmessages" for="locations"/>
-									</div>
-									<div class="form-inline  #{!alterations.valid ? 'has-error' : ''}">
-										 <div class="form-group">
-										  	<h:selectOneMenu id="alterationtypes" 
-										  	                 value="#{editSummaryBacking.alteration.alterationType}" 
-										  	                 styleClass="form-control" 								  	                 
-										  	                 binding="#{alterations}">
-										  		<r:ajax execute="alterationtypes" render="locations"/>
-										  		<f:selectItem noSelectionOption="true" itemLabel="#{msg.editdetail_edit_selectone}"/>
-												<f:selectItems value="#{editSummaryBacking.alterationTypes}" var="alterationtype" itemValue="#{alterationtype}" itemLabel="#{msg[alterationtype.message]}"/>
-											</h:selectOneMenu>	
-										 </div>
-										 <div class="form-group">			  	
-											<div id="locationsparent" class="#{!locations.valid ? 'has-error' : ''}">
-												<r:autocomplete id="locations"													 
-												                mode="client" 
-												                minChars="0" 
-												                styleClass="form-control" 
-												                value="#{editSummaryBacking.alteration.location}" 
-												                autocompleteList="#{editSummaryBacking.locations}"
-												                binding="#{locations}"
-												                autofill="false"
-												                selectFirst="false"									                
-												                showButton="true"
-												                clientFilterFunction="aps.noopFilter">
-													<r:ajax execute="locations"/>
-												</r:autocomplete>
-											</div>
-										</div>	
-										<div class="form-group">
-										  	<div>
-										  		<r:commandButton execute="alterationtypes locations" 
-										  		                 render="affect alterationparent alterations"
-										  		                 action="#{editSummaryBacking.addAlteration}"
-										  		                 styleClass="btn btn-default" 
-										  		                 value="#{msg.editdetail_edit_alteration_add}"/>
-										  	</div>
-									  	</div>
-									</div>										
-								</h:panelGroup>						
-								<p/>
-								<div class="btn-group">
-									<r:commandButton value="#{msg.editdetail_edit_deletefirst}"
-													 execute="alterations"
-													 render="alterations" 
-									                 action="#{editSummaryBacking.deleteFirstAlteration}" 
-									                 styleClass="btn btn-default"/>
-									<r:commandButton value="#{msg.editdetail_edit_deletelast}"
-													 execute="alterations"
-													 render="alterations" 
-									                 action="#{editSummaryBacking.deleteLastAlteration}" 
-									                 styleClass="btn btn-default"/>							                
-								</div>
-								<p/>
-								<div class="form-group">							
-									<r:orderingList id="alterations" 
-									                value="#{editSummaryBacking.sortedAlterations}"							                 
-									                var="_alteration"
-									                collectionType="java.util.ArrayList"							                
-									                itemValue="#{_alteration}"
-									                valueChangeListener="#{editSummaryBacking.orderingValueChangeListener}">
-										<r:ajax execute="alterations"/>
-										<f:converter converterId="alterationSelectItemsConverter"/>	
-										<f:selectItems value="#{editSummaryBacking.serviceGroupAlteration.alterations}" />						                
-										<r:column>
-						                    <f:facet name="header">#{msg.editdetail_edit_alterations_type}</f:facet>
-						                    #{msg[_alteration.alterationType.message]}
-						                </r:column>
-						                <r:column>
-						                    <f:facet name="header">#{msg.editdetail_edit_alterations_location}</f:facet>
-						                    #{_alteration.location}
-						                </r:column>
-									</r:orderingList>
-								</div>																
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<r:commandButton value="#{msg.editdetail_edit_cancel_button}" 
-						                 styleClass="btn btn-default" 
-						                 onclick="#{r:component('editPane')}.hide(); return false;" />
-          				<r:commandButton value="#{msg.editdetail_edit_save_button}" 			           				                  
-          				                 styleClass="btn btn-primary"   
-          				                 execute="servicegroup direction affect effective delay freeform"           				                       				                
-          				                 action="#{editSummaryBacking.saveServiceGroupAlteration}"
-          				                 render="editform dataTable"
-          				                 oncomplete="#{!facesContext.validationFailed} ? #{r:component('editPane')}.hide() : #{r:component('editPane')}.show();"/>          				                 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:r="http://richfaces.org"
+    xmlns:func="http://aps.com/functions"
+    template="/WEB-INF/default.xhtml">
+    <ui:define name="content">
+        <div class="well">
+            <h:form id="form">
+                <h:panelGroup rendered="#{(not facesContext.validationFailed) and (not empty facesContext.messageList)}">
+                    <div class="alert alert-danger">
+                        <a class="close" data-dismiss="alert">×</a>
+                        <h:messages styleClass="messages"
+                                    errorClass="invalid"
+                                    infoClass="valid"
+                                    warnClass="warning"
+                                    globalOnly="true" />
+                    </div>
+                </h:panelGroup>
 
-					</div>								
-				</div>															
-	        </r:popupPanel>	        
-		</h:form>
+                <div class="form-group #{!title.valid ? 'has-error' : ''}">
+                     <h:outputLabel for="title"
+                                    value="#{msg.editdetail_title_label}"
+                                    styleClass="control-label"/>
+                     <h:inputText id="title"
+                                  styleClass="form-control"
+                                  value="#{editDetailBacking.editIncident.title}"
+                                  binding="#{title}" >
+                         <r:ajax/>
+                     </h:inputText>
+                     <h:message for="title"/>
+                </div>
+                <div class="form-group #{!description.valid ? 'has-error' : ''}">
+                     <h:outputLabel for="description"
+                                    value="#{msg.editdetail_description_label}"
+                                    styleClass="control-label"/>
+                     <h:inputTextarea id="description"
+                                      styleClass="form-control"
+                                      value="#{editDetailBacking.editIncident.description}"
+                                      binding="#{description}">
+                         <r:ajax/>
+                     </h:inputTextarea>
+                     <h:message for="description"/>
+                </div>
+                <h:panelGroup id="nextreviewparent"
+                              styleClass="form-group #{!nextreview.valid ? 'has-error' : ''}"
+                              layout="block">
+                    <h:outputLabel for="nextreview"
+                                   value="#{msg.editdetail_nextreview_label}"
+                                   styleClass="control-label"/>
+                    <div class="input-group">
+                        <h:inputText id="nextreview"
+                                     value="#{editDetailBacking.nextReview}"
+                                     styleClass="form-control"
+                                     converter="localTimeConverter"
+                                     binding="#{nextreview}">
+                            <r:placeholder value="hh:mm"/>
+                            <r:ajax/>
+                        </h:inputText>
+                        <span class="input-group-btn">
+                            <r:commandButton execute="@this"
+                                               render="nextreviewparent"
+                                               action="#{editDetailBacking.setNextReviewPlus(30)}"
+                                               styleClass="btn btn-default"
+                                               value="#{msg.editdetail_edit_nextreview_30_mins}"/>
+                              <r:commandButton execute="@this"
+                                               render="nextreviewparent"
+                                               action="#{editDetailBacking.setNextReviewPlus(60)}"
+                                               styleClass="btn btn-default"
+                                               value="#{msg.editdetail_edit_nextreview_1_hour}"/>
+                              <r:commandButton execute="@this"
+                                               render="nextreviewparent"
+                                               action="#{editDetailBacking.setNextReviewPlus(120)}"
+                                               styleClass="btn btn-default"
+                                               value="#{msg.editdetail_edit_nextreview_2_hour}"/>
+                              <r:commandButton execute="@this"
+                                               render="nextreviewparent"
+                                               action="#{editDetailBacking.setNextReviewPlus(180)}"
+                                               styleClass="btn btn-default"
+                                               value="#{msg.editdetail_edit_nextreview_3_hour}"/>
+                            <r:commandButton execute="@this"
+                                               render="nextreviewparent"
+                                               action="#{editDetailBacking.setNextReviewPlus(240)}"
+                                               styleClass="btn btn-default"
+                                               value="#{msg.editdetail_edit_nextreview_4_hour}"/>
+                        </span>
+                    </div>
+                    <h:message for="nextreview"/>
+                </h:panelGroup>
+                <div class="form-group">
+                    <div class="btn-group">
+                        <h:commandLink value="#{msg.editdetail_newservicegroupalteration_button}"
+                                       styleClass="btn btn-default"
+                                       immediate="true"
+                                       action="#{editDetailBacking.newServiceGroupAlteration}" />
+                        <h:commandLink value="#{msg.editdetail_contigency_button}"
+                                       styleClass="btn btn-default"
+                                       immediate="true"
+                                       action="#{editDetailBacking.selectContingencyPlan}" />
+                        <h:commandLink value="#{msg.editdetail_manual_sort_button}"
+                                       styleClass="btn btn-default"
+                                       immediate="true"
+                                       action="#{editDetailBacking.startSortServiceGroupAlteration}" />
+                        <r:commandLink value="#{msg.editdetail_auto_sort_button}"
+                                       styleClass="btn btn-default"
+                                       execute="@this"
+                                       action="#{editDetailBacking.autoSort}"
+                                       render="dataTable" />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <h:dataTable id="dataTable"
+                                 var="_alteration"
+                                 value="#{editDetailBacking.editIncident.serviceGroupAlterations}"
+                                 styleClass="table table-striped table-bordered">
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
+                            #{_alteration.serviceGroup.standardDescription}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
+                            #{msg[_alteration.direction.message]}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_alteration_column}</f:facet>
+                                #{func:shortFormat(_alteration)}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_freeform_column}</f:facet>
+                            #{_alteration.freeform}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_edit_column}</f:facet>
+                               <h:commandLink value="#{msg.editdetail_edit_column}"
+                                              immediate="true"
+                                              action="#{editDetailBacking.editServiceGroupAlteration(_alteration)}">
+                               </h:commandLink>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_edit_copy}</f:facet>
+                               <h:commandLink value="#{msg.editdetail_edit_copy}"
+                                              immediate="true"
+                                              action="#{editDetailBacking.copyServiceGroupAlteration(_alteration)}">
+                               </h:commandLink>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_delete_column}</f:facet>
+                            <r:commandLink execute="@this"
+                                           value="#{msg.editdetail_delete_column}"
+                                           render="@none"
+                                           oncomplete="#{r:component('confirmPane')}.show()">
+                                   <f:setPropertyActionListener value="#{_alteration}"
+                                                                target="#{editDetailBacking.serviceGroupAlteration}" />
+                            </r:commandLink>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+                <p>
+                <h:commandButton styleClass="btn btn-primary btn-block"
+                                 value="#{msg.editdetail_publish_button}"
+                                 action="#{editDetailBacking.saveIncident}"/>
+                <h:commandButton styleClass="btn btn-default btn-block"
+                                 value="#{msg.editdetail_cancel_button}"
+                                 immediate="true" action="#{editDetailBacking.cancelIncident}"/>
+                </p>
 
-		<ui:include src="/WEB-INF/polling.xhtml" />		
-		
-	</ui:define>
+                <r:jsFunction name="remove"
+                              action="#{editDetailBacking.deleteServiceGroupAlteration}"
+                              render="dataTable"
+                              execute="@this"
+                              oncomplete="#{r:component('confirmPane')}.hide();" />
+            </h:form>
+        </div>
+
+        <h:form id="confirmform">
+            <r:popupPanel id="confirmPane"
+                          autosized="true"
+                          styleClass="modal-dialog"
+                          aria-labelledby="confirmPaneLabel"
+                          aria-hidden="true"
+                          domElementAttachment="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h:button value="x"
+                                  styleClass="close"
+                                  data-dismiss="modal"
+                                  aria-hidden="true"
+                                  onclick="#{r:component('confirmPane')}.hide(); return false;" />
+                        <h4 class="modal-title" id="confirmPaneLabel">
+                            #{msg.editdetail_confirm_title}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>#{msg.editdetail_confirm_question}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <r:commandButton value="#{msg.editdetail_confirm_cancel_button}"
+                                         styleClass="btn btn-default"
+                                         onclick="#{r:component('confirmPane')}.hide(); return false;" />
+                        <r:commandButton value="#{msg.editdetail_confirm_yes_button}"
+                                         styleClass="btn btn-primary"
+                                         onclick="remove(); return false;" />
+                    </div>
+                </div>
+            </r:popupPanel>
+        </h:form>
+
+        <ui:include src="/WEB-INF/polling.xhtml" />
+
+    </ui:define>
 </ui:composition>

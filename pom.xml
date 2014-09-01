@@ -53,7 +53,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
 
-        <version.deltaspike>0.7</version.deltaspike>
+        <version.deltaspike>1.0.1</version.deltaspike>
         <version.richfaces>5.0.0.Alpha3</version.richfaces>
         <version.richfaces-push-depchain>5.0.0.Alpha3</version.richfaces-push-depchain>
         <version.omnifaces>1.6.3</version.omnifaces>
@@ -161,14 +161,6 @@
         <dependency>
             <groupId>org.jboss.spec.javax.faces</groupId>
             <artifactId>jboss-jsf-api_2.0_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Import for catch Weld specific exception -->
-        <dependency>
-            <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-core</artifactId>
-            <version>1.1.13.Final</version>
             <scope>provided</scope>
         </dependency>
 

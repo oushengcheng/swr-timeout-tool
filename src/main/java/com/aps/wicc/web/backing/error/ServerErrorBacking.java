@@ -1,4 +1,4 @@
-package com.aps.wicc.web.backing;
+package com.aps.wicc.web.backing.error;
 
 import javax.inject.*;
 import javax.enterprise.context.*;

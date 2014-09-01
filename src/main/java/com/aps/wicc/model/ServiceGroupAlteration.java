@@ -23,18 +23,13 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.envers.Audited;
 import org.hibernate.validator.constraints.Length;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableList;
 
 @Exclude
 @Entity
 @Audited
-public class ServiceGroupAlteration
-{
-
-    private static final Logger logger = LoggerFactory.getLogger(ServiceGroupAlteration.class);
+public class ServiceGroupAlteration {
 
     @Id
     @GenericGenerator(name="hilogen", strategy="hilo")

@@ -1,36 +1,36 @@
 package com.aps.wicc.exceptionhandling;
 
-import org.apache.deltaspike.core.api.config.view.navigation.*;
-import org.apache.deltaspike.core.api.exception.control.event.*;
-import org.apache.deltaspike.core.api.exception.control.*;
-import org.apache.deltaspike.core.api.exception.control.ExceptionHandler;
-
-import javax.faces.context.*;
-import javax.faces.application.*;
+import javax.faces.application.ViewExpiredException;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import com.aps.wicc.web.*;
+import org.apache.deltaspike.core.api.config.view.navigation.ViewNavigationHandler;
+import org.apache.deltaspike.core.api.exception.control.ExceptionHandler;
+import org.apache.deltaspike.core.api.exception.control.Handles;
+import org.apache.deltaspike.core.api.exception.control.event.ExceptionEvent;
 
-import org.jboss.weld.context.*;
+import com.aps.wicc.web.Pages;
 
 @ExceptionHandler
 public class FacesExceptionHandler
 {
-	@Inject
+    @Inject
     private ViewNavigationHandler viewNavigationHandler;
-    
+
     void redirect(@Handles @FacesRequest final ExceptionEvent<Throwable> evt, final FacesContext facesContext) {
+
         if (evt.getException().getClass() == ViewExpiredException.class) {
+
             this.viewNavigationHandler.navigateTo(Pages.Timedout.class);
+
             evt.handledAndContinue();
-        }
-        else if (evt.getException().getClass() == NonexistentConversationException.class) {
-            this.viewNavigationHandler.navigateTo(Pages.Timedout.class);
-            evt.handledAndContinue();
-        }
-        else {
+
+        } else {
+
             this.viewNavigationHandler.navigateTo(Pages.Servererror.class);
+
             evt.handledAndContinue();
+
         }
     }
 }
