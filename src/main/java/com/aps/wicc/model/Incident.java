@@ -28,8 +28,7 @@ import com.google.common.collect.ImmutableList;
 @Exclude
 @Entity
 @Audited
-public class Incident
-{
+public class Incident {
 
     @Id
     @GenericGenerator(name="hilogen", strategy="hilo")
@@ -46,6 +45,9 @@ public class Incident
     @NotNull(message="{incident.descriptionnotnull}")
     @Type(type="text")
     private String description;
+
+    @Type(type="text")
+    private String footer;
 
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime created;
@@ -88,6 +90,14 @@ public class Incident
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    public String getFooter() {
+        return this.footer;
+    }
+
+    public void setFooter(final String footer) {
+        this.footer = footer;
     }
 
     public DateTime getCreated() {
@@ -156,15 +166,16 @@ public class Incident
     @Override
     public String toString() {
         final ToStringBuilder builder = new ToStringBuilder((Object)this);
-        builder.append("id", (Object)this.id);
-        builder.append("version", (Object)this.version);
-        builder.append("title", (Object)this.title);
-        builder.append("description", (Object)this.description);
-        builder.append("created", (Object)this.created);
-        builder.append("lastPublished", (Object)this.lastPublished);
-        builder.append("nextReview", (Object)this.nextReview);
-        builder.append("status", (Object)this.status);
-        builder.append("serviceGroupAlterations", (Object)this.serviceGroupAlterations);
+        builder.append("id", id);
+        builder.append("version", version);
+        builder.append("title", title);
+        builder.append("description", description);
+        builder.append("footer", footer);
+        builder.append("created", created);
+        builder.append("lastPublished", lastPublished);
+        builder.append("nextReview", nextReview);
+        builder.append("status", status);
+        builder.append("serviceGroupAlterations", serviceGroupAlterations);
         return builder.toString();
     }
 }

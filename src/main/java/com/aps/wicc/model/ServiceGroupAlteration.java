@@ -53,6 +53,9 @@ public class ServiceGroupAlteration {
     @NotNull(message="{servicegroupalteration.direction}")
     private Direction direction;
 
+    @Length(max=20, message="{servicegroupalteration.departuretimeslength}")
+    private String departureTimes;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message="{servicegroupalteration.affect}")
     private Affect affect;
@@ -91,6 +94,7 @@ public class ServiceGroupAlteration {
     void update(final ServiceGroupAlteration serviceGroupAlteration) {
         this.serviceGroup = serviceGroupAlteration.getServiceGroup();
         this.direction = serviceGroupAlteration.getDirection();
+        this.departureTimes = serviceGroupAlteration.getDepartureTimes();
         this.affect = serviceGroupAlteration.getAffect();
         this.effectiveFrom = serviceGroupAlteration.getEffectiveFrom();
         this.delay = serviceGroupAlteration.getDelay();
@@ -161,6 +165,14 @@ public class ServiceGroupAlteration {
         this.affect = affect;
     }
 
+    public String getDepartureTimes() {
+        return departureTimes;
+    }
+
+    public void setDepartureTimes(String departureTimes) {
+        this.departureTimes = departureTimes;
+    }
+
     public String getEffectiveFrom() {
         return this.effectiveFrom;
     }
@@ -218,6 +230,7 @@ public class ServiceGroupAlteration {
         builder.append("incident", this.incident);
         builder.append("serviceGroup", this.serviceGroup);
         builder.append("direction", this.direction);
+        builder.append("departureTimes", this.departureTimes);
         builder.append("affect", this.affect);
         builder.append("effectiveFrom", this.effectiveFrom);
         builder.append("delay", this.delay);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-09-12T14:31:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="history" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="7c8df79b-13fe-4869-9277-ca68ef1352e2">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -16,9 +17,9 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<import value="org.joda.time.DateTime"/>
 	<import value="org.joda.time.format.DateTimeFormat"/>
 	<import value="org.joda.time.DateTimeZone"/>
+	<import value="org.joda.time.DateTime"/>
 	<parameter name="dateTimeZone" class="org.joda.time.DateTimeZone"/>
 	<parameter name="from" class="org.joda.time.DateTime"/>
 	<parameter name="until" class="org.joda.time.DateTime"/>
@@ -29,12 +30,14 @@
 	<field name="revision" class="java.lang.Integer"/>
 	<field name="title" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
+	<field name="footer" class="java.lang.String"/>
 	<field name="created" class="org.joda.time.DateTime"/>
 	<field name="lastPublished" class="org.joda.time.DateTime"/>
 	<field name="nextReview" class="org.joda.time.DateTime"/>
 	<field name="status" class="java.lang.Object"/>
 	<field name="serviceGroupAlterationId" class="java.lang.Long"/>
 	<field name="serviceGroup" class="java.lang.String"/>
+	<field name="departureTimes" class="java.lang.String"/>
 	<field name="direction" class="java.lang.Object"/>
 	<field name="affect" class="java.lang.Object"/>
 	<field name="effectiveFrom" class="java.lang.String"/>
@@ -120,7 +123,7 @@
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="189" y="0" width="120" height="18" uuid="6b7e24af-bf69-46f1-804e-911e6cb223cc">
+				<reportElement x="230" y="0" width="79" height="18" uuid="6b7e24af-bf69-46f1-804e-911e6cb223cc">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 				</reportElement>
@@ -200,7 +203,7 @@
 				<text><![CDATA[Affect]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="538" y="0" width="120" height="18" printWhenGroupChanges="RevisionGroup" uuid="3615ace4-c878-4fe1-8c84-20e68529a414">
+				<reportElement x="538" y="0" width="72" height="18" printWhenGroupChanges="RevisionGroup" uuid="3615ace4-c878-4fe1-8c84-20e68529a414">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 				</reportElement>
@@ -230,6 +233,20 @@
 				</reportElement>
 				<text><![CDATA[Id]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="189" y="0" width="41" height="18" uuid="0d89263e-d49b-45cf-972d-bbef80a4e7ab">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Footer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="610" y="0" width="48" height="18" uuid="240a4272-ce79-4717-aadc-4408e0f8fb01">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<text><![CDATA[Departure Times]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -253,7 +270,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement isPrintRepeatedValues="false" x="189" y="0" width="120" height="18" printWhenGroupChanges="RevisionGroup" uuid="07553a48-b900-4199-a117-5b774dae5bf1">
+				<reportElement isPrintRepeatedValues="false" x="230" y="0" width="79" height="18" printWhenGroupChanges="RevisionGroup" uuid="07553a48-b900-4199-a117-5b774dae5bf1">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 				</reportElement>
@@ -337,7 +354,7 @@
 				<textFieldExpression><![CDATA[$F{revision}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="538" y="0" width="120" height="18" printWhenGroupChanges="RevisionGroup" uuid="8078d7d2-9415-4888-ae92-a69595bc2ecc">
+				<reportElement isPrintRepeatedValues="false" x="538" y="0" width="72" height="18" printWhenGroupChanges="RevisionGroup" uuid="8078d7d2-9415-4888-ae92-a69595bc2ecc">
 					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
 					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 				</reportElement>
@@ -362,6 +379,20 @@
 					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{serviceGroupAlterationId}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="189" y="0" width="41" height="18" uuid="1492054d-55ea-44c3-bfc2-96af07eb4570">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{footer}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="610" y="0" width="48" height="18" uuid="8d0ff23a-7120-4949-9c61-82d28e8e7735">
+					<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+					<property name="net.sf.jasperreports.export.xls.wrap.text" value="false"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{departureTimes}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

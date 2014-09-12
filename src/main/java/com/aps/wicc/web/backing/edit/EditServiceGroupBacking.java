@@ -22,6 +22,7 @@ import com.aps.wicc.model.Direction;
 import com.aps.wicc.model.ServiceGroup;
 import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.web.Pages;
+import com.aps.wicc.web.formatter.LongFormatter;
 
 @Named
 @ViewScoped
@@ -72,7 +73,7 @@ public class EditServiceGroupBacking implements Serializable {
     }
 
     public AlterationType[] getAlterationTypes() {
-        return AlterationType.values();
+        return AlterationType.visibleValues();
     }
 
     public ServiceGroupAlteration getServiceGroupAlteration() {
@@ -135,6 +136,19 @@ public class EditServiceGroupBacking implements Serializable {
         }
         alterations.add(alteration);
         alteration = new Alteration();
+    }
+
+    public String getFormattedText() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(new LongFormatter(getServiceGroupAlteration(), alterations).format());
+        if (showFreeform()) {
+            builder.append("\n").append(getServiceGroupAlteration().getFreeform());
+        }
+        return builder.toString();
+    }
+
+    private boolean showFreeform() {
+        return getServiceGroupAlteration().getFreeform() != null && !getServiceGroupAlteration().getFreeform().isEmpty();
     }
 
     // ========================== Save & Cancel =================================

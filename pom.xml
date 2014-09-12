@@ -62,12 +62,11 @@
         <version.usertype.core>3.1.0.CR1</version.usertype.core>
         <version.prettytime>3.2.4.Final</version.prettytime>
         <version.picketlink>2.6.0.Beta3</version.picketlink>
-        <version.jasperreports>5.2.0</version.jasperreports>
+        <version.jasperreports>5.6.1</version.jasperreports>
         <version.poi>3.9</version.poi>
         <version.poi-scratchpad>3.8</version.poi-scratchpad>
         <version.flyway>3.0</version.flyway>
         <jboss.bom.version>1.0.0.M6</jboss.bom.version>
-        <!-- <jboss.bom.version>1.0.0.M6-redhat-1</jboss.bom.version>> -->
 
         <plugin.maven-compiler-plugin.version>3.0</plugin.maven-compiler-plugin.version>
         <plugin.maven-war-plugin.version>2.4</plugin.maven-war-plugin.version>

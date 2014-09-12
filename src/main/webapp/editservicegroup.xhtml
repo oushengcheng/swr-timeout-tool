@@ -20,7 +20,7 @@
                                              styleClass="form-control"
                                              converter="serviceGroupSelectItemsConverter"
                                              binding="#{servicegroup}">
-                                <r:ajax execute="servicegroup" render="locations"/>
+                                <r:ajax execute="servicegroup" render="locations formattedtext"/>
                                 <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
                                 <f:selectItems value="#{editServiceGroupBacking.serviceGroups}"
                                                var="serviceGroup"
@@ -37,7 +37,7 @@
                                              value="#{editServiceGroupBacking.serviceGroupAlteration.direction}"
                                              styleClass="form-control"
                                              binding="#{direction}">
-                                <r:ajax execute="direction" render="locations"/>
+                                <r:ajax execute="direction" render="locations formattedtext"/>
                                 <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
                                 <f:selectItems value="#{editServiceGroupBacking.directions}"
                                                var="direction"
@@ -46,13 +46,25 @@
                             </h:selectOneMenu>
                             <h:message for="direction"/>
                         </div>
+                        <div class="form-group #{!departuretimes.valid ? 'has-error' : ''}">
+                            <h:outputLabel for="departuretimes"
+                                           value="#{msg.editservicegroup_departuretimes}"
+                                           styleClass="control-label"/>
+                            <h:inputText id="departuretimes"
+                                          value="#{editServiceGroupBacking.serviceGroupAlteration.departureTimes}"
+                                          styleClass="form-control"
+                                          binding="#{departuretimes}">
+                                <r:ajax event="change" execute="@this" render="formattedtext"/>
+                            </h:inputText>
+                            <h:message for="delay"/>
+                        </div>
                         <div class="form-group #{!affect.valid ? 'has-error' : ''}">
                             <h:outputLabel for="affect" value="#{msg.editservicegroup_affect}" styleClass="control-label"/>
                             <h:selectOneMenu id="affect"
                                              value="#{editServiceGroupBacking.serviceGroupAlteration.affect}"
                                              styleClass="form-control"
                                              binding="#{affect}">
-                                <r:ajax/>
+                                <r:ajax render="formattedtext"/>
                                 <f:selectItem noSelectionOption="true" itemLabel="#{msg.editservicegroup_selectone}"/>
                                 <f:selectItems value="#{editServiceGroupBacking.affects}"
                                                var="affect"
@@ -74,17 +86,17 @@
                                 </h:inputText>
                                 <span class="input-group-btn">
                                     <r:commandButton execute="@this"
-                                                     render="effective"
+                                                     render="effective formattedtext"
                                                      action="#{editServiceGroupBacking.setEffectiveNow}"
                                                      styleClass="btn btn-default"
                                                      value="#{msg.editservicegroup_effective_now}"/>
                                     <r:commandButton execute="@this"
-                                                     render="effective"
+                                                     render="effective formattedtext"
                                                      action="#{editServiceGroupBacking.serviceGroupAlteration.setEffectiveFrom(msg.editservicegroup_effective_start_peak_value)}"
                                                      styleClass="btn btn-default"
                                                      value="#{msg.editservicegroup_effective_start_peak}"/>
                                     <r:commandButton execute="@this"
-                                                     render="effective"
+                                                     render="effective formattedtext"
                                                      action="#{editServiceGroupBacking.serviceGroupAlteration.setEffectiveFrom(msg.editservicegroup_effective_end_peak_value)}"
                                                      styleClass="btn btn-default"
                                                      value="#{msg.editservicegroup_effective_end_peak}"/>
@@ -101,7 +113,7 @@
                                 <r:ajax event="change"
                                         execute="@this"
                                         listener="#{editServiceGroupBacking.delayValueChangeListener}"
-                                        render="affect"/>
+                                        render="affect formattedtext"/>
                             </h:inputText>
                             <h:message for="delay"/>
                         </div>
@@ -113,7 +125,7 @@
                                          value="#{editServiceGroupBacking.serviceGroupAlteration.freeform}"
                                          styleClass="form-control"
                                          binding="#{freeform}">
-                                <r:ajax/>
+                                <r:ajax render="formattedtext"/>
                             </h:inputText>
                             <h:message for="freeform"/>
                         </div>
@@ -157,14 +169,14 @@
                                                         selectFirst="false"
                                                         showButton="true"
                                                         clientFilterFunction="aps.noopFilter">
-                                            <r:ajax execute="locations"/>
+                                            <r:ajax execute="locations" render="formattedtext"/>
                                         </r:autocomplete>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div>
                                         <r:commandButton execute="alterationtypes locations"
-                                                         render="affect alterationparent alterations"
+                                                         render="affect alterationparent alterations formattedtext"
                                                          action="#{editServiceGroupBacking.addAlteration}"
                                                          styleClass="btn btn-default"
                                                          value="#{msg.editservicegroup_alteration_add}"/>
@@ -175,12 +187,12 @@
                         <p/>
                         <div class="btn-group">
                             <r:commandButton value="#{msg.editservicegroup_deletefirst}"
-                                             render="alterations"
+                                             render="alterations formattedtext"
                                              execute="@this"
                                              action="#{editServiceGroupBacking.deleteFirstAlteration}"
                                              styleClass="btn btn-default"/>
                             <r:commandButton value="#{msg.editservicegroup_deletelast}"
-                                             render="alterations"
+                                             render="alterations formattedtext"
                                              execute="@this"
                                              action="#{editServiceGroupBacking.deleteLastAlteration}"
                                              styleClass="btn btn-default"/>
@@ -191,7 +203,7 @@
                                             value="#{editServiceGroupBacking.alterations}"
                                             var="_alteration"
                                             itemValue="#{_alteration}">
-                                <r:ajax execute="alterations"/>
+                                <r:ajax execute="alterations" render="formattedtext"/>
                                 <f:converter converterId="alterationSelectItemsConverter"/>
                                 <f:selectItems value="#{editServiceGroupBacking.unsortedAlterations}" />
                                 <r:column>
@@ -208,15 +220,30 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 column">
-                        <r:commandButton styleClass="btn btn-primary btn-block"
-                                         value="#{msg.editservicegroup_save_button}"
-                                         execute="servicegroup direction affect effective delay freeform"
-                                         render="@form"
-                                         action="#{editServiceGroupBacking.saveServiceGroupAlteration}"/>
-                        <h:commandButton styleClass="btn btn-default btn-block"
-                                         value="#{msg.editservicegroup_cancel_button}"
-                                         immediate="true"
-                                         action="#{editServiceGroupBacking.cancelServiceGroupAlteration}"/>
+                        <div class="form-group">
+                            <h:outputLabel for="formattedtext"
+                                           value="#{msg.editservicegroup_output}"
+                                           styleClass="control-label"/>
+                            <h:inputTextarea id="formattedtext"
+                                             readonly="true"
+                                             styleClass="form-control"
+                                             value="#{editServiceGroupBacking.formattedText}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 column">
+                        <div class="form-group">
+                            <r:commandButton styleClass="btn btn-primary btn-block"
+                                             value="#{msg.editservicegroup_save_button}"
+                                             execute="servicegroup direction affect effective delay freeform"
+                                             render="@form"
+                                             action="#{editServiceGroupBacking.saveServiceGroupAlteration}"/>
+                            <h:commandButton styleClass="btn btn-default btn-block"
+                                             value="#{msg.editservicegroup_cancel_button}"
+                                             immediate="true"
+                                             action="#{editServiceGroupBacking.cancelServiceGroupAlteration}"/>
+                        </div>
                     </div>
                 </div>
             </div>

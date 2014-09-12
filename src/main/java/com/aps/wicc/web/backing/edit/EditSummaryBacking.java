@@ -11,6 +11,7 @@ import org.apache.deltaspike.core.api.config.view.ViewConfig;
 
 import com.aps.wicc.ejb.IncidentBean;
 import com.aps.wicc.model.Incident;
+import com.aps.wicc.web.Messages;
 import com.aps.wicc.web.Pages;
 
 @Named
@@ -20,14 +21,16 @@ public class EditSummaryBacking implements Serializable {
     private static final long serialVersionUID = 1L;
     private IncidentBean incidentBean;
     private CurrentEdit editingIncident;
+    private Messages messages;
 
     public EditSummaryBacking() {
     }
 
     @Inject
-    public EditSummaryBacking(final IncidentBean incidentBean, final CurrentEdit editingIncident) {
+    public EditSummaryBacking(IncidentBean incidentBean, CurrentEdit editingIncident, Messages messages) {
         this.incidentBean = incidentBean;
         this.editingIncident = editingIncident;
+        this.messages = messages;
     }
 
     public List<Incident> getIncidents() {
@@ -35,7 +38,7 @@ public class EditSummaryBacking implements Serializable {
     }
 
     public Class<? extends ViewConfig> newIncident() {
-        editingIncident.setIncident(new Incident());
+        editingIncident.setIncident(incidentBean.newIncident(messages.defaultFooter()));
         return Pages.Editdetail.class;
     }
 

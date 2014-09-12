@@ -44,6 +44,18 @@
                      </h:inputTextarea>
                      <h:message for="description"/>
                 </div>
+                <div class="form-group #{!footer.valid ? 'has-error' : ''}">
+                     <h:outputLabel for="footer"
+                                    value="#{msg.editdetail_footer_label}"
+                                    styleClass="control-label"/>
+                     <h:inputTextarea id="footer"
+                                      styleClass="form-control"
+                                      value="#{editDetailBacking.editIncident.footer}"
+                                      binding="#{footer}">
+                         <r:ajax/>
+                     </h:inputTextarea>
+                     <h:message for="description"/>
+                </div>
                 <h:panelGroup id="nextreviewparent"
                               styleClass="form-group #{!nextreview.valid ? 'has-error' : ''}"
                               layout="block">
@@ -118,6 +130,10 @@
                         <h:column>
                             <f:facet name="header">#{msg.editdetail_servicegroup_column}</f:facet>
                             #{_alteration.serviceGroup.standardDescription}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{msg.editdetail_departuretime_column}</f:facet>
+                            #{_alteration.departureTimes}
                         </h:column>
                         <h:column>
                             <f:facet name="header">#{msg.editdetail_direction_column}</f:facet>
