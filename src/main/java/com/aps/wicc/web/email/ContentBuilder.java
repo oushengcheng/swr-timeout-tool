@@ -68,7 +68,7 @@ class ContentBuilder implements Serializable {
     }
 
     private void addSubject() {
-        subject = messages.publishEmailSubject(incident.getDescription());
+        subject = messages.publishEmailSubject(incident.getTitle());
     }
 
     private void addIncident() {
