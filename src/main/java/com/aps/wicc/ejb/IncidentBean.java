@@ -11,7 +11,6 @@ import javax.persistence.PersistenceException;
 import org.joda.time.DateTime;
 import org.omnifaces.util.Exceptions;
 
-import com.aps.wicc.ejb.exceptions.StaleDataException;
 import com.aps.wicc.model.Incident;
 import com.aps.wicc.model.Status;
 import com.aps.wicc.persist.IncidentDao;
@@ -40,7 +39,7 @@ public class IncidentBean {
     }
 
     public Incident closeIncident(Incident incident) {
-        incident = (Incident)this.entityManager.merge((Object)incident);
+        incident = entityManager.merge(incident);
         incident.setStatus(Status.CLOSED);
         return incident;
     }

@@ -123,7 +123,7 @@ h1, h2, h3 {
     margin-top: 15px;
 }
 
-@media only screen and (max-device-width : 1023px) {
+@media (max-width : 1023px) {
 
     .planview h1 {
         font-weight: bold;
@@ -161,7 +161,7 @@ h1, h2, h3 {
 
 }
 
-@media only screen and (min-device-width : 1024px) {
+@media (min-width : 1024px) {
 
     .planview h1 {
         font-weight: bold;

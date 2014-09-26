@@ -1,4 +1,4 @@
-package com.aps.wicc.ejb.exceptions;
+package com.aps.wicc.ejb;
 
 public class StaleDataException extends RuntimeException
 {

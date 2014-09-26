@@ -353,6 +353,11 @@
 			<mail-session jndi-name="java:jboss/mail/Default">
 				<smtp-server outbound-socket-binding-ref="mail-smtp" />
 			</mail-session>
+            <mail-session jndi-name="java:/mail/smtp-gmail" from="andrew.p.spratley@gmail.com">
+                <smtp-server ssl="true" outbound-socket-binding-ref="mail-smtp-gmail">
+                    <login name="andrew.p.spratley@gmail.com" password="jwldftrwuamuvbdd"/>
+                </smtp-server>
+            </mail-session>
 		</subsystem>
 		<subsystem xmlns="urn:jboss:domain:messaging:1.2">
 			<hornetq-server>
@@ -567,5 +572,8 @@
 		<outbound-socket-binding name="mail-smtp">
 			<remote-destination host="localhost" port="25" />
 		</outbound-socket-binding>
+        <outbound-socket-binding name="mail-smtp-gmail">
+            <remote-destination host="smtp.gmail.com" port="465"/>
+        </outbound-socket-binding>
 	</socket-binding-group>
 </server>

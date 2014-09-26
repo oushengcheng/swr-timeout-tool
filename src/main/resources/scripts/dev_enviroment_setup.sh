@@ -1,12 +1,17 @@
 #!/bin/bash
+# JBoss EAP 6.1 must be saved in /opt with correct permissions before running this script
 
 all() {
   echo '*********************************************'
   echo '** installing Wicc development environment **'
   echo '*********************************************'
+  echo ""
+  echo "JBoss EAP 6.1 must be saved in /opt with correct permissions before running this script"
+  echo ""
   setupParameters
   readInMySQLCredentials
   createdb
+  readInGmailCredentials
   setupJbossStandalone  
   echo '******************************************************'
   echo '** installing Wicc development environment finished **'
@@ -30,6 +35,7 @@ setupParameters() {
     WICC_DB_NAME=timeouttool
     WICC_DB_USER=wicc
     WICC_DB_PASS=wicc
+    EMAIL_ADDRESS="andrew.p.spratley@gmail.com"
 
     MAVEN_DEPENDENCY_PLUGIN_AND_GOAL=org.apache.maven.plugins:maven-dependency-plugin:2.8:copy
 
@@ -40,6 +46,16 @@ readInMySQLCredentials() {
     echo -n "Enter root password for MySQL: "
 
     read -s MYSQL_PASS
+
+    echo "Processing..."
+   	
+}
+
+readInGmailCredentials() {
+
+    echo -n "Enter password for Gmail: "
+
+    read -s EMAIL_PASS
 
     echo "Processing..."
    	
@@ -153,6 +169,11 @@ setupJbossStandalone() {
     $JBOSS_CLI --command='/system-property=web_xml_project_stage/:add(value=Development)'
     $JBOSS_CLI --command='/system-property=org.apache.deltaspike.ProjectStage/:add(value=Development)'
     
+    echo "Adding email resource"
+    $JBOSS_CLI --command='/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp-gmail:add(host=smtp.gmail.com,port=465)'
+    $JBOSS_CLI --command='/subsystem=mail/mail-session=smtp-gmail:add(jndi-name="java:/mail/smtp-gmail", from="'$EMAIL_ADDRESS'")'
+    $JBOSS_CLI --command='/subsystem=mail/mail-session=smtp-gmail/server=smtp:add(outbound-socket-binding-ref=mail-smtp-gmail,ssl=true,username='$EMAIL_ADDRESS',password='$EMAIL_PASS')'
+
     # Remove temporary copy of mysqlconnector
     rm $MYSQL_CONNECTOR_FULL_NAME_AND_PATH
 

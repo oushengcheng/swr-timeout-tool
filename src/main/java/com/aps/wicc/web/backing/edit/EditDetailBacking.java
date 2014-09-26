@@ -18,11 +18,12 @@ import org.omnifaces.util.Exceptions;
 
 import com.aps.wicc.ejb.IncidentBean;
 import com.aps.wicc.ejb.Sorter;
-import com.aps.wicc.ejb.exceptions.StaleDataException;
+import com.aps.wicc.ejb.StaleDataException;
 import com.aps.wicc.model.Incident;
 import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.web.Messages;
 import com.aps.wicc.web.Pages;
+import com.aps.wicc.web.email.EmailSend;
 
 @Named
 @ViewScoped
@@ -31,6 +32,7 @@ public class EditDetailBacking implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private IncidentBean incidentBean;
+    private EmailSend emailSend;
     private DateTimeZone dateTimeZone;
     private Sorter sorter;
     private JsfMessage<Messages> messages;
@@ -45,11 +47,13 @@ public class EditDetailBacking implements Serializable {
     @Inject
     @SuppressWarnings("cdi-ambiguous-dependency")
     public EditDetailBacking(IncidentBean incidentBean,
+                             EmailSend emailSend,
                              DateTimeZone dateTimeZone,
                              Sorter sorter,
                              JsfMessage<Messages> messages,
                              CurrentEdit editingIncident) {
         this.incidentBean = incidentBean;
+        this.emailSend = emailSend;
         this.dateTimeZone = dateTimeZone;
         this.sorter = sorter;
         this.messages = messages;
@@ -120,6 +124,7 @@ public class EditDetailBacking implements Serializable {
 
             setNextReviewTime();
             incidentBean.save(getEditIncident());
+            emailSend.send();
             return Pages.Editsummary.class;
 
         } catch (EJBException e) {

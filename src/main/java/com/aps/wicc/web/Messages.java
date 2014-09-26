@@ -6,8 +6,8 @@ import org.apache.deltaspike.core.api.message.MessageTemplate;
 
 @MessageBundle
 @MessageContextConfig(messageSource = { "messages" })
-public interface Messages
-{
+public interface Messages {
+
     @MessageTemplate("{login_incorrect_credentials}")
     String incorrectCredentials();
 
@@ -19,5 +19,8 @@ public interface Messages
 
     @MessageTemplate("{default_footer}")
     String defaultFooter();
+
+    @MessageTemplate("{publish_email_subject}")
+    String publishEmailSubject(String description);
 
 }
