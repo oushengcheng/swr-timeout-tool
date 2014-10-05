@@ -65,12 +65,14 @@
 
         <h:outputStylesheet name="css/marquee.css" />
 
+    </ui:define>
+
+    <ui:define name="prerespondjs">
         <h:outputScript target="body">
             jQuery(function() {
                 aps.marquee(#{scrollingViewBacking.scrollspeed});
             });
         </h:outputScript>
-
     </ui:define>
 
     <ui:define name="footer">
