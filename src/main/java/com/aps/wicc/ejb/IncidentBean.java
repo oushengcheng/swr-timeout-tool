@@ -21,6 +21,8 @@ public class IncidentBean {
     private IncidentDao incidentDao;
     private EntityManager entityManager;
 
+    private final static int NO_INCIDENTS = 5;
+
     @Inject
     public IncidentBean(IncidentDao incidentDao, EntityManager entityManager) {
         this.incidentDao = incidentDao;
@@ -30,11 +32,13 @@ public class IncidentBean {
     public IncidentBean() {
     }
 
-    public List<Incident> getAllForPreviousWeek() {
-        return this.incidentDao.getOpenAndPreviousWeeksIncidents();
+    public List<Incident> getIncidentList() {
+        List<Incident> incidents = incidentDao.getOpenIncidents();
+        incidents.addAll(incidentDao.getLastNClosedIncidents(NO_INCIDENTS));
+        return incidents;
     }
 
-    public List<Incident> getIncidents(final DateTime from, final DateTime until) {
+    public List<Incident> getIncidentsByDateRange(final DateTime from, final DateTime until) {
         return this.incidentDao.getIncidents(from, until);
     }
 
@@ -56,8 +60,8 @@ public class IncidentBean {
 
     public Incident save(Incident incident) {
         try {
+            closeOpenIncidents();
             if (incident.getId() == null) {
-                closeOpenIncidents();
                 entityManager.persist(incident);
             } else {
                 incident = entityManager.merge(incident);

@@ -72,7 +72,7 @@ public class HistoryBean
         final List<History> history = new ArrayList<History>();
         final AuditReader reader = AuditReaderFactory.get(this.entityManager);
 
-        for (final Incident incident : this.incidentBean.getIncidents(from, until)) {
+        for (final Incident incident : this.incidentBean.getIncidentsByDateRange(from, until)) {
 
             Integer revision = 0;
 

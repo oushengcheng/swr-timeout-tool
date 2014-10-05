@@ -48,7 +48,7 @@ public class HistoryBacking implements Serializable
     }
     
     public List<Incident> getIncidents() {
-        return this.incidentBean.getIncidents(this.from, this.until);
+        return this.incidentBean.getIncidentsByDateRange(this.from, this.until);
     }
     
     public DateTime getFrom() {

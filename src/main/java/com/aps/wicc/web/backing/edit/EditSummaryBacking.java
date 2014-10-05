@@ -34,7 +34,7 @@ public class EditSummaryBacking implements Serializable {
     }
 
     public List<Incident> getIncidents() {
-        return this.incidentBean.getAllForPreviousWeek();
+        return this.incidentBean.getIncidentList();
     }
 
     public Class<? extends ViewConfig> newIncident() {
