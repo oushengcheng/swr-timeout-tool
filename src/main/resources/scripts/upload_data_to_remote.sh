@@ -9,4 +9,4 @@ echo "Using Openshift MySQL username $OPENSHIFT_USER"
 echo "Using Openshift MySQL password $OPENSHIFT_PWD"
 echo "Using port for MySQL $OPENSHIFT_PORT"
 
-mysqldump --host=127.0.0.1 --port=$OPENSHIFT_PORT --user=$OPENSHIFT_USER --password=$OPENSHIFT_PWD timeouttool > data_dml.sql
+mysql --host=127.0.0.1 --port=$OPENSHIFT_PORT --user=$OPENSHIFT_USER --password=$OPENSHIFT_PWD timeouttool < data_dml.sql
