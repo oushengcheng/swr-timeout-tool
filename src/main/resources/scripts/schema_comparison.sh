@@ -17,7 +17,7 @@ mysql --user=root --password=$password < startschematemp.sql
 mysql --user=root --password=$password < endschematemp.sql
 
 # Calculate differences
-mysqldiff --difftype=sql --force --server1=root:monster@localhost start_timeouttool:end_timeouttool > diff.sql
+mysqldiff --difftype=sql --force --server1=root:$password@localhost start_timeouttool:end_timeouttool > diff.sql
 
 # Clean up temporary files
 rm -rf startschematemp.sql
