@@ -5,12 +5,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:form prependId="false">
-        <h:commandLink id="scroll"
-                       value="#{msg.scroll}"
+        <h:commandLink value="#{msg.scroll}"
                        action="#{switcherBacking.scrollingView()}"
                        rendered="#{switcherBacking.staticView}"/>
-        <h:commandLink id="static"
-                       value="#{msg.static}"
+        <h:commandLink value="#{msg.static}"
                        action="#{switcherBacking.staticView()}"
                        rendered="#{not switcherBacking.staticView}"/>
     </h:form>
