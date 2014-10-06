@@ -43,10 +43,9 @@
                                            value="#{msg.logout}"
                                            action="#{logoutBacking.logout()}"
                                            rendered="#{identity.loggedIn}"/>
+                            <h:outputText value="&#160;" />
+                            <ui:insert name="viewswitcher"/>                                           
                         </h:form>
-                    </span>
-                    <span class="navbar-text navbar-right">
-                        <ui:insert name="viewswitcher"/>
                     </span>
                   </div>
 
@@ -61,8 +60,9 @@
                                                value="#{msg.logout}"
                                                action="#{logoutBacking.logout()}"
                                                rendered="#{identity.loggedIn}"/>
-                            </h:form>
-                            <ui:insert name="viewswitcher"/>
+                                <h:outputText value="&#160;" />
+                                <ui:insert name="viewswitcher"/>
+                            </h:form>                            
                         </span>
                     </div>
                   </div>

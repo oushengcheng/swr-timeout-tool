@@ -4,13 +4,10 @@
       xmlns:r="http://richfaces.org"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form prependId="false">
-        <h:commandLink value="#{msg.scroll}"
-                       action="#{switcherBacking.scrollingView()}"
-                       rendered="#{switcherBacking.staticView}"/>
-        <h:commandLink value="#{msg.static}"
-                       action="#{switcherBacking.staticView()}"
-                       rendered="#{not switcherBacking.staticView}"/>
-    </h:form>
-
+    <h:commandLink value="#{msg.scroll}"
+                   action="#{switcherBacking.scrollingView()}"
+                   rendered="#{switcherBacking.staticView}"/>
+    <h:commandLink value="#{msg.static}"
+                   action="#{switcherBacking.staticView()}"
+                   rendered="#{not switcherBacking.staticView}"/>
 </ui:composition>
