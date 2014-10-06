@@ -3,12 +3,17 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:r="http://richfaces.org"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>#{msg.header_title}</title>
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <o:conditionalComment if="IE 8">
+            <link rel="stylesheet" type="text/css" href="#{request.contextPath}#{fn:length(request.contextPath) == 1 ? '' : '/'}javax.faces.resource/css/ie8scrolling.css.xhtml" />
+        </o:conditionalComment>  
     </h:head>
 
     <h:body>
@@ -17,13 +22,13 @@
             <r:orderingList style="display: none"  />
         </h:form>
 
-        <!-- Ensure this loaded after Richfaces -->
+        <!-- Ensure this loaded after Richfaces -->             
         <h:outputStylesheet name="css/style.css" />
         <h:outputStylesheet name="css/sticky-footer-navbar.css" />
-
+        
         <!-- Wrap all page content here -->
         <div id="wrap">
-
+            
             <!-- Fixed navbar -->
             <div class="navbar navbar-default navbar-fixed-top">
                 <div class="container hidden-xs">

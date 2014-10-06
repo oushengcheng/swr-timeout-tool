@@ -123,53 +123,6 @@ h1, h2, h3 {
     margin-top: 15px;
 }
 
-/* Set as defaults for measuring heights before respond.js kicks in with media queries*/
-.container {
-    width: 1170px;
-}
-
-.planview h1 {
-    font-weight: bold;
-    font-size: 48px;
-    overflow: hidden;
-}
-
-.planview h2 {
-    font-size: 36px;
-}
-
-.planview h3 {
-    font-size: 26px;
-}
-
-.planview li, .planview span {
-   font-size: 26px;
-}
-
-.planviewscroll h1 {
-    font-weight: bold;
-    font-size: 64px;
-    height: 70px;
-    overflow: hidden;
-}
-
-.planviewscroll h2 {
-    font-size: 44px;
-    height: 50px;
-    overflow: hidden;
-}
-
-.planviewscroll h3 {
-    font-size: 44px;
-    height: 50px;
-    overflow: hidden;
-}
-
-.planviewscroll li, .planviewscroll span {
-   font-size: 44px;
-   font-weight: bold;
-}
-
 @media (max-width : 1023px) {
 
     .planview h1 {
