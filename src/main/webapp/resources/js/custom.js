@@ -9,10 +9,6 @@
         var total_height = $("#scrollwindow")[0].scrollHeight;
         var visible_height = $("#scrollwindow").height();
 
-
-        console.log(total_height);
-        console.log(visible_height);
-
         var count = 0;
 
         var duration = (visible_height + total_height) / speed;
