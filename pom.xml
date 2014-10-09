@@ -7,8 +7,8 @@
     <artifactId>wicc</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
-    <name>WICC timeout tool</name>
-    <description>A tool for use in the WICC for timeouts</description>
+    <name>WICC information tool</name>
+    <description>A tool for use in the WICC for disseminating information</description>
 
     <repositories>
         <repository>
