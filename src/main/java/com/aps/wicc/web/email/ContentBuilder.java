@@ -93,7 +93,7 @@ class ContentBuilder implements Serializable {
     }
 
     private String printTime(String format, DateTime dateTime) {
-        return DateTimeFormat.forPattern(format).print(dateTime);
+        return DateTimeFormat.forPattern(format).withZone(dateTimeZone).print(dateTime);
     }
 
     private void addResources() {
