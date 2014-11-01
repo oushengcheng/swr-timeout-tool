@@ -174,6 +174,13 @@ setupJbossStandalone() {
     $JBOSS_CLI --command='/subsystem=mail/mail-session=smtp-gmail:add(jndi-name="java:/mail/smtp-gmail", from="'$EMAIL_ADDRESS'")'
     $JBOSS_CLI --command='/subsystem=mail/mail-session=smtp-gmail/server=smtp:add(outbound-socket-binding-ref=mail-smtp-gmail,ssl=true,username='$EMAIL_ADDRESS',password='$EMAIL_PASS')'
 
+    echo "Adding Security Realm"
+    cp /home/andrew/.ssh/development-keystore.jks $JBOSS_HOME/standalone/configuration/development-keystore.jks
+
+    $JBOSS_CLI --command='/subsystem=web/connector=http/:write-attribute(name=redirect-port,value=8443)'
+    $JBOSS_CLI --command='/subsystem=web/connector=https/:add(socket-binding=https,scheme=https,protocol=HTTP/1.1,enable-lookups=false,secure=true)'
+    $JBOSS_CLI --command='/subsystem=web/connector=https/ssl=configuration/:add(name=localhost-ssl,password=PPLErCys__JOPGkbnI2mpF0obBEl2g7f,protocol=TLSv1,key-alias=localhost,certificate-key-file="\${jboss.server.config.dir}/development-keystore.jks")'
+
     # Remove temporary copy of mysqlconnector
     rm $MYSQL_CONNECTOR_FULL_NAME_AND_PATH
 
