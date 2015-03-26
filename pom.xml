@@ -24,7 +24,7 @@
 
         <repository>
             <id>jr-ce-releases</id>
-            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/simple/jr-ce-releases/</url>
         </repository>
 
     </repositories>
@@ -41,9 +41,9 @@
             </snapshots>
         </pluginRepository>
 
-        <pluginRepository>
+		<pluginRepository>
             <id>jr-ce-releases</id>
-            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/jr-ce-releases</url>
+            <url>http://jaspersoft.artifactoryonline.com/jaspersoft/simple/jr-ce-releases</url>
         </pluginRepository>
 
     </pluginRepositories>
@@ -64,6 +64,7 @@
         <version.picketlink>2.6.0.Beta3</version.picketlink>
         <version.freemarker>2.3.20</version.freemarker>
         <version.jasperreports>6.0.3</version.jasperreports>
+        <version.jasperreports-functions>6.0.0</version.jasperreports-functions>
 		<version.poi>3.11</version.poi>
         <version.flyway>3.0</version.flyway>
         <jboss.bom.version>1.0.0.M6</jboss.bom.version>
@@ -460,7 +461,7 @@
                      <dependency>
                          <groupId>net.sf.jasperreports</groupId>
                          <artifactId>jasperreports-functions</artifactId>
-                         <version>${version.jasperreports}</version>
+                         <version>${version.jasperreports-functions}</version>
                     </dependency>
 
                 </dependencies>
