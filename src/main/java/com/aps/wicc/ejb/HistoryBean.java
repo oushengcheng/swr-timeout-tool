@@ -20,10 +20,12 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.joda.time.DateTime;
@@ -64,7 +66,7 @@ public class HistoryBean
     }
 
     public String getFilename() {
-        return "train service plans.xls";
+        return "train service plans.xlsx";
     }
 
     public void createReport(final DateTime from, final DateTime until, final OutputStream outputStream) {
@@ -117,12 +119,13 @@ public class HistoryBean
         try {
             final InputStream jasperReport = HistoryBean.class.getResourceAsStream("history.jasper");
             final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, (JRDataSource)new JRBeanCollectionDataSource(history));
-            JRXlsExporter exporter = new JRXlsExporter();
+//            JRXlsExporter exporter = new JRXlsExporter();
+            JRXlsxExporter exporter = new JRXlsxExporter();
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
             exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, os);
             exporter.exportReport();
-            outputStream.write(this.formatting(os.toByteArray()));
+            outputStream.write(this.formattingNew(os.toByteArray()));
 
 
         } catch (JRException e) {
@@ -135,10 +138,9 @@ public class HistoryBean
         }
     }
 
-    private byte[] formatting(final byte[] content) throws IOException {
+    private byte[] formattingNew(final byte[] content) throws IOException {
 
-        HSSFWorkbook hwb = new HSSFWorkbook(new ByteArrayInputStream(content));
-
+        Workbook hwb = new XSSFWorkbook(new ByteArrayInputStream(content));
         for (int j = 0; j < hwb.getNumberOfSheets(); ++j) {
 
             hwb.getSheetAt(j).setZoom(4, 5);
@@ -148,10 +150,12 @@ public class HistoryBean
             hwb.getSheetAt(j).getPrintSetup().setHeaderMargin(0.511811024);
             hwb.getSheetAt(j).setRepeatingRows(CellRangeAddress.valueOf("1:3"));
 
-            for (int k = 1; k <= HistoryBean.COLUMNS; ++k) {
-                hwb.getSheetAt(j).setColumnWidth(k, (int)HistoryBean.EXCEL_MAX_COL_WIDTH);
-                hwb.getSheetAt(j).autoSizeColumn(k);
-                hwb.getSheetAt(j).setColumnWidth(k, (int)(hwb.getSheetAt(j).getColumnWidth(k) * 1.1));
+            for (int k = 2; k <= HistoryBean.COLUMNS; ++k) {
+            	try {
+	                hwb.getSheetAt(j).autoSizeColumn(k);
+            	} catch (NullPointerException e) {
+            		// ignore
+            	}
             }
             hwb.getSheetAt(j).setMargin((short)0, 0.62992126);
             hwb.getSheetAt(j).setMargin((short)1, 0.62992126);
