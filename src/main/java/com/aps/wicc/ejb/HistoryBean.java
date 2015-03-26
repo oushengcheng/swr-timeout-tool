@@ -22,7 +22,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -42,11 +41,9 @@ public class HistoryBean
     private DateTimeZone dateTimeZone;
     private EntityManager entityManager;
     private static final Integer COLUMNS;
-    private static final Integer EXCEL_MAX_COL_WIDTH;
 
     static {
         COLUMNS = 15;
-        EXCEL_MAX_COL_WIDTH = 65280;
     }
 
     @Inject
