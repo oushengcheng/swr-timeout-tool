@@ -164,6 +164,7 @@ public class HistoryBean
         }
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         hwb.write((OutputStream)os);
+        hwb.close();
         return os.toByteArray();
     }
 }
