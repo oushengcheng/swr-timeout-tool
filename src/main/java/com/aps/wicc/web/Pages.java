@@ -17,6 +17,9 @@ import com.aps.wicc.web.backing.view.ScrollingViewBacking;
 @Folder(name = "/")
 public interface Pages {
 
+	public static final String PARAMETER_ID = "id";
+	public static final String PARAMETER_SCROLL_SPEED = "scrollspeed";
+
     @ViewControllerRef(LoginBacking.class)
     public static class Login implements ViewConfig {
     }
@@ -59,15 +62,15 @@ public interface Pages {
     @ViewControllerRef(ScrollingViewBacking.class)
     @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
     @Access(role={Roles.EDIT_ROLE, Roles.VIEW_ROLE})
-    @NavigationParameter(key = "scrollspeed", value = "#{scrollSpeed}")
+    @NavigationParameter(key = PARAMETER_SCROLL_SPEED, value = "#{scrollSpeed}")
     public static class Scrollingview implements ViewConfig, SecuredPages {
     }
 
     @ViewControllerRef(ScrollViewBacking.class)
     @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
     @NavigationParameter.List({
-            @NavigationParameter(key = "id", value = "#{planViewIdParameter}"),
-            @NavigationParameter(key = "scrollspeed", value = "#{scrollSpeed}")
+            @NavigationParameter(key = PARAMETER_ID, value = "#{planViewIdParameter}"),
+            @NavigationParameter(key = PARAMETER_SCROLL_SPEED, value = "#{scrollSpeed}")
     })
     public static class Planviewscroll implements ViewConfig {
     }
