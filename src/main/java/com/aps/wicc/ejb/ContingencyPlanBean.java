@@ -42,6 +42,10 @@ public class ContingencyPlanBean
 
         contingencyPlan = this.entityManager.find(ContingencyPlan.class, contingencyPlan.getId());
 
+        if (!contingencyPlan.getDescription().isEmpty()) {
+        	incident.setDescription(incident.getDescription() + "\n" + contingencyPlan.getDescription());
+        }
+
         for (ContingencyAlteration contingencyAlteration : contingencyPlan.getContingencyAlterations()) {
 
             ServiceGroupAlteration serviceGroupAlteration = new ServiceGroupAlteration();
