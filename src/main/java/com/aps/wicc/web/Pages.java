@@ -12,6 +12,7 @@ import com.aps.wicc.ejb.security.CustomAccessDecsionVoter;
 import com.aps.wicc.model.Roles;
 import com.aps.wicc.web.backing.LoginBacking;
 import com.aps.wicc.web.backing.view.ScrollViewBacking;
+import com.aps.wicc.web.backing.view.ScrollingViewBacking;
 
 @Folder(name = "/")
 public interface Pages {
@@ -55,6 +56,7 @@ public interface Pages {
     public static class Staticview implements ViewConfig, SecuredPages {
     }
 
+    @ViewControllerRef(ScrollingViewBacking.class)
     @View(navigation = View.NavigationMode.REDIRECT, viewParams = View.ViewParameterMode.INCLUDE)
     @Access(role={Roles.EDIT_ROLE, Roles.VIEW_ROLE})
     @NavigationParameter(key = "scrollspeed", value = "#{scrollSpeed}")

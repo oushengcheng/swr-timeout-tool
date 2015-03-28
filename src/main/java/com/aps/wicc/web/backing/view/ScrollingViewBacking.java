@@ -13,10 +13,8 @@ import org.joda.time.Minutes;
 import org.omnifaces.cdi.ViewScoped;
 
 import com.aps.wicc.ejb.IncidentBean;
-import com.aps.wicc.ejb.parameters.PlanViewIdParameter;
 import com.aps.wicc.ejb.parameters.ScrollSpeed;
 import com.aps.wicc.model.Incident;
-import com.aps.wicc.web.Pages;
 
 @Named
 @ViewScoped
@@ -24,11 +22,9 @@ public class ScrollingViewBacking implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private String id;
-    private String requiredid;
     private String scrollspeed;
     private String defaultscrollspeed;
     private IncidentBean incidentBean;
-    private ViewNavigationHandler viewNavigationHandler;
     private Incident incident;
 
     public ScrollingViewBacking() {
@@ -37,22 +33,14 @@ public class ScrollingViewBacking implements Serializable
 
     @Inject
     public ScrollingViewBacking(IncidentBean incidentBean,
-                               ViewNavigationHandler viewNavigationHandler,
-                               @PlanViewIdParameter String requiredid,
-                               @ScrollSpeed String defaultscrollspeed) {
-        super();
-        this.requiredid = requiredid;
+                                ViewNavigationHandler viewNavigationHandler,
+                                @ScrollSpeed String defaultscrollspeed) {
         this.defaultscrollspeed = defaultscrollspeed;
         this.incidentBean = incidentBean;
-        this.viewNavigationHandler = viewNavigationHandler;
     }
 
     @PreRenderView
     protected void preRenderView() {
-        // Protect pages using id passed in in url
-        if (this.id == null || !this.id.equals(this.requiredid)) {
-            this.viewNavigationHandler.navigateTo(Pages.Pagenotfound.class);
-        }
         // Set default scroll speed
         if (this.scrollspeed == null) {
             this.scrollspeed = defaultscrollspeed;
