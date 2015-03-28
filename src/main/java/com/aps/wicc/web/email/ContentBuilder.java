@@ -26,6 +26,7 @@ import freemarker.template.TemplateException;
 class ContentBuilder implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private Configuration cfg;
     private IncidentBean incidentBean;
     private DateTimeZone dateTimeZone;
@@ -68,7 +69,7 @@ class ContentBuilder implements Serializable {
     }
 
     private void addSubject() {
-        subject = messages.publishEmailSubject(incident.getTitle());
+        subject = messages.publishEmailSubject(printTime("HH:mm EEE d MMM yyyy", new DateTime()));
     }
 
     private void addIncident() {
