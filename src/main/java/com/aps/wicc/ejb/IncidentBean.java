@@ -48,12 +48,17 @@ public class IncidentBean {
         return incident;
     }
 
-    public Incident newIncident(String footer) {
+    public Incident newIncident(String title, String description, String footer) {
         Incident incident = new Incident();
+        incident.setTitle(title);
+        incident.setDescription(description);
         incident.setFooter(footer);
         return incident;
     }
 
+    public Incident newIncident(String footer) {
+    	return newIncident("", "", footer);
+    }
     public Incident getOpenIncident() {
         return this.incidentDao.getOpenIncident();
     }

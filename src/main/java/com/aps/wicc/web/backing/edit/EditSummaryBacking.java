@@ -8,6 +8,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.deltaspike.core.api.config.view.ViewConfig;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 
 import com.aps.wicc.ejb.IncidentBean;
 import com.aps.wicc.model.Incident;
@@ -22,15 +25,20 @@ public class EditSummaryBacking implements Serializable {
     private IncidentBean incidentBean;
     private CurrentEdit editingIncident;
     private Messages messages;
+    private DateTimeZone dateTimeZone;
 
     public EditSummaryBacking() {
     }
 
     @Inject
-    public EditSummaryBacking(IncidentBean incidentBean, CurrentEdit editingIncident, Messages messages) {
+    public EditSummaryBacking(IncidentBean incidentBean,
+    		                  CurrentEdit editingIncident,
+    		                  Messages messages,
+    		                  DateTimeZone dateTimeZone) {
         this.incidentBean = incidentBean;
         this.editingIncident = editingIncident;
         this.messages = messages;
+        this.dateTimeZone = dateTimeZone;
     }
 
     public List<Incident> getIncidents() {
@@ -47,6 +55,28 @@ public class EditSummaryBacking implements Serializable {
         return Pages.Editdetail.class;
     }
 
+    public Class<? extends ViewConfig> sleepIncident() {
+        editingIncident.setIncident(createNewSleepIncident());
+        return Pages.Editdetail.class;
+    }
+
+	private Incident createNewSleepIncident() {
+		return incidentBean.newIncident(messages.sleepIncidentTitle(printTime()),
+        		                        messages.sleepIncidentDescription(),
+        		                        messages.defaultFooter());
+	}
+
+    public Class<? extends ViewConfig> actionIncident() {
+        editingIncident.setIncident(createNewActionIncident());
+        return Pages.Editdetail.class;
+    }
+
+	private Incident createNewActionIncident() {
+		return incidentBean.newIncident(messages.actionIncidentTitle(printTime()),
+        		                        messages.actionIncidentDescription(),
+        		                        messages.defaultFooter());
+	}
+
     public Class<? extends ViewConfig> viewPlanStatic() {
         return Pages.Staticview.class;
     }
@@ -55,4 +85,7 @@ public class EditSummaryBacking implements Serializable {
         return Pages.Scrollingview.class;
     }
 
+    private String printTime() {
+        return DateTimeFormat.forPattern("HH:mm EEEE d MMMM yyyy").withZone(dateTimeZone).print(new DateTime());
+    }
 }

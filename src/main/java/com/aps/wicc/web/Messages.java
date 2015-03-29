@@ -23,4 +23,16 @@ public interface Messages {
     @MessageTemplate("{publish_email_subject}")
     String publishEmailSubject(String description);
 
+    @MessageTemplate("{sleep_incident_description}")
+	String sleepIncidentDescription();
+
+    @MessageTemplate("{action_incident_description}")
+	String actionIncidentDescription();
+
+    @MessageTemplate("{sleep_incident_title}")
+	String sleepIncidentTitle(String time);
+
+    @MessageTemplate("{action_incident_title}")
+	String actionIncidentTitle(String time);
+
 }

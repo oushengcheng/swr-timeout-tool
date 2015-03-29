@@ -12,6 +12,12 @@
 			<h:form>							
 				<div class="form-group">
 					<div class="btn-group">
+						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.sleepIncident}">
+							#{msg.editsummary_sleep_button}
+						</h:commandLink>
+						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.actionIncident}">
+							#{msg.editsummary_action_button}
+						</h:commandLink>
 						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.newIncident}">
 							#{msg.editsummary_newplan_button}
 						</h:commandLink> 			
