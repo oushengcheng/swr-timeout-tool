@@ -179,6 +179,9 @@
                         <h:commandButton styleClass="btn btn-primary btn-block"
                                          value="#{msg.editdetail_publish_button}"
                                          action="#{editDetailBacking.saveIncident}"/>
+						<h:commandButton styleClass="btn btn-success btn-block"
+                                         value="#{msg.editdetail_publishemail_button}"
+                                         action="#{editDetailBacking.saveAndEmailIncident}"/>
                         <h:commandButton styleClass="btn btn-default btn-block"
                                          value="#{msg.editdetail_cancel_button}"
                                          immediate="true" action="#{editDetailBacking.cancelIncident}"/>

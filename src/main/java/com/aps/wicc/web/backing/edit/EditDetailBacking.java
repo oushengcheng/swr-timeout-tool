@@ -45,7 +45,6 @@ public class EditDetailBacking implements Serializable {
     }
 
     @Inject
-    @SuppressWarnings("cdi-ambiguous-dependency")
     public EditDetailBacking(IncidentBean incidentBean,
                              EmailSend emailSend,
                              DateTimeZone dateTimeZone,
@@ -119,22 +118,36 @@ public class EditDetailBacking implements Serializable {
 
     // ================= Save & Cancel ===================================
     public Class<?> saveIncident() {
-
         try {
-
-            setNextReviewTime();
-            incidentBean.save(getEditIncident());
-            emailSend.send();
-            return Pages.Editsummary.class;
-
+            doSave();
         } catch (EJBException e) {
-
-            if (Exceptions.is(e, StaleDataException.class)) {
-                this.messages.addError().staleData();
-                return null;
-            }
-            throw e;
+            return checkForStaleDataException(e);
         }
+        return Pages.Editsummary.class;
+    }
+
+    private void doSave() {
+		setNextReviewTime();
+		incidentBean.save(getEditIncident());
+	}
+
+	private Class<?> checkForStaleDataException(EJBException e) {
+		if (Exceptions.is(e, StaleDataException.class)) {
+		    this.messages.addError().staleData();
+		    return null;
+		} else {
+			throw e;
+		}
+	}
+
+    public Class<?> saveAndEmailIncident() {
+    	try {
+            doSave();
+            emailSend.send();
+        } catch (EJBException e) {
+            return checkForStaleDataException(e);
+        }
+        return Pages.Editsummary.class;
     }
 
     public Class<?> cancelIncident() {
