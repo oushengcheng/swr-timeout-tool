@@ -88,7 +88,7 @@ public class EditSummaryBacking implements Serializable {
     }
 
     private String printTime() {
-        return DateTimeFormat.forPattern("HH:mm EEEE d MMMM yyyy").withZone(dateTimeZone).print(new DateTime());
+        return DateTimeFormat.forPattern("HH:mm EEE d MMM yyyy").withZone(dateTimeZone).print(new DateTime());
     }
 
     public String clipboardText() {
