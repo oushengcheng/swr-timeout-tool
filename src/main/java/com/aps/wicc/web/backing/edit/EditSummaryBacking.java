@@ -14,8 +14,10 @@ import org.joda.time.format.DateTimeFormat;
 
 import com.aps.wicc.ejb.IncidentBean;
 import com.aps.wicc.model.Incident;
+import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.web.Messages;
 import com.aps.wicc.web.Pages;
+import com.aps.wicc.web.formatter.LongFormatter;
 
 @Named
 @RequestScoped
@@ -87,5 +89,26 @@ public class EditSummaryBacking implements Serializable {
 
     private String printTime() {
         return DateTimeFormat.forPattern("HH:mm EEEE d MMMM yyyy").withZone(dateTimeZone).print(new DateTime());
+    }
+
+    public String clipboardText() {
+
+    	Incident incident = incidentBean.getOpenIncident();
+
+    	if (incident == null) {
+    		return "";
+    	}
+
+    	StringBuilder builder = new StringBuilder();
+
+    	builder.append(incident.getTitle());
+    	builder.append("\n");
+    	builder.append(incident.getDescription());
+    	builder.append("\n");
+    	for (ServiceGroupAlteration alteration : incident.getServiceGroupAlterations()) {
+    		builder.append(new LongFormatter(alteration).format());
+    		builder.append("\n");
+    	}
+    	return builder.toString();
     }
 }

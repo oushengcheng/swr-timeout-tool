@@ -27,7 +27,11 @@
 						<h:commandLink styleClass="btn btn-default" action="#{editSummaryBacking.viewPlanScroll}" target="_blank">
 							#{msg.editsummary_viewplanscroll_button}
 						</h:commandLink>
-					</div>			
+						<r:commandLink styleClass="btn btn-default" execute="@this"
+                                       value="#{msg.editsummary_copy_button}"
+                                       render="@none"
+                                       oncomplete="#{r:component('copyPane')}.show(); jQuery('#selectionarea').select();"/>
+					</div>                                        							
 				</div>
 				<div class="table-responsive">
 					<h:dataTable id="dataTable" var="_incident" value="#{editSummaryBacking.incidents}" styleClass="table table-striped table-bordered">
@@ -89,6 +93,40 @@
 			</h:form>
 		</div>
 		
+		<h:form id="copyform" prependId="false">
+            <r:popupPanel id="copyPane"
+                          autosized="true"
+                          styleClass="modal-dialog"
+                          aria-labelledby="confirmPaneLabel"
+                          aria-hidden="true"
+                          domElementAttachment="form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h:button value="x"
+                                  styleClass="close"
+                                  data-dismiss="modal"
+                                  aria-hidden="true"
+                                  onclick="#{r:component('copyPane')}.hide(); return false;" />
+                        <h4 class="modal-title" id="copyPaneLabel">
+                            #{msg.editsummary_copy_text}
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                    	<h:inputTextarea id="selectionarea" 
+                    	                 styleClass="form-control"
+                                         value="#{editSummaryBacking.clipboardText()}"
+                                         onkeypress="if(event.keyCode==13) {#{r:component('copyPane')}.hide();}"/>    
+                    </div>
+                    <div class="modal-footer">
+                        <h:button id="copyclosebutton"
+                                  value="#{msg.editsummary_copy_close_button}"
+                                  styleClass="btn btn-default"
+                                  onclick="#{r:component('copyPane')}.hide(); return false;"/>                        
+                    </div>
+                </div>
+            </r:popupPanel>
+        </h:form>
+        
 		<ui:include src="/WEB-INF/polling.xhtml" />	
 		
 	</ui:define>
