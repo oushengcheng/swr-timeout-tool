@@ -35,6 +35,7 @@ public class IncidentBean {
     public List<Incident> getIncidentList() {
         List<Incident> incidents = incidentDao.getOpenIncidents();
         incidents.addAll(incidentDao.getLastNClosedIncidents(NO_INCIDENTS));
+        incidents.addAll(incidentDao.getDraftIncidents());
         return incidents;
     }
 
@@ -59,11 +60,12 @@ public class IncidentBean {
     public Incident newIncident(String footer) {
     	return newIncident("", "", footer);
     }
+
     public Incident getOpenIncident() {
         return this.incidentDao.getOpenIncident();
     }
 
-    public Incident save(Incident incident) {
+    public Incident save(Incident incident, Status status) {
         try {
             closeOpenIncidents();
             if (incident.getId() == null) {
@@ -72,7 +74,7 @@ public class IncidentBean {
                 incident = entityManager.merge(incident);
             }
             incident.setLastPublished(new DateTime());
-            incident.setStatus(Status.OPEN);
+            incident.setStatus(status);
             return incident;
         } catch (PersistenceException pe) {
             if (Exceptions.is(pe, OptimisticLockException.class)) {

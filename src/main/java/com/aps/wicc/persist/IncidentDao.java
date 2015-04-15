@@ -60,6 +60,35 @@ public class IncidentDao {
         }
     }
 
+    public List<Incident> getDraftIncidents() {
+
+        final CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Incident> criteria = builder.createQuery(Incident.class);
+        final Root<Incident> incidentRoot = criteria.from(Incident.class);
+
+        criteria.select(incidentRoot);
+        criteria.distinct(true);
+
+        incidentRoot.fetch(Incident_.serviceGroupAlterations, JoinType.LEFT);
+
+        criteria.where(builder.equal(incidentRoot.get(Incident_.status), builder.literal(Status.DRAFT)));
+        criteria.orderBy(builder.desc(incidentRoot.get(Incident_.lastPublished)));
+
+        final TypedQuery<Incident> query = this.entityManager.createQuery(criteria);
+
+        try {
+
+            final List<Incident> incidents = query.getResultList();
+            this.serviceGroupAlterationDao.getServiceGroupAlterations(incidents);
+            return incidents;
+
+        } catch (NoResultException nre) {
+
+            return Collections.emptyList();
+
+        }
+    }
+
     public List<Incident> getIncidents(final DateTime from, final DateTime until) {
 
         if (from == null || until == null) {

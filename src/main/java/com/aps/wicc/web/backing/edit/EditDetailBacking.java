@@ -25,6 +25,7 @@ import com.aps.wicc.ejb.StaleDataException;
 import com.aps.wicc.ejb.export.ContingencyPlanExportBean;
 import com.aps.wicc.model.Incident;
 import com.aps.wicc.model.ServiceGroupAlteration;
+import com.aps.wicc.model.Status;
 import com.aps.wicc.web.Messages;
 import com.aps.wicc.web.Pages;
 import com.aps.wicc.web.email.EmailSend;
@@ -136,16 +137,25 @@ public class EditDetailBacking implements Serializable {
     // ================= Save & Cancel ===================================
     public Class<?> saveIncident() {
         try {
-            doSave();
+            doSave(Status.OPEN);
         } catch (EJBException e) {
             return checkForStaleDataException(e);
         }
         return Pages.Editsummary.class;
     }
 
-    private void doSave() {
+    public Class<?> saveIncidentAsDraft() {
+        try {
+            doSave(Status.DRAFT);
+        } catch (EJBException e) {
+            return checkForStaleDataException(e);
+        }
+        return Pages.Editsummary.class;
+    }
+
+    private void doSave(Status status) {
 		setNextReviewTime();
-		incidentBean.save(getEditIncident());
+		incidentBean.save(getEditIncident(), status);
 	}
 
 	private Class<?> checkForStaleDataException(EJBException e) {
@@ -159,7 +169,7 @@ public class EditDetailBacking implements Serializable {
 
     public Class<?> saveAndEmailIncident() {
     	try {
-            doSave();
+            doSave(Status.OPEN);
             emailSend.send();
         } catch (EJBException e) {
             return checkForStaleDataException(e);
