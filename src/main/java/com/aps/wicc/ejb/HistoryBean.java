@@ -116,7 +116,6 @@ public class HistoryBean
         try {
             final InputStream jasperReport = HistoryBean.class.getResourceAsStream("history.jasper");
             final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, (JRDataSource)new JRBeanCollectionDataSource(history));
-//            JRXlsExporter exporter = new JRXlsExporter();
             JRXlsxExporter exporter = new JRXlsxExporter();
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);

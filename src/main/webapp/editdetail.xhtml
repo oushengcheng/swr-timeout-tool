@@ -121,6 +121,10 @@
                                        execute="@this"
                                        action="#{editDetailBacking.autoSort}"
                                        render="dataTable" />
+						<h:commandLink value="#{msg.editdetail_export}"
+                                       styleClass="btn btn-default"
+                                       immediate="true"
+                                       action="#{editDetailBacking.exportPlan}" />                                       
                     </div>
                 </div>
                 <div class="table-responsive">

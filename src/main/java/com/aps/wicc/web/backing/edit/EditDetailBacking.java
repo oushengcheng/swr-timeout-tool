@@ -1,8 +1,11 @@
 package com.aps.wicc.web.backing.edit;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.ejb.EJBException;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -19,6 +22,7 @@ import org.omnifaces.util.Exceptions;
 import com.aps.wicc.ejb.IncidentBean;
 import com.aps.wicc.ejb.Sorter;
 import com.aps.wicc.ejb.StaleDataException;
+import com.aps.wicc.ejb.export.ContingencyPlanExportBean;
 import com.aps.wicc.model.Incident;
 import com.aps.wicc.model.ServiceGroupAlteration;
 import com.aps.wicc.web.Messages;
@@ -32,6 +36,7 @@ public class EditDetailBacking implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private IncidentBean incidentBean;
+    private ContingencyPlanExportBean exportBean;
     private EmailSend emailSend;
     private DateTimeZone dateTimeZone;
     private Sorter sorter;
@@ -46,12 +51,14 @@ public class EditDetailBacking implements Serializable {
 
     @Inject
     public EditDetailBacking(IncidentBean incidentBean,
+    		                 ContingencyPlanExportBean exportBean,
                              EmailSend emailSend,
                              DateTimeZone dateTimeZone,
                              Sorter sorter,
                              JsfMessage<Messages> messages,
                              CurrentEdit editingIncident) {
         this.incidentBean = incidentBean;
+        this.exportBean = exportBean;
         this.emailSend = emailSend;
         this.dateTimeZone = dateTimeZone;
         this.sorter = sorter;
@@ -91,6 +98,16 @@ public class EditDetailBacking implements Serializable {
 
     public void autoSort() {
         getEditIncident().setServiceGroupAlterations(this.sorter.sort(getEditIncident().getServiceGroupAlterations()));
+    }
+
+    public Class<? extends ViewConfig> exportPlan() throws IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+        externalContext.setResponseContentType(exportBean.getFormat());
+        externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"" + exportBean.getFilename() + "\"");
+        exportBean.createReport(getEditIncident(), externalContext.getResponseOutputStream());
+        facesContext.responseComplete();
+        return null;
     }
 
     // ================= Service Group Alteration Actions ===================================
