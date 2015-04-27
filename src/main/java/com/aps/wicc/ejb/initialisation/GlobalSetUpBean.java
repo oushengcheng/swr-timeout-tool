@@ -7,9 +7,7 @@ public class GlobalSetUpBean implements Initialisable {
 
     @Override
     public void init() {
-
         ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-
     }
 
 }
